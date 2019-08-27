@@ -1,0 +1,25 @@
+{
+  "name": "interactive-platform",
+  "version": "0.0.1",
+  "description": "capstone project",
+  "main": "index.html",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "eslint \"src/**/*.{js,jsx}\" --quiet"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Gleebo/interactive-platform.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Gleebo/interactive-platform/issues"
+  },
+  "homepage": "https://github.com/Gleebo/interactive-platform#readme",
+  "devDependencies": {
+    "eslint": "^6.2.2",
+    "eslint-config-prettier": "^6.1.0",
+    "prettier": "^1.18.2"
+  }
+}
