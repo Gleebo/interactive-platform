@@ -1,5 +1,5 @@
 import firebase from "firebase/app";
-
+//configuration object
 var firebaseConfig = {
   apiKey: "AIzaSyA7vQPCa3-TE8Ve-QiAH9l80aYir7oJkZU",
   authDomain: "kids-islands.firebaseapp.com",
