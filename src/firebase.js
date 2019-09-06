@@ -13,29 +13,30 @@ var firebaseConfig = {
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
 
-function signIn(email, password) {
-  firebase
-    .auth()
-    .signInWithEmailAndPassword(email, password)
-    .then(user => console.log({ user }))
-    .catch(function(error) {
-      // Handle Errors here.
-      var errorCode = error.code;
-      var errorMessage = error.message;
-      console.error(errorCode, errorMessage);
-    });
+async function signIn(email, password) {
+  try {
+    const userCredential = await firebase
+      .auth()
+      .signInWithEmailAndPassword(email, password);
+    console.log(userCredential);
+  } catch (error) {
+    const errorCode = error.code;
+    const errorMessage = error.message;
+    console.error(errorCode, errorMessage);
+  }
 }
-function createNewUser(email, password) {
-  firebase
-    .auth()
-    .createUserWithEmailAndPassword(email, password)
-    .then(user => console.log({ user }))
-    .catch(function(error) {
-      // Handle Errors here.
-      var errorCode = error.code;
-      var errorMessage = error.message;
-      console.error(errorCode, errorMessage);
-    });
+
+async function createNewUser(email, password) {
+  try {
+    const userCredential = await firebase
+      .auth()
+      .createUserWithEmailAndPassword(email, password);
+    console.log(userCredential);
+  } catch (error) {
+    const errorCode = error.code;
+    const errorMessage = error.message;
+    console.error(errorCode, errorMessage);
+  }
 }
 
 export { signIn, createNewUser };
