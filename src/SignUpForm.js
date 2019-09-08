@@ -1,13 +1,16 @@
-import React, { useState } from "react";
-import { signIn } from "./firebase";
+import React, { useState, useEffect } from "react";
+import { createNewUser } from "./firebase";
 
-export function SignInForm() {
-  const [email, setEmail] = useState("example@portal.com");
+export const SignUpForm = () => {
+  const [submitButtonDisabled, setSubmitButtonDisabled] = useState(true);
+  const [email, setEmail] = useState("user@example.com");
   const [password, setPassword] = useState("");
-  const handleSignInClick = e => {
-    e.preventDefault();
-    signIn(email, password);
-  };
+
+  useEffect(() => {
+    //disables submit button if password length is less than 6 chars
+    setSubmitButtonDisabled(password.length < 6);
+  }, [password]);
+
   return (
     <table>
       <tbody>
@@ -37,10 +40,18 @@ export function SignInForm() {
         </tr>
         <tr>
           <td>
-            <input type="button" value="sign in" onClick={handleSignInClick} />
+            <input
+              type="button"
+              value="sign up"
+              disabled={submitButtonDisabled}
+              onClick={e => {
+                e.preventDefault();
+                createNewUser(email, password);
+              }}
+            />
           </td>
         </tr>
       </tbody>
     </table>
   );
-}
+};
