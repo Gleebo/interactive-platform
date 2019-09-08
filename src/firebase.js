@@ -1,5 +1,7 @@
 import firebase from "firebase/app";
 import "firebase/auth";
+import "firebase/firestore";
+import "firebase/firebase-storage";
 //configuration object
 var firebaseConfig = {
   apiKey: "AIzaSyA7vQPCa3-TE8Ve-QiAH9l80aYir7oJkZU",
@@ -38,5 +40,19 @@ async function createNewUser(email, password) {
     console.error(errorCode, errorMessage);
   }
 }
+//retrieve all products from db
+async function getAllProducts() {
+  try {
+    const querySnapshot = await firebase
+      .firestore()
+      .collection("products")
+      .get();
+    let docs = [];
+    querySnapshot.forEach(doc => docs.push({ id: doc.id, ...doc.data() }));
+    return docs;
+  } catch (error) {
+    console.error;
+  }
+}
 
-export { signIn, createNewUser };
+export { signIn, createNewUser, getAllProducts };
