@@ -18,6 +18,10 @@ const App = () => {
           </li>
         ))}
       </ul>
+      <img
+        src="https://firebasestorage.googleapis.com/v0/b/kids-islands.appspot.com/o/roflmao.jpg?alt=media&token=c898d205-bac6-4cb7-877f-0b479feceae2"
+        alt="rofl"
+      ></img>
     </div>
   );
 };

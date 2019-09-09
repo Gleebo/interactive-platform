@@ -14,12 +14,18 @@ var firebaseConfig = {
 };
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
+
+const auth = firebase.auth();
+const db = firebase.firestore();
+//const storage = firebase.storage();
+
 //function for signing users in
 async function signIn(email, password) {
   try {
-    const userCredential = await firebase
-      .auth()
-      .signInWithEmailAndPassword(email, password);
+    const userCredential = await auth.signInWithEmailAndPassword(
+      email,
+      password
+    );
     console.log(userCredential);
   } catch (error) {
     const errorCode = error.code;
@@ -30,9 +36,10 @@ async function signIn(email, password) {
 //function to register new user using email and password
 async function createNewUser(email, password) {
   try {
-    const userCredential = await firebase
-      .auth()
-      .createUserWithEmailAndPassword(email, password);
+    const userCredential = await auth.createUserWithEmailAndPassword(
+      email,
+      password
+    );
     console.log(userCredential);
   } catch (error) {
     const errorCode = error.code;
@@ -43,10 +50,7 @@ async function createNewUser(email, password) {
 //retrieve all products from db
 async function getAllProducts() {
   try {
-    const querySnapshot = await firebase
-      .firestore()
-      .collection("products")
-      .get();
+    const querySnapshot = await db.collection("products").get();
     let docs = [];
     querySnapshot.forEach(doc => docs.push({ id: doc.id, ...doc.data() }));
     return docs;
