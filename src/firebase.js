@@ -3,7 +3,7 @@ import "firebase/auth";
 import "firebase/firestore";
 import "firebase/firebase-storage";
 //configuration object
-var firebaseConfig = {
+const firebaseConfig = {
   apiKey: "AIzaSyA7vQPCa3-TE8Ve-QiAH9l80aYir7oJkZU",
   authDomain: "kids-islands.firebaseapp.com",
   databaseURL: "https://kids-islands.firebaseio.com",
@@ -59,4 +59,17 @@ async function getAllProducts() {
   }
 }
 
-export { signIn, createNewUser, getAllProducts };
+async function getProduct(id) {
+  try {
+    const docSnapShot = await db
+      .collection("products")
+      .doc(id)
+      .get();
+    const product = docSnapShot.data();
+    return product;
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+export { signIn, createNewUser, getAllProducts, getProduct };
