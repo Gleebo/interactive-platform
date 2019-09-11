@@ -3,7 +3,7 @@ import { createNewUser } from "./firebase";
 
 export const SignUpForm = () => {
   const [submitButtonDisabled, setSubmitButtonDisabled] = useState(true);
-  const [email, setEmail] = useState("user@example.com");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   useEffect(() => {
@@ -22,6 +22,7 @@ export const SignUpForm = () => {
               name="email"
               id="email"
               value={email}
+              placeholder = "Input your email"
               onChange={e => setEmail(e.target.value)}
             />
           </td>
@@ -34,6 +35,7 @@ export const SignUpForm = () => {
               name="password"
               id="password"
               value={password}
+              placeholder = "Input your password"
               onChange={e => setPassword(e.target.value)}
             />
           </td>

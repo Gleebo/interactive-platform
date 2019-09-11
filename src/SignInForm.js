@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { signIn } from "./firebase";
 
 export function SignInForm() {
-  const [email, setEmail] = useState("example@portal.com");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const handleSignInClick = e => {
     e.preventDefault();
@@ -19,6 +19,7 @@ export function SignInForm() {
               name="email"
               id="email"
               value={email}
+              placeholder = "Input your email"
               onChange={e => setEmail(e.target.value)}
             />
           </td>
@@ -31,6 +32,7 @@ export function SignInForm() {
               name="password"
               id="password"
               value={password}
+              placeholder = "Input your password"
               onChange={e => setPassword(e.target.value)}
             />
           </td>
