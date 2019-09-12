@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { createProduct, uploadImage } from "./firebase";
+import { uploadImage } from "./firebase";
 
 export const AddProductForm = () => {
   const [submitButtonDisabled, setSubmitButtonDisabled] = useState(true);
@@ -7,7 +7,6 @@ export const AddProductForm = () => {
   const [category, setCategory] = useState("");
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
-  const [img, setImg] = useState("");
   const [price, setPrice] = useState("");
   const [ref, setRef] = useState("");
 
