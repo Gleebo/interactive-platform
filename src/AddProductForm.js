@@ -2,17 +2,18 @@ import React, { useState } from "react";
 import { createProduct } from "./firebase";
 
 export const AddProductForm = () => {
-  const [brand, setBrand] = useState("");
-  const [category, setCategory] = useState("");
-  const [name, setName] = useState("");
-  const [description, setDescription] = useState("");
-  const [price, setPrice] = useState("");
+  const [product, setProduct] = useState({
+    name: "",
+    category: "",
+    brand: "",
+    description: "",
+    price: ""
+  });
   const [ref, setRef] = useState("");
 
   function handleSubmit(event) {
     event.preventDefault();
     const image = ref.files[0];
-    const product = { name, category, brand, description, price };
     createProduct(product, image);
   }
 
@@ -27,8 +28,10 @@ export const AddProductForm = () => {
                 type="text"
                 name="brand"
                 id="productBrand"
-                value={brand}
-                onChange={e => setBrand(e.target.value)}
+                value={product.brand}
+                onChange={e =>
+                  setProduct({ ...product, brand: e.target.value })
+                }
               />
             </td>
           </tr>
@@ -39,8 +42,10 @@ export const AddProductForm = () => {
                 type="text"
                 name="category"
                 id="productCategory"
-                value={category}
-                onChange={e => setCategory(e.target.value)}
+                value={product.category}
+                onChange={e =>
+                  setProduct({ ...product, category: e.target.value })
+                }
               />
             </td>
           </tr>
@@ -51,8 +56,8 @@ export const AddProductForm = () => {
                 type="text"
                 name="name"
                 id="productName"
-                value={name}
-                onChange={e => setName(e.target.value)}
+                value={product.name}
+                onChange={e => setProduct({ ...product, name: e.target.value })}
               />
             </td>
           </tr>
@@ -62,8 +67,10 @@ export const AddProductForm = () => {
               <textarea
                 name="description"
                 id="productDescription"
-                value={description}
-                onChange={e => setDescription(e.target.value)}
+                value={product.description}
+                onChange={e =>
+                  setProduct({ ...product, description: e.target.value })
+                }
               />
             </td>
           </tr>
@@ -74,8 +81,10 @@ export const AddProductForm = () => {
                 type="text"
                 name="price"
                 id="productPrice"
-                value={price}
-                onChange={e => setPrice(e.target.value)}
+                value={product.price}
+                onChange={e =>
+                  setProduct({ ...product, price: e.target.value })
+                }
               />
             </td>
           </tr>
