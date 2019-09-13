@@ -42,58 +42,34 @@ async function createNewUser(email, password) {
   }
 }
 // function to upload image
-async function uploadImage(file, brand, category, description, name, price) {
-  try {
-    //storage function for the image
-    const url = await firebase
-      .storage()
-      .ref()
-      .child(file.name)
-      .put(file)
-      .snapshot.ref.getDownloadURL();
-    const docRef = await createProduct(
-      brand,
-      category,
-      description,
-      url,
-      name,
-      price
-    );
-    return docRef.id;
-    // const url = await uploadTask.ref.getDownloadURL();
-    // return url;
-  } catch (error) {
-    const errorCode = error.code;
-    const errorMessage = error.message;
-    console.error(errorCode, errorMessage);
-  }
+function uploadImage(file) {
+  //storage function for the image
+  return firebase
+    .storage()
+    .ref()
+    .child(file.name)
+    .put(file);
+}
+
+function addProduct(product) {
+  return firebase
+    .firestore()
+    .collection("products")
+    .add(product);
 }
 
 //function to add product
-async function createProduct(
-  brand,
-  category,
-  description,
-  imgUrl,
-  name,
-  price
-) {
+async function createProduct(product, imageFile) {
   try {
-    //todo: check the value of name and price
+    const docRefPromise = addProduct(product);
+    const imgUploadPromise = uploadImage(imageFile);
 
-    //add product to firebase
-    const addProduct = await firebase
-      .firestore()
-      .collection("products")
-      .add({
-        brand: brand,
-        category: category,
-        description: description,
-        imgUrl: imgUrl,
-        name: name,
-        price: price
-      });
-    return addProduct;
+    const [docRef, uploadTask] = await Promise.all([
+      docRefPromise,
+      imgUploadPromise
+    ]);
+    const imgUrl = await uploadTask.ref.getDownloadURL();
+    await docRef.update({ imgUrl });
   } catch (error) {
     const errorCode = error.code;
     const errorMessage = error.message;
@@ -101,4 +77,4 @@ async function createProduct(
   }
 }
 
-export { signIn, createNewUser, createProduct, uploadImage };
+export { signIn, createNewUser, createProduct };
