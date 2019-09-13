@@ -41,6 +41,7 @@ async function createNewUser(email, password) {
     console.error(errorCode, errorMessage);
   }
 }
+
 // function to upload image
 function uploadImage(file) {
   //storage function for the image
@@ -51,6 +52,7 @@ function uploadImage(file) {
     .put(file);
 }
 
+//Promise for adding new product
 function addProduct(product) {
   return firebase
     .firestore()
@@ -58,16 +60,19 @@ function addProduct(product) {
     .add(product);
 }
 
-//function to add product
+//function to add product and image
 async function createProduct(product, imageFile) {
   try {
     const docRefPromise = addProduct(product);
     const imgUploadPromise = uploadImage(imageFile);
 
+    //put new porduct and upload image
     const [docRef, uploadTask] = await Promise.all([
       docRefPromise,
       imgUploadPromise
     ]);
+
+    //get image url and put into product doc in firestore
     const imgUrl = await uploadTask.ref.getDownloadURL();
     await docRef.update({ imgUrl });
   } catch (error) {
