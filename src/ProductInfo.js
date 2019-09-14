@@ -1,21 +1,10 @@
-import React, { useState } from "react";
-const ProductForm = () => {
-  const [value, setValue] = useState(1);
+import React from "react";
+const ProductInfo = ({ description, name }) => {
   return (
-    <form className="d-flex justify-content-left">
-      <input
-        type="number"
-        value={value}
-        aria-label="Search"
-        className="form-control"
-        style={{ width: 100 + "px" }}
-        onChange={e => setValue(e.target.value)}
-      />
-      <button className="btn btn-primary btn-md my-0 p" type="submit">
-        Add to cart
-        <i className="fas fa-shopping-cart ml-1"></i>
-      </button>
-    </form>
+    <div className="col-md-6 text-center">
+      <h4>{name}</h4>
+      <p>{description}</p>
+    </div>
   );
 };
-export default ProductForm;
+export default ProductInfo;
