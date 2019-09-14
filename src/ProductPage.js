@@ -4,6 +4,8 @@ import ProductCategory from "./ProductCategory";
 import ProductDetail from "./ProductDetail";
 import ProductForm from "./ProductForm";
 import ProductImage from "./ProductImage";
+import ProductInfo from "./ProductInfo";
+import ProductInfoImage from "./ProductInfoImage";
 
 export default function ProductPage({ productID }) {
   const [
@@ -33,6 +35,22 @@ export default function ProductPage({ productID }) {
               ></ProductDetail>
               <ProductForm></ProductForm>
             </div>
+          </div>
+        </div>
+        <hr></hr>
+        <div className="row d-flex justify-content-center wow fadeIn">
+          <ProductInfo name={name} description={description}></ProductInfo>
+        </div>
+        <div className="row wow fadeIn">
+          <ProductInfoImage
+            imgUrl1={imgUrl}
+            infoname1={name}
+          ></ProductInfoImage>
+          <div className="col-lg-4 col-md-12 mb-4">
+            <img src={imgUrl} className="img-fluid" alt={name} />
+          </div>
+          <div className="col-lg-4 col-md-12 mb-4">
+            <img src={imgUrl} className="img-fluid" alt={name} />
           </div>
         </div>
       </div>
