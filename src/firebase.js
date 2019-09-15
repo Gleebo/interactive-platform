@@ -15,12 +15,20 @@ var firebaseConfig = {
 };
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
+
+const db = firebase.firestore();
+const storage = firebase.storage();
+const auth = firebase.auth();
+
+const productsCollection = db.collection("products");
+
 //function for signing users in
 async function signIn(email, password) {
   try {
-    const userCredential = await firebase
-      .auth()
-      .signInWithEmailAndPassword(email, password);
+    const userCredential = await auth.signInWithEmailAndPassword(
+      email,
+      password
+    );
     console.log(userCredential);
   } catch (error) {
     const errorCode = error.code;
@@ -31,9 +39,10 @@ async function signIn(email, password) {
 //function to register new user using email and password
 async function createNewUser(email, password) {
   try {
-    const userCredential = await firebase
-      .auth()
-      .createUserWithEmailAndPassword(email, password);
+    const userCredential = await auth.createUserWithEmailAndPassword(
+      email,
+      password
+    );
     console.log(userCredential);
   } catch (error) {
     const errorCode = error.code;
@@ -42,44 +51,10 @@ async function createNewUser(email, password) {
   }
 }
 
-// function to upload image
-function uploadImage(file) {
-  //storage function for the image
-  return firebase
-    .storage()
-    .ref()
-    .child(file.name)
-    .put(file);
-}
-
-//Promise for adding new product
-function addProduct(product) {
-  return firebase
-    .firestore()
-    .collection("products")
-    .add(product);
-}
-//Promise for updating product
-function updateProduct(id, product) {
-  return firebase
-    .firestore()
-    .collection("products")
-    .doc(id)
-    .update(product);
-}
-//Promise for updating product
-function updateImage(id, imgUrl) {
-  return firebase
-    .firestore()
-    .collection("products")
-    .doc(id)
-    .update({ imgUrl: imgUrl });
-}
-
 //function to add product and image
 async function createProduct(product, imageFile) {
   try {
-    const docRefPromise = addProduct(product);
+    const docRefPromise = productsCollection.add(product);
     const imgUploadPromise = uploadImage(imageFile);
 
     //put new porduct and upload image
@@ -97,25 +72,19 @@ async function createProduct(product, imageFile) {
     console.error(errorCode, errorMessage);
   }
 }
-//function to add product and image
+
+//edit product and image
 async function editProduct(id, product, imageFile) {
   try {
-    if (imageFile == null) {
-      await updateProduct(id, product);
-    } else {
-      const docRefPromise = updateProduct(id, product);
-      const imgUploadPromise = uploadImage(imageFile);
+    const docRef = productsCollection.doc(id);
 
-      //update porduct and upload image
-      const [docRef, uploadTask] = await Promise.all([
-        docRefPromise,
-        imgUploadPromise
-      ]);
-
-      //get image url and put into product doc in firestore
+    if (imageFile) {
+      const uploadTask = await uploadImage(imageFile);
       const imgUrl = await uploadTask.ref.getDownloadURL();
-      await updateImage(id, imgUrl);
+      product = { ...product, imgUrl };
     }
+
+    await docRef.update(product);
   } catch (error) {
     const errorCode = error.code;
     const errorMessage = error.message;
@@ -126,13 +95,8 @@ async function editProduct(id, product, imageFile) {
 //getProduct by ID
 async function getProduct(id) {
   try {
-    const docSnapShot = await firebase
-      .firestore()
-      .collection("products")
-      .doc(id)
-      .get();
+    const docSnapShot = await productsCollection.doc(id).get();
     const product = docSnapShot.data();
-    console.log(product);
     return product;
   } catch (error) {
     const errorCode = error.code;
@@ -141,6 +105,12 @@ async function getProduct(id) {
   }
 }
 
-//Edit product
+// function to upload image
+function uploadImage(file) {
+  return storage
+    .ref()
+    .child(file.name)
+    .put(file);
+}
 
 export { signIn, createNewUser, createProduct, getProduct, editProduct };

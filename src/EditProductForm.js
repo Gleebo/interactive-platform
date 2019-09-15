@@ -20,7 +20,7 @@ export const EditProductForm = () => {
 
   function handleSubmit(event) {
     event.preventDefault();
-    const image = ref.files[0] ? ref.files[0] : null;
+    const image = ref.files[0];
     editProduct(id, product, image);
   }
 
