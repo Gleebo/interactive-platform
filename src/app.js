@@ -1,11 +1,15 @@
 import React from "react";
 import { render } from "react-dom";
 import ProductPage from "./ProductPage";
+import MainInterface from "./mainInterface.jsx";
+import { BrowserRouter } from "react-router-dom";
 
 const App = () => {
   return (
     <div>
-      <ProductPage productID="6Q0JqK7OWJR6TfTpg3kj" />
+      <BrowserRouter>
+        <MainInterface />
+      </BrowserRouter>
     </div>
   );
 };

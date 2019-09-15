@@ -7,7 +7,8 @@ import ProductImage from "./ProductImage";
 import ProductInfo from "./ProductInfo";
 import ProductInfoImage from "./ProductInfoImage";
 
-export default function ProductPage({ productID }) {
+export default function ProductPage(props) {
+  const productID = "6Q0JqK7OWJR6TfTpg3kj";
   const [
     { name, brand, description, price, imgUrl, category },
     setProduct
