@@ -59,6 +59,22 @@ function addProduct(product) {
     .collection("products")
     .add(product);
 }
+//Promise for updating product
+function updateProduct(id, product) {
+  return firebase
+    .firestore()
+    .collection("products")
+    .doc(id)
+    .update(product);
+}
+//Promise for updating product
+function updateImage(id, imgUrl) {
+  return firebase
+    .firestore()
+    .collection("products")
+    .doc(id)
+    .update({ imgUrl: imgUrl });
+}
 
 //function to add product and image
 async function createProduct(product, imageFile) {
@@ -81,5 +97,50 @@ async function createProduct(product, imageFile) {
     console.error(errorCode, errorMessage);
   }
 }
+//function to add product and image
+async function editProduct(id, product, imageFile) {
+  try {
+    if (imageFile == null) {
+      await updateProduct(id, product);
+    } else {
+      const docRefPromise = updateProduct(id, product);
+      const imgUploadPromise = uploadImage(imageFile);
 
-export { signIn, createNewUser, createProduct };
+      //update porduct and upload image
+      const [docRef, uploadTask] = await Promise.all([
+        docRefPromise,
+        imgUploadPromise
+      ]);
+
+      //get image url and put into product doc in firestore
+      const imgUrl = await uploadTask.ref.getDownloadURL();
+      await updateImage(id, imgUrl);
+    }
+  } catch (error) {
+    const errorCode = error.code;
+    const errorMessage = error.message;
+    console.error(errorCode, errorMessage);
+  }
+}
+
+//getProduct by ID
+async function getProduct(id) {
+  try {
+    const docSnapShot = await firebase
+      .firestore()
+      .collection("products")
+      .doc(id)
+      .get();
+    const product = docSnapShot.data();
+    console.log(product);
+    return product;
+  } catch (error) {
+    const errorCode = error.code;
+    const errorMessage = error.message;
+    console.error(errorCode, errorMessage);
+  }
+}
+
+//Edit product
+
+export { signIn, createNewUser, createProduct, getProduct, editProduct };

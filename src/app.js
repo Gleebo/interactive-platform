@@ -3,6 +3,7 @@ import { render } from "react-dom";
 import { SignInForm } from "./SignInForm";
 import { SignUpForm } from "./SignUpForm";
 import { AddProductForm } from "./AddProductForm";
+import { EditProductForm } from "./EditProductForm";
 
 const App = () => {
   return (
@@ -10,6 +11,7 @@ const App = () => {
       <SignInForm />
       <SignUpForm />
       <AddProductForm />
+      <EditProductForm />
     </div>
   );
 };
