@@ -11,17 +11,17 @@ import ProductPage from "./ProductPage";
 class MainInterface extends Component {
   render() {
     return (
-      <React.Fragment>
+      <div>
         <NavBar />
-        <main className="container">
+        <div>
           <Route path="/" exact component={Home}></Route>
           <Route path="/signIn" component={SignIn}></Route>
           <Route path="/signUp" component={SignUp}></Route>
           <Route path="/cartInterface" component={CartInterface}></Route>
           <Route path="/brandIntro" component={BrandIntro}></Route>
           <Route path="/productPage" component={ProductPage}></Route>
-        </main>
-      </React.Fragment>
+        </div>
+      </div>
     );
   }
 }

@@ -1,10 +1,9 @@
 import React, { Component } from "react";
-import { NavLink } from "react-router-dom";
 
 class NavBar extends Component {
   render() {
     return (
-      <nav className="navbar navbar-expand-lg navbar-light bg-light">
+      <nav className="navbar navbar-expand-lg navbar-light bg-light sticky-top">
         <a className="navbar-brand" href="#">
           KidIslands
         </a>
@@ -20,20 +19,28 @@ class NavBar extends Component {
           <span className="navbar-toggler-icon"></span>
         </button>
         <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
-          <div className="navbar-nav">
-            <NavLink className="nav-item nav-link " to="/">
-              Home
-            </NavLink>
-            <NavLink className="nav-item nav-link " to="/signUp">
-              sign up
-            </NavLink>
-            <NavLink className="nav-item nav-link " to="/signIn">
-              log in
-            </NavLink>
-            <NavLink className="nav-item nav-link " to="/cartInterface">
-              Cart
-            </NavLink>
-          </div>
+          <ul className="navbar-nav ml-auto">
+            <li className="nav-item active">
+              <a className="nav-link" href="/">
+                Home
+              </a>
+            </li>
+            <li>
+              <a className="nav-link" href="/signIn">
+                Sign in
+              </a>
+            </li>
+            <li>
+              <a className="nav-link" href="/signUp">
+                Sign up
+              </a>
+            </li>
+            <li>
+              <a className="nav-link" href="/cartInterface">
+                My cart
+              </a>
+            </li>
+          </ul>
         </div>
       </nav>
     );

@@ -1,0 +1,38 @@
+.navbar-nav li {
+  padding-right: 40px;
+}
+.navbar {
+  padding: 0.8rem;
+}
+
+.carousel-caption {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.carousel-caption h1 {
+  text-transform: uppercase;
+  text-shadow: 10px 10px 10px #000;
+}
+
+.carousel-caption h3 {
+  padding-bottom: 1rem;
+}
+
+.col-12 h1 {
+  margin-top: 1rem;
+}
+
+.my-4 {
+  border-top: 2px solid #b4b4b4;
+  width: 90%;
+}
+
+.container-fluid {
+  margin-top: 3rem;
+}
+
+.col-md-12 h2 {
+  margin-top: 4rem;
+}
