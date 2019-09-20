@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import ProductCategory from "./ProductCategory";
 
 class NavBar extends Component {
   render() {
@@ -23,6 +24,11 @@ class NavBar extends Component {
             <li className="nav-item active">
               <a className="nav-link" href="/">
                 Home
+              </a>
+            </li>
+            <li className="nav-item ">
+              <a className="nav-link" href="#">
+                Categories
               </a>
             </li>
             <li>
