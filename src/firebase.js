@@ -54,6 +54,7 @@ async function createNewUser(email, password) {
 //function to add product and image
 async function createProduct(product, imageFile) {
   try {
+    product = addKeywords(product);
     const docRefPromise = productsCollection.add(product);
     const imgUploadPromise = uploadImage(imageFile);
 
@@ -94,6 +95,10 @@ async function editProduct(id, product, imageFile) {
 
 //getProduct by ID
 async function getProduct(id) {
+  //new way to get using cloud functions
+  // const url = `https://us-central1-kids-islands.cloudfunctions.net/getProduct?id=${id}`;
+  // const product = await fetch(url);
+
   try {
     const docSnapShot = await productsCollection.doc(id).get();
     const product = docSnapShot.data();
@@ -105,12 +110,51 @@ async function getProduct(id) {
   }
 }
 
-// function to upload image
+async function searchProducts(name = "", category = "") {
+  try {
+    let query = productsCollection.where("keywords", "array-contains", name);
+    if (category) {
+      query = query.where("category", "==", category);
+    }
+
+    const querySnapshot = await query.get();
+    let docs = [];
+
+    if (querySnapshot.size > 0) {
+      querySnapshot.forEach(doc => docs.push({ id: doc.id, ...doc.data() }));
+    }
+    console.log(docs);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+function addKeywords(product) {
+  let nameKeywords = [];
+  let current = "";
+  product.name.split("").forEach(letter => {
+    current += letter;
+    nameKeywords.push(current);
+  });
+
+  let keywords = [product.name, product.brand, ...nameKeywords];
+  product = { keywords, ...product };
+}
+
 function uploadImage(file) {
+  // function to upload image
+
   return storage
     .ref()
     .child(file.name)
     .put(file);
 }
 
-export { signIn, createNewUser, createProduct, getProduct, editProduct };
+export {
+  signIn,
+  createNewUser,
+  createProduct,
+  getProduct,
+  editProduct,
+  searchProducts
+};

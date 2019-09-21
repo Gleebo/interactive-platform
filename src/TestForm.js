@@ -1,51 +1,53 @@
-import React, { useState } from "react";
-import Form from "react-bootstrap/Form";
-import Col from "react-bootstrap/Col";
-import Button from "react-bootstrap/Button";
+import React, { useEffect, useState } from "react";
+import { fromEvent } from "rxjs";
+import {
+  debounceTime,
+  map,
+  distinctUntilChanged,
+  switchMap,
+  filter,
+  tap
+} from "rxjs/operators";
 
-export function TestForm() {
-  const [validated, setValidated] = useState(false);
-  const handleSubmit = e => {
-    const form = e.currentTarget;
-    if (form.checkValidity()) {
-      e.preventDefault();
-      e.stopPropagation();
-    }
-    setValidated(true);
-  };
+export default function TestForm() {
+  const [results, setResults] = useState([]);
+
+  function fakeApi(v) {
+    const fakeProducts = new Promise(resolve => {
+      setTimeout(
+        () => resolve([v + "1", v + "2", v + "3", v + "4", v + "5"]),
+        5000
+      );
+    });
+    return fakeProducts;
+  }
+
+  const inputRef = React.createRef();
+
+  useEffect(() => {
+    const inputSource = fromEvent(inputRef.current, "keyup");
+    const input$ = inputSource
+      .pipe(
+        debounceTime(300),
+        map(e => e.target.value),
+        filter(value => value.length > 0),
+        distinctUntilChanged(),
+        tap(v => console.log("request sent for " + v)),
+        switchMap(fakeApi),
+        tap(results => setResults(results))
+      )
+      .subscribe(console.log);
+    return input$.unsubscribe;
+  }, []);
+
   return (
-    <Form noValidate validated={validated} onSubmit={handleSubmit}>
-      <Form.Row>
-        <Form.Group as={Col} controlId="TestFormEmail">
-          <Form.Label>Email</Form.Label>
-          <Form.Control
-            required
-            type="email"
-            placeholder="email"
-            name="email"
-          ></Form.Control>
-          <Form.Control.Feedback>All good</Form.Control.Feedback>
-          <Form.Control.Feedback type="invalid">
-            Input valid email
-          </Form.Control.Feedback>
-        </Form.Group>
-      </Form.Row>
-      <Form.Row>
-        <Form.Group as={Col} controlId="TestFormPassword">
-          <Form.Label>Password</Form.Label>
-          <Form.Control
-            required
-            type="password"
-            placeholder="password"
-            name="password"
-          ></Form.Control>
-          <Form.Control.Feedback>All good</Form.Control.Feedback>
-          <Form.Control.Feedback type="invalid">
-            Password must at least 6 characters long
-          </Form.Control.Feedback>
-        </Form.Group>
-      </Form.Row>
-      <Button type="submit">Submit</Button>
-    </Form>
+    <div>
+      <input type="search" ref={inputRef} />
+      <ul id="suggestions">
+        {results.map(result => (
+          <li key={result}>{result}</li>
+        ))}
+      </ul>
+    </div>
   );
 }
