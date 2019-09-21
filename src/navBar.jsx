@@ -6,7 +6,15 @@ class NavBar extends Component {
       <div>
         <nav className="navbar navbar-expand-lg navbar-light bg-light sticky-top">
           <a className="navbar-brand" href="/">
-            KidIslands
+            <img
+              src="Logo.jpg"
+              alt="..."
+              style={{
+                height: 40 + "px",
+                width: 150 + "px",
+                marginLeft: 35 + "px"
+              }}
+            ></img>
           </a>
           <button
             className="navbar-toggler"
