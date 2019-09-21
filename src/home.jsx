@@ -1,8 +1,5 @@
 import React from "react";
 import SearchBar from "./searchBar.jsx";
-import BrandList from "./brandList.jsx";
-import SubjectList from "./subjectList.jsx";
-import PropertyList from "./propertyList.jsx";
 import ProductList from "./productList.jsx";
 import Carousel from "./carousel.jsx";
 import Jumbotron from "./jumbotron.jsx";
@@ -18,6 +15,7 @@ const Home = () => {
     <div>
       <SearchBar />
       <Carousel />
+      <ProductList />
       <WelcomeSection />
       <ThreeCategory />
       <TwoColSection />

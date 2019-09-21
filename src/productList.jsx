@@ -88,9 +88,11 @@ class ProductList extends Component {
 
   render() {
     return (
-      <div className="row justify-content-center">
-        {this.state.products.map(product => OneProduct(product))}
-      </div>
+      <main className="container">
+        <div className="row justify-content-center">
+          {this.state.products.map(product => OneProduct(product))}
+        </div>
+      </main>
     );
   }
 }

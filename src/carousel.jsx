@@ -19,10 +19,7 @@ const Carousel = () => {
             <h1 className="display-2">ProductTitle</h1>
             <h3>Product Description</h3>
             <button type="button" className="btn btn-outline-light btn-lg">
-              button1
-            </button>
-            <button type="button" className="btn btn-primary btn-lg">
-              button2
+              Learn More
             </button>
           </div>
         </div>

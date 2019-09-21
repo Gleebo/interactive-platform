@@ -26,7 +26,7 @@
 
 .my-4 {
   border-top: 2px solid #b4b4b4;
-  width: 90%;
+  width: 60%;
 }
 
 .container-fluid {
@@ -35,4 +35,9 @@
 
 .col-md-12 h2 {
   margin-top: 4rem;
+}
+
+.oneP {
+  padding: 10px;
+  margin-top: 40px;
 }

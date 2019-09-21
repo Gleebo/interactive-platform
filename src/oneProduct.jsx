@@ -9,12 +9,12 @@ const OneProduct = product => {
         state: { name: product.name, id: product.id } //how to attach data using Link to jump to new page
       }}
     >
-      <div className="card" style={{ width: 12 + "rem" }}>
+      <div className="card oneP" style={{ width: 12 + "rem" }}>
         <img src={product.imageSrc} className="card-img-top" alt="..." />
         <div className="card-body">
           <h5>{product.name}</h5>
           <h5>{product.price}</h5>
-          <p className="card-text">{product.desciption}</p>
+          {/*<p className="card-text">{product.desciption}</p>*/}
         </div>
       </div>
     </Link>
