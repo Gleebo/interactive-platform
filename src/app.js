@@ -1,15 +1,9 @@
 import React from "react";
 import { render } from "react-dom";
-import { SignInForm } from "./SignInForm";
-import { SignUpForm } from "./SignUpForm";
+import TestForm from "./TestForm";
 
 const App = () => {
-  return (
-    <div>
-      <SignInForm />
-      <SignUpForm />
-    </div>
-  );
+  return <TestForm />;
 };
 
 render(<App />, document.getElementById("root"));
