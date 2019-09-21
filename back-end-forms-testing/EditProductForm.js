@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { getProduct, editProduct } from "./firebase";
+import { getProduct, editProduct } from "../src/firebase";
 
 export const EditProductForm = () => {
   const id = "6Q0JqK7OWJR6TfTpg3kj";
