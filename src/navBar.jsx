@@ -4,17 +4,9 @@ class NavBar extends Component {
   render() {
     return (
       <div>
-        <nav className="navbar navbar-expand-lg navbar-light bg-light sticky-top">
+        <nav className="navbar navbar-expand-lg navbar-light bg-light">
           <a className="navbar-brand" href="/">
-            <img
-              src="Logo.jpg"
-              alt="..."
-              style={{
-                height: 40 + "px",
-                width: 150 + "px",
-                marginLeft: 35 + "px"
-              }}
-            ></img>
+            <span>KidIslands</span>
           </a>
           <button
             className="navbar-toggler"
@@ -70,6 +62,14 @@ class NavBar extends Component {
               <div className="card card-body">
                 <div className="text-center">
                   <h5>Brands</h5>
+                  <a href="#">Nike</a> <br></br>
+                  <a href="#">Li Ning</a>
+                  <br></br>
+                  <a href="#">Adidas</a>
+                  <br></br>
+                  <a href="#">Anta</a>
+                  <br></br>
+                  <a href="#">Air Jordan</a>
                 </div>
               </div>
             </div>
@@ -79,6 +79,13 @@ class NavBar extends Component {
               <div className="card card-body">
                 <div className="text-center">
                   <h5>Subjects</h5>
+                  <a href="#">English</a>
+                  <br></br>
+                  <a href="#">Chinese</a>
+                  <br></br>
+                  <a href="#">Music</a>
+                  <br></br>
+                  <a href="#">History</a>
                 </div>
               </div>
             </div>
@@ -88,6 +95,11 @@ class NavBar extends Component {
               <div className="card card-body">
                 <div className="text-center">
                   <h5>Properties</h5>
+                  <a href="#">Books</a>
+                  <br></br>
+                  <a href="#">Toys</a>
+                  <br></br>
+                  <a href="#">Toola</a>
                 </div>
               </div>
             </div>

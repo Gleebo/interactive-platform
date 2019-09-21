@@ -19,8 +19,8 @@ const Home = () => {
       <WelcomeSection />
       <ThreeCategory />
       <TwoColSection />
-      <MeetTheTeamTitle />
-      <MeetTheTeamCard />
+      {/*<MeetTheTeamTitle />
+      <MeetTheTeamCard />  */}
       <Footer />
     </div>
   );
