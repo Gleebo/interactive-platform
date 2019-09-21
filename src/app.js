@@ -1,8 +1,9 @@
 import React from "react";
 import { render } from "react-dom";
+import TestForm from "../back-end-forms-testing/TestForm";
 
 const App = () => {
-  return <h1>KIDS ISLANDS</h1>;
+  return <TestForm />;
 };
 
 render(<App />, document.getElementById("root"));
