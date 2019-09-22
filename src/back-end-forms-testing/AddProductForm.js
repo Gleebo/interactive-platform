@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { createProduct } from "../src/firebase";
+import { createProduct } from "../firebase";
 
 export const AddProductForm = () => {
   const [product, setProduct] = useState({
