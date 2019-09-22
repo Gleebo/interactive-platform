@@ -38,7 +38,7 @@ export default function TestForm() {
       )
       .subscribe(console.log);
     return input$.unsubscribe;
-  }, []);
+  }, [inputRef]);
 
   return (
     <div>
