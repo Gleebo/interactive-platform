@@ -25,3 +25,15 @@ exports.getProduct = functions.https.onRequest(async (request, response) => {
   delete product.keywords;
   response.json(product);
 });
+
+exports.searchSuggestions = functions.https.onRequest(
+  async (request, response) => {
+    const keyword = request.query.keyword;
+    let query = productsCollection.where("keywords", "array-contains", keyword);
+    const snapshot = await query.get();
+    const suggestions = snapshot.empty
+      ? "Nothing found..."
+      : snapshot.docs.map(doc => doc.data().name);
+    response.json(suggestions);
+  }
+);

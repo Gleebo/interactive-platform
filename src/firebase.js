@@ -22,6 +22,14 @@ const auth = firebase.auth();
 
 const productsCollection = db.collection("products");
 
+auth.onAuthStateChanged(user => {
+  if (user) {
+    //user is signed in
+  } else {
+    //user is not signed in
+  }
+});
+
 //function for signing users in
 async function signIn(email, password) {
   try {
@@ -36,6 +44,7 @@ async function signIn(email, password) {
     console.error(errorCode, errorMessage);
   }
 }
+
 //function to register new user using email and password
 async function createNewUser(email, password) {
   try {
@@ -95,10 +104,6 @@ async function editProduct(id, product, imageFile) {
 
 //getProduct by ID
 async function getProduct(id) {
-  //new way to get using cloud functions
-  // const url = `https://us-central1-kids-islands.cloudfunctions.net/getProduct?id=${id}`;
-  // const product = await fetch(url);
-
   try {
     const docSnapShot = await productsCollection.doc(id).get();
     const product = docSnapShot.data();
@@ -109,21 +114,22 @@ async function getProduct(id) {
     console.error(errorCode, errorMessage);
   }
 }
-
-async function searchProducts(name = "", category = "") {
+//function to get search results 10 at a time, put lastrpoduct id in the search results to get next 10
+async function searchProducts(name = "", category = "", lastProductID = null) {
   try {
     let query = productsCollection.where("keywords", "array-contains", name);
     if (category) {
       query = query.where("category", "==", category);
     }
-
-    const querySnapshot = await query.get();
-    let docs = [];
-
-    if (querySnapshot.size > 0) {
-      querySnapshot.forEach(doc => docs.push({ id: doc.id, ...doc.data() }));
+    if (lastProductID) {
+      let lastProdRef = productsCollection.doc(lastProductID);
+      query.startAfter(lastProdRef);
     }
-    console.log(docs);
+    const querySnapshot = await query.limit(10).get();
+    const products = querySnapshot.empty
+      ? []
+      : querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+    console.log(products);
   } catch (error) {
     console.error(error);
   }
