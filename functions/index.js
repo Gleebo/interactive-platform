@@ -14,6 +14,7 @@ exports.getProductsList = functions.https.onRequest(
       delete productData.keywords;
       return { id, ...productData };
     });
+    response.header("Access-Control-Allow-Origin", "*");
     response.json(products);
   }
 );
@@ -23,6 +24,7 @@ exports.getProduct = functions.https.onRequest(async (request, response) => {
   const querySnapshot = await productsCollection.doc(productID).get();
   const product = querySnapshot.data();
   delete product.keywords;
+  response.header("Access-Control-Allow-Origin", "*");
   response.json(product);
 });
 
