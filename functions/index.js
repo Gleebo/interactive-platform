@@ -30,10 +30,11 @@ exports.searchSuggestions = functions.https.onRequest(
   async (request, response) => {
     const keyword = request.query.keyword;
     let query = productsCollection.where("keywords", "array-contains", keyword);
-    const snapshot = await query.get();
+    const snapshot = await query.limit(10).get();
     const suggestions = snapshot.empty
-      ? "Nothing found..."
+      ? ["Nothing found..."]
       : snapshot.docs.map(doc => doc.data().name);
+    response.header("Access-Control-Allow-Origin", "*");
     response.json(suggestions);
   }
 );

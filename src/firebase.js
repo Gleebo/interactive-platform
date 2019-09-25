@@ -63,7 +63,6 @@ async function createNewUser(email, password) {
 //function to add product and image
 async function createProduct(product, imageFile) {
   try {
-    product = addKeywords(product);
     const docRefPromise = productsCollection.add(product);
     const imgUploadPromise = uploadImage(imageFile);
 
@@ -135,16 +134,63 @@ async function searchProducts(name = "", category = "", lastProductID = null) {
   }
 }
 
-function addKeywords(product) {
-  let nameKeywords = [];
-  let current = "";
-  product.name.split("").forEach(letter => {
-    current += letter;
-    nameKeywords.push(current);
+async function addKeywords() {
+  const querySnapshot = await productsCollection.get();
+  querySnapshot.forEach(async doc => {
+    let name = doc.data().name;
+    let keywords = generateKeywords(name);
+    await doc.ref.update({ keywords });
   });
+}
 
-  let keywords = [product.name, product.brand, ...nameKeywords];
-  product = { keywords, ...product };
+const lazyLoad = (() => {
+  let lastDoc;
+  let count = 0;
+  return async () => {
+    let products = [];
+    if (count === 0) {
+      const first = await productsCollection.limit(10).get();
+      products = first.docs.map(doc => doc.data().name);
+      lastDoc = first.docs[first.docs.length - 1];
+      count++;
+      return products;
+    }
+    if (lastDoc) {
+      const next = await productsCollection
+        .startAfter(lastDoc)
+        .limit(10)
+        .get();
+      products = next.docs.map(doc => doc.data().name);
+      lastDoc = next.docs[next.docs.length - 1];
+      count++;
+      return products;
+    }
+    return null;
+  };
+})();
+
+function generateKeywords(name = "sample name") {
+  name = name.toLowerCase().replace(/[^a-zA-Z ]/g, "");
+  let keywords = helper(name);
+  let words = name.split(" ");
+  if (words.length > 1) {
+    words.forEach((word, i, words) => {
+      name = name.slice(words[i].length + 1);
+      keywords = [...keywords, ...helper(name)];
+    });
+  }
+  return keywords;
+
+  function helper(name) {
+    let letters = name.split("");
+    let keywords = [];
+    let current = "";
+    letters.forEach(letter => {
+      current += letter;
+      keywords.push(current);
+    });
+    return keywords;
+  }
 }
 
 function uploadImage(file) {
@@ -162,5 +208,6 @@ export {
   createProduct,
   getProduct,
   editProduct,
-  searchProducts
+  searchProducts,
+  lazyLoad
 };
