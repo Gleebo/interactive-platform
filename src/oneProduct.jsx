@@ -10,10 +10,15 @@ const OneProduct = product => {
       }}
     >
       <div className="card oneP" style={{ width: 12 + "rem" }}>
-        <img src={product.imgUrl} className="card-img-top" alt="..." />
+        <img
+          src={product.imgUrl}
+          className="card-img-top"
+          alt="..."
+          style={{ width: 172, height: 172 }}
+        />
         <div className="card-body">
           <h5>{product.name}</h5>
-          <h5>{product.price}</h5>
+          <h5>AU$: {product.price}</h5>
           {/*<p className="card-text">{product.desciption}</p>*/}
         </div>
       </div>

@@ -108,3 +108,9 @@
   font-size: 30;
   font-weight: bolder;
 }
+
+.viewAllText {
+  float: right;
+  margin-right: 90;
+  margin-top: 20;
+}
