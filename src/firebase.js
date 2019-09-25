@@ -101,6 +101,21 @@ async function editProduct(id, product, imageFile) {
   }
 }
 
+async function getProducts(limit = 0) {
+  const querySnapshotPromise =
+    limit > 0
+      ? productsCollection.limit(limit).get()
+      : productsCollection.get();
+  const querySnapshot = await querySnapshotPromise;
+  const products = querySnapshot.docs.map(doc => {
+    let id = doc.id;
+    let productData = doc.data();
+    delete productData.keywords;
+    return { id, ...productData };
+  });
+  return products;
+}
+
 //getProduct by ID
 async function getProduct(id) {
   try {
@@ -111,26 +126,6 @@ async function getProduct(id) {
     const errorCode = error.code;
     const errorMessage = error.message;
     console.error(errorCode, errorMessage);
-  }
-}
-//function to get search results 10 at a time, put lastrpoduct id in the search results to get next 10
-async function searchProducts(name = "", category = "", lastProductID = null) {
-  try {
-    let query = productsCollection.where("keywords", "array-contains", name);
-    if (category) {
-      query = query.where("category", "==", category);
-    }
-    if (lastProductID) {
-      let lastProdRef = productsCollection.doc(lastProductID);
-      query.startAfter(lastProdRef);
-    }
-    const querySnapshot = await query.limit(10).get();
-    const products = querySnapshot.empty
-      ? []
-      : querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-    console.log(products);
-  } catch (error) {
-    console.error(error);
   }
 }
 
@@ -208,6 +203,5 @@ export {
   createProduct,
   getProduct,
   editProduct,
-  searchProducts,
   lazyLoad
 };
