@@ -85,3 +85,26 @@
   font-size: 20px;
   margin-top: 40px;
 }
+
+.cartSingle {
+  margin-top: 10p;
+}
+
+.cartSingle hr {
+  border-top: 1px solid rgb(114, 126, 139);
+  width: 100%;
+}
+
+.cartActionSection {
+  background: #e0dada;
+  width: 300;
+  margin-top: 30;
+  margin-bottom: 30;
+  float: right;
+  margin-right: 100;
+}
+
+.cartActionSection span {
+  font-size: 30;
+  font-weight: bolder;
+}

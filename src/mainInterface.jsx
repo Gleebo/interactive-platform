@@ -7,6 +7,7 @@ import Home from "./home.jsx";
 import CartInterface from "./cartInterface.jsx";
 import BrandIntro from "./brandIntro.jsx";
 import ProductPage from "./ProductPage";
+import NotFound from "./notFound.jsx";
 
 class MainInterface extends Component {
   render() {
@@ -20,6 +21,7 @@ class MainInterface extends Component {
           <Route path="/cartInterface" component={CartInterface}></Route>
           <Route path="/brandIntro" component={BrandIntro}></Route>
           <Route path="/productPage" component={ProductPage}></Route>
+          <Route path="/notFound" component={NotFound}></Route>
         </div>
       </div>
     );

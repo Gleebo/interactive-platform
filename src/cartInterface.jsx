@@ -4,10 +4,10 @@ import CartAssemble from "./cartAssemble.jsx";
 class CartInterface extends Component {
   state = {
     counters: [
-      { id: 1, value: 0, name: "P1_name" },
-      { id: 2, value: 0, name: "P2_name" },
-      { id: 3, value: 0, name: "P3_name" },
-      { id: 4, value: 0, name: "p4_name" }
+      { id: 1, value: 0, name: "P1_name", price: 30 },
+      { id: 2, value: 0, name: "P2_name", price: 20 },
+      { id: 3, value: 0, name: "P3_name", price: 10 },
+      { id: 4, value: 0, name: "p4_name", price: 5 }
     ]
   };
 
