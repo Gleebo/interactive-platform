@@ -18,7 +18,7 @@ export default function TestForm() {
   let key = 0; //key for list of results
 
   async function getSearchSuggestions(keyword) {
-    const url = `https://us-central1-kids-islands.cloudfunctions.net/searchSuggestions?keyword=${keyword}`;
+    const url = `https://us-central1-kids-islands.cloudfunctions.net/searchAhead?keyword=${keyword}`;
     const response = await fetch(url);
     const suggestions = await response.json();
     return suggestions;
@@ -30,6 +30,7 @@ export default function TestForm() {
       .pipe(
         map(e => e.target.value),
         tap(setInput),
+        map(v => v.toLowerCase()),
         debounceTime(500),
         filter(value => value.length > 1),
         distinctUntilChanged(),

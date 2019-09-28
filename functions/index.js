@@ -26,6 +26,31 @@ exports.getProducts = functions.https.onRequest(async (request, response) => {
   response.json(products);
 });
 
+exports.searchProducts = functions.https.onRequest(
+  async (request, response) => {
+    const id = request.query.id;
+    const category = request.query.category;
+    const keyword = request.query.keyword;
+    var query = productsCollection.where("keywords", "array-contains", keyword);
+    if (category !== "all") {
+      query = query.where("category", "==", category);
+    }
+    if (id !== "none") {
+      query = query.startAfter(await productsCollection.doc(id).get());
+    }
+    query = query.limit(10);
+    const querySnapshot = await query.get();
+    const result = querySnapshot.docs.map(doc => {
+      let id = doc.id;
+      let productData = doc.data();
+      delete productData.keywords;
+      return { id, ...productData };
+    });
+    response.header("Access-Control-Allow-Origin", "*");
+    response.json(result);
+  }
+);
+
 exports.getProductById = functions.https.onRequest(
   async (request, response) => {
     const productID = request.query.id;
