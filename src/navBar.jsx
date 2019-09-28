@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Link } from "react-router-dom";
 
 class NavBar extends Component {
   render() {
@@ -62,7 +63,7 @@ class NavBar extends Component {
               <div className="card card-body">
                 <div className="text-center">
                   <h5>Brands</h5>
-                  <a href="#">Nike</a> <br></br>
+                  <a href="/brandIntro">Nike</a> <br></br>
                   <a href="#">Li Ning</a>
                   <br></br>
                   <a href="#">Adidas</a>
