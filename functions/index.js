@@ -4,6 +4,7 @@ const admin = require("firebase-admin");
 admin.initializeApp();
 const db = admin.firestore();
 const productsCollection = db.collection("products");
+const auth = admin.auth();
 
 exports.getProducts = functions.https.onRequest(async (request, response) => {
   const id = request.query.id;
@@ -71,4 +72,15 @@ exports.searchAhead = functions.https.onRequest(async (request, response) => {
     : snapshot.docs.map(doc => doc.data().name);
   response.header("Access-Control-Allow-Origin", "*");
   response.json(suggestions);
+});
+
+exports.updateUser = functions.https.onCall(async (data, context) => {
+  try {
+    const user = data.user;
+    const uid = context.auth.uid;
+    const userRecord = await auth.updateUser(uid, user);
+    return { userRecord };
+  } catch (error) {
+    return error;
+  }
 });

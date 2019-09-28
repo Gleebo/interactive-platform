@@ -2,6 +2,7 @@ import firebase from "firebase/app";
 import "firebase/auth";
 import "firebase/firestore";
 import "firebase/storage";
+import "firebase/functions";
 
 //configuration object
 var firebaseConfig = {
@@ -19,8 +20,10 @@ firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
 const storage = firebase.storage();
 const auth = firebase.auth();
+const functions = firebase.functions();
 
 const productsCollection = db.collection("products");
+const ordersCollection = db.collection("orders");
 
 auth.onAuthStateChanged(user => {
   if (user) {
@@ -60,6 +63,18 @@ async function createNewUser(email, password) {
   }
 }
 
+//function to updateUser
+async function updateUser(user) {
+  try {
+    const updateUser = functions.httpsCallable("updateUser");
+    const result = await updateUser(user);
+    return result;
+  } catch (error) {
+    const errorCode = error.code;
+    const errorMessage = error.message;
+    console.error(errorCode, errorMessage);
+  }
+}
 //function to add product and image
 async function createProduct(product, imageFile) {
   try {
@@ -122,6 +137,40 @@ async function getProduct(id) {
     const docSnapShot = await productsCollection.doc(id).get();
     const product = docSnapShot.data();
     return product;
+  } catch (error) {
+    const errorCode = error.code;
+    const errorMessage = error.message;
+    console.error(errorCode, errorMessage);
+  }
+}
+//function to add order, include userId, productId,address,time,status
+async function createOrder(order) {
+  try {
+    const result = await ordersCollection.add(order);
+    console.log(result);
+  } catch (error) {
+    const errorCode = error.code;
+    const errorMessage = error.message;
+    console.error(errorCode, errorMessage);
+  }
+}
+//function to get orders by userId
+async function getOrdersByUser(uid) {
+  try {
+    const docSnapShot = await ordersCollection.where("userId", "==", uid).get();
+    const orders = docSnapShot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+    return orders;
+  } catch (error) {
+    const errorCode = error.code;
+    const errorMessage = error.message;
+    console.error(errorCode, errorMessage);
+  }
+}
+//function to cancel order
+async function cancelOrder(id) {
+  try {
+    const docRef = ordersCollection.doc(id);
+    await docRef.update({ status: "cancelled" });
   } catch (error) {
     const errorCode = error.code;
     const errorMessage = error.message;
@@ -203,5 +252,9 @@ export {
   createProduct,
   getProduct,
   editProduct,
-  lazyLoad
+  lazyLoad,
+  updateUser,
+  createOrder,
+  getOrdersByUser,
+  cancelOrder
 };
