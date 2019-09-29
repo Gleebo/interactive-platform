@@ -5,8 +5,8 @@ const OneProduct = product => {
   return (
     <Link
       to={{
-        pathname: "/productPage",
-        state: { name: product.name, id: product.id } //how to attach data using Link to jump to new page
+        pathname: "/productDetailPage",
+        state: { product } //how to attach data using Link to jump to new page
       }}
     >
       <div className="card oneP" style={{ width: 12 + "rem" }}>

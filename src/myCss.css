@@ -114,3 +114,8 @@
   margin-right: 90;
   margin-top: 20;
 }
+
+.p-d-p hr {
+  margin-left: 0;
+  width: 60%;
+}
