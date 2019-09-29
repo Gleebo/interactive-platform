@@ -1,46 +1,46 @@
-import React, { Component } from "react";
+import React from "react";
 
 const SignIn = () => {
   return (
-    <div class="row justify-content-center align-items-center ">
-      <div class="row">
-        <div class="span12">
-          <form class="form-horizontal" action="" method="POST">
+    <div className="row justify-content-center align-items-center ">
+      <div className="row">
+        <div className="span12">
+          <form className="form-horizontal" action="" method="POST">
             <fieldset>
               <div id="legend">
-                <legend class="">Log In</legend>
+                <legend className="">Log In</legend>
               </div>
-              <div class="control-group">
-                <label class="control-label" for="username">
+              <div className="control-group">
+                <label className="control-label" for="username">
                   Account
                 </label>
-                <div class="controls">
+                <div className="controls">
                   <input
                     type="text"
                     id="username"
                     name="username"
                     placeholder="Email or School Name"
-                    class="input-xlarge"
+                    className="input-xlarge"
                   />
                 </div>
               </div>
-              <div class="control-group">
-                <label class="control-label" for="password">
+              <div className="control-group">
+                <label className="control-label" for="password">
                   Password
                 </label>
-                <div class="controls">
+                <div className="controls">
                   <input
                     type="password"
                     id="password"
                     name="password"
                     placeholder=""
-                    class="input-xlarge"
+                    className="input-xlarge"
                   />
                 </div>
               </div>
-              <div class="control-group">
-                <div class="controls">
-                  <button class="btn btn-success m-2">Log In</button>
+              <div className="control-group">
+                <div className="controls">
+                  <button className="btn btn-success m-2">Log In</button>
                 </div>
               </div>
             </fieldset>

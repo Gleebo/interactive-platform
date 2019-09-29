@@ -1,6 +1,6 @@
 import React from "react";
 
-const BrandIntro = () => {
+const BrandIntro = brand => {
   return (
     <div className="card mb-3" style={{ marginTop: 45 }}>
       <div className="row no-gutters">
@@ -12,16 +12,19 @@ const BrandIntro = () => {
             style={{ width: 500, height: 400 }}
           />
         </div>
-        <div className="col-md-6">
+        <div className="col-md-6 align-self-center">
           <div className="card-body">
-            <h5 className="card-title">Title</h5>
+            <h5 className="card-title">Name: {brand.location.state.name}</h5>
+            {/*how to retrieve data from Link "to" data*/}
+            <h5 className="card-title">Countery: America</h5>
+            <h5 className="card-title">Year of establishment: 1985</h5>
             <p className="card-text">
-              This is a wider card with supporting text below as a natural
-              lead-in to additional content. This content is a little bit
-              longer.
+              Introduction: This is a wider card with supporting text below as a
+              natural lead-in to additional content. This content is a little
+              bit longer.
             </p>
             <p className="card-text">
-              <small className="text-muted">Last updated 3 mins ago</small>
+              <small className="text-muted">Google us to lean more</small>
             </p>
           </div>
         </div>

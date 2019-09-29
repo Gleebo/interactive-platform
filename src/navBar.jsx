@@ -1,7 +1,27 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
+
+import OneNavLink from "./oneNavLink.jsx";
 
 class NavBar extends Component {
+  state = {
+    brands: [
+      { id: 1, name: "Nike" },
+      {
+        id: 2,
+        name: "Li Ning"
+      },
+      {
+        id: 3,
+        name: "Anta"
+      },
+      {
+        id: 4,
+        name: "UA"
+      }
+    ],
+    subjects: [],
+    properties: []
+  };
   render() {
     return (
       <div>
@@ -63,14 +83,7 @@ class NavBar extends Component {
               <div className="card card-body">
                 <div className="text-center">
                   <h5>Brands</h5>
-                  <a href="/brandIntro">Nike</a> <br></br>
-                  <a href="#">Li Ning</a>
-                  <br></br>
-                  <a href="#">Adidas</a>
-                  <br></br>
-                  <a href="#">Anta</a>
-                  <br></br>
-                  <a href="#">Air Jordan</a>
+                  {this.state.brands.map(brand => OneNavLink(brand))}
                 </div>
               </div>
             </div>
