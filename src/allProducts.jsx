@@ -1,11 +1,13 @@
 import React, { Component } from "react";
 import OneProduct from "./oneProduct.jsx";
 import SearchBar from "./searchBar.jsx";
+import Pagination from "./pagination.jsx";
 import { getAllProducts } from "./firebase";
 
 class AllProducts extends Component {
   state = {
-    products: []
+    products: [],
+    thePageSize: 10
   };
 
   async componentDidMount() {
@@ -14,6 +16,8 @@ class AllProducts extends Component {
     this.setState({ products: result });
   }
 
+  handlePageChange = page => {};
+
   render() {
     return (
       <div className="text-center">
@@ -21,6 +25,11 @@ class AllProducts extends Component {
         <div className="row justify-content-center">
           {this.state.products.map(product => OneProduct(product))}
         </div>
+        <Pagination
+          productsCount={this.state.products.length}
+          pageSize={this.state.thePageSize}
+          onPageChange={this.handlePageChange}
+        />
       </div>
     );
   }
