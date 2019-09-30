@@ -39,7 +39,7 @@ class ProductDetailPage extends Component {
           <hr></hr>
           <h4>
             <span className="badge badge-primary">
-              AU$ {this.props.location.state.product.price}
+              {this.props.location.state.product.category}
             </span>
           </h4>
           <div style={{ width: 350 }}>
@@ -50,9 +50,7 @@ class ProductDetailPage extends Component {
 
             <h5>
               {" "}
-              <span>
-                Categoty: {this.props.location.state.product.category}
-              </span>
+              <span>AU${this.props.location.state.product.price}</span>
             </h5>
 
             <span>{this.props.location.state.product.description}</span>
