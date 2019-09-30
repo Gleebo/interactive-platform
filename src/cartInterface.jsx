@@ -13,7 +13,7 @@ class CartInterface extends Component {
 
   handleDelete = product_id => {
     const counters = this.state.counters.filter(c => c.id !== product_id);
-    this.setState({ counters: counters }); // key : value
+    this.setState({ counters: counters }); // old array : new array
   };
 
   handleIncrement = counter => {
