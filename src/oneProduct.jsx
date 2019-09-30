@@ -9,7 +9,10 @@ const OneProduct = product => {
         state: { product } //how to attach data using Link to jump to new page
       }}
     >
-      <div className="card oneP" style={{ width: 12 + "rem" }}>
+      <div
+        className="card oneP"
+        style={{ width: 12 + "rem", height: 36 + "rem" }}
+      >
         <img
           src={product.imgUrl}
           className="card-img-top"
