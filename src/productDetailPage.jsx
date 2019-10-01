@@ -51,7 +51,7 @@ class ProductDetailPage extends Component {
             <h5>
               {" "}
               <span>
-                category: {this.props.location.state.product.category}
+                Category: {this.props.location.state.product.category}
               </span>
             </h5>
 
