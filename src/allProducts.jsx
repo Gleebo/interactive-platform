@@ -8,7 +8,7 @@ import { paginate } from "./utils/paginate";
 class AllProducts extends Component {
   state = {
     products: [],
-    thePageSize: 12,
+    thePageSize: 18,
     currentPage: 1
   };
 
