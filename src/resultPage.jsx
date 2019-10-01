@@ -11,12 +11,14 @@ class ResultPage extends Component {
 
   async componentDidUpdate() {
     const keyword = this.props.location.state.keyword;
+
     const { data: resultProducts } = await axios.get(
       "https://us-central1-kids-islands.cloudfunctions.net/searchProducts?keyword=" +
         keyword +
         "&id=none&category=all"
     );
-    this.setState({ resultProducts });
+    if (this.state.resultProducts.length !== resultProducts.length)
+      this.setState({ resultProducts });
   }
 
   async componentDidMount() {
