@@ -11,7 +11,6 @@ class ResultPage extends Component {
 
   async componentDidUpdate() {
     const keyword = this.props.location.state.keyword;
-
     const { data: resultProducts } = await axios.get(
       "https://us-central1-kids-islands.cloudfunctions.net/searchProducts?keyword=" +
         keyword +

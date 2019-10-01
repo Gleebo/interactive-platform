@@ -68,7 +68,8 @@
   text-align: left;
 }
 
-.navbar-brand span {
+.navbar-brand span,
+.signInLogo {
   margin-left: 35px;
   font-family: Comic Sans MS;
   color: rgba(17, 190, 190, 0.932);
