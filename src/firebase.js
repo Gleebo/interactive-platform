@@ -116,33 +116,6 @@ async function editProduct(id, product, imageFile) {
   }
 }
 
-async function getProducts(limit = 0) {
-  const querySnapshotPromise =
-    limit > 0
-      ? productsCollection.limit(limit).get()
-      : productsCollection.get();
-  const querySnapshot = await querySnapshotPromise;
-  const products = querySnapshot.docs.map(doc => {
-    let id = doc.id;
-    let productData = doc.data();
-    delete productData.keywords;
-    return { id, ...productData };
-  });
-  return products;
-}
-
-//getProduct by ID
-async function getProduct(id) {
-  try {
-    const docSnapShot = await productsCollection.doc(id).get();
-    const product = docSnapShot.data();
-    return product;
-  } catch (error) {
-    const errorCode = error.code;
-    const errorMessage = error.message;
-    console.error(errorCode, errorMessage);
-  }
-}
 //function to add order, include userId, productId,address,time,status
 async function createOrder(order) {
   try {
@@ -154,6 +127,7 @@ async function createOrder(order) {
     console.error(errorCode, errorMessage);
   }
 }
+
 //function to get orders by userId
 async function getOrdersByUser(uid) {
   try {
@@ -186,32 +160,6 @@ async function addKeywords() {
     await doc.ref.update({ keywords });
   });
 }
-
-const lazyLoad = (() => {
-  let lastDoc;
-  let count = 0;
-  return async () => {
-    let products = [];
-    if (count === 0) {
-      const first = await productsCollection.limit(10).get();
-      products = first.docs.map(doc => doc.data().name);
-      lastDoc = first.docs[first.docs.length - 1];
-      count++;
-      return products;
-    }
-    if (lastDoc) {
-      const next = await productsCollection
-        .startAfter(lastDoc)
-        .limit(10)
-        .get();
-      products = next.docs.map(doc => doc.data().name);
-      lastDoc = next.docs[next.docs.length - 1];
-      count++;
-      return products;
-    }
-    return null;
-  };
-})();
 
 function generateKeywords(name = "sample name") {
   name = name.toLowerCase().replace(/[^a-zA-Z ]/g, "");
@@ -250,7 +198,6 @@ export {
   signIn,
   createNewUser,
   createProduct,
-  getProduct,
   editProduct,
   lazyLoad,
   updateUser,
