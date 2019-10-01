@@ -11,19 +11,30 @@ const OneProduct = product => {
     >
       <div
         className="card oneP"
-        style={{ width: 12 + "rem", height: 36 + "rem" }}
+        style={{ width: 12 + "rem", height: 24 + "rem" }}
       >
         <img
           src={product.imgUrl}
           className="card-img-top"
           alt="..."
-          style={{ width: 172, height: 172 }}
+          style={{ width: 100 + "%", height: 172 }}
         />
-        <div className="card-body">
+        <div
+          className="card-body"
+          style={{
+            width: 100 + "%",
+            overflow: "hidden",
+            textOverflow: "ellipsis",
+            display: "-webkit-box",
+            webkitLineClamp: "5",
+            webkitBoxOrient: "vertical"
+          }}
+        >
           <h5>{product.name}</h5>
-          <h5>AU$: {product.price}</h5>
+
           {/*<p className="card-text">{product.desciption}</p>*/}
         </div>
+        <h5 className="card-body">AU$: {product.price}</h5>
       </div>
     </Link>
   );
