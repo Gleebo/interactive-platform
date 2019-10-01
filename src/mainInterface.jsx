@@ -5,11 +5,11 @@ import SignIn from "./signIn.jsx";
 import SignUp from "./signUp.jsx";
 import Home from "./home.jsx";
 import CartInterface from "./cartInterface.jsx";
-
 import NotFound from "./notFound.jsx";
 import AllProducts from "./allProducts.jsx";
 import BrandIntro from "./brandIntro.jsx";
 import ProductDetailPage from "./productDetailPage.jsx";
+import ResultPage from "./resultPage.jsx";
 
 class MainInterface extends Component {
   render() {
@@ -28,6 +28,7 @@ class MainInterface extends Component {
           ></Route>
           <Route path="/notFound" component={NotFound}></Route>
           <Route path="/allProducts" component={AllProducts}></Route>
+          <Route path="/resultPage" component={ResultPage}></Route>
         </div>
       </div>
     );
