@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 //import RxTestingForm from "../back-end-forms-testing/rxtesting";
 import TestForm from "../back-end-forms-testing/TestForm";
-import LazyLoad from "../back-end-forms-testing/lazyloadTest";
 import { createOrder, getOrdersByUser, cancelOrder } from "../firebase";
 
 export default function App() {

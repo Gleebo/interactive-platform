@@ -74,6 +74,7 @@ exports.searchAhead = functions.https.onRequest(async (request, response) => {
   response.json(suggestions);
 });
 
+//data can include email and password
 exports.updateUser = functions.https.onCall(async (data, context) => {
   try {
     const user = data.user;

@@ -116,7 +116,7 @@ async function editProduct(id, product, imageFile) {
   }
 }
 
-//function to add order, include userId, productId,address,time,status
+//function to add order, include userId, list of productIds, address, time, status
 async function createOrder(order) {
   try {
     const result = await ordersCollection.add(order);
@@ -152,6 +152,26 @@ async function cancelOrder(id) {
   }
 }
 
+function uploadImage(file) {
+  // function to upload image
+
+  return storage
+    .ref()
+    .child(file.name)
+    .put(file);
+}
+
+export {
+  signIn,
+  createNewUser,
+  createProduct,
+  editProduct,
+  updateUser,
+  createOrder,
+  getOrdersByUser,
+  cancelOrder
+};
+
 async function addKeywords() {
   const querySnapshot = await productsCollection.get();
   querySnapshot.forEach(async doc => {
@@ -184,24 +204,3 @@ function generateKeywords(name = "sample name") {
     return keywords;
   }
 }
-
-function uploadImage(file) {
-  // function to upload image
-
-  return storage
-    .ref()
-    .child(file.name)
-    .put(file);
-}
-
-export {
-  signIn,
-  createNewUser,
-  createProduct,
-  editProduct,
-  lazyLoad,
-  updateUser,
-  createOrder,
-  getOrdersByUser,
-  cancelOrder
-};
