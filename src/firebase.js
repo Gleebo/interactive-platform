@@ -117,7 +117,7 @@ async function editProduct(id, product, imageFile) {
   }
 }
 
-//function to add order, include userId, productId,address,time,status
+//function to add order, include userId, list of productIds, address, time, status
 async function createOrder(order) {
   try {
     const result = await ordersCollection.add(order);
