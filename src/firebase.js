@@ -24,6 +24,7 @@ const functions = firebase.functions();
 
 const productsCollection = db.collection("products");
 const ordersCollection = db.collection("orders");
+const supportRequestsCollection = db.collection("supportRequests");
 
 auth.onAuthStateChanged(user => {
   if (user) {
@@ -193,15 +194,29 @@ function uploadImage(file) {
     .child(file.name)
     .put(file);
 }
-
+//function to CreateTicketForSupport
+async function createTicketForSupport(request) {
+  try {
+    const uid = auth.currentUser.uid;
+    const result = await supportRequestsCollection.add({
+      uid: uid,
+      ...request
+    });
+    console.log(result);
+  } catch (error) {
+    const errorCode = error.code;
+    const errorMessage = error.message;
+    console.error(errorCode, errorMessage);
+  }
+}
 export {
   signIn,
   createNewUser,
   createProduct,
   editProduct,
-  lazyLoad,
   updateUser,
   createOrder,
   getOrdersByUser,
-  cancelOrder
+  cancelOrder,
+  createTicketForSupport
 };
