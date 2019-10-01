@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { fromEvent } from "rxjs";
+import { Subject } from "rxjs";
 import {
   debounceTime,
   map,
@@ -9,43 +9,45 @@ import {
   tap
 } from "rxjs/operators";
 
+const input$ = new Subject();
+
 export default function TestForm() {
   const [results, setResults] = useState([]);
+  const [input, setInput] = useState("");
 
-  function fakeApi(v) {
-    const fakeProducts = new Promise(resolve => {
-      setTimeout(
-        () => resolve([v + "1", v + "2", v + "3", v + "4", v + "5"]),
-        5000
-      );
-    });
-    return fakeProducts;
+  let key = 0; //key for list of results
+
+  async function getSearchSuggestions(keyword) {
+    const url = `https://us-central1-kids-islands.cloudfunctions.net/searchAhead?keyword=${keyword}`;
+    const response = await fetch(url);
+    const suggestions = await response.json();
+    return suggestions;
   }
 
-  const inputRef = React.createRef();
-
   useEffect(() => {
-    const inputSource = fromEvent(inputRef.current, "keyup");
-    const input$ = inputSource
+    console.log("useEffect");
+    const input$$ = input$
       .pipe(
-        debounceTime(300),
         map(e => e.target.value),
-        filter(value => value.length > 0),
+        tap(setInput),
+        map(v => v.toLowerCase()),
+        debounceTime(500),
+        filter(value => value.length > 1),
         distinctUntilChanged(),
-        tap(v => console.log("request sent for " + v)),
-        switchMap(fakeApi),
-        tap(results => setResults(results))
+        switchMap(getSearchSuggestions),
+        tap(setResults)
       )
       .subscribe(console.log);
-    return input$.unsubscribe;
-  }, [inputRef]);
+
+    return () => input$$.unsubscribe();
+  }, []);
 
   return (
     <div>
-      <input type="search" ref={inputRef} />
+      <input type="search" value={input} onChange={e => input$.next(e)} />
       <ul id="suggestions">
         {results.map(result => (
-          <li key={result}>{result}</li>
+          <li key={key++}>{result}</li>
         ))}
       </ul>
     </div>

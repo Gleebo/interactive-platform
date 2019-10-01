@@ -2,6 +2,7 @@ import firebase from "firebase/app";
 import "firebase/auth";
 import "firebase/firestore";
 import "firebase/storage";
+import "firebase/functions";
 
 //configuration object
 var firebaseConfig = {
@@ -19,8 +20,19 @@ firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
 const storage = firebase.storage();
 const auth = firebase.auth();
+const functions = firebase.functions();
 
 const productsCollection = db.collection("products");
+const ordersCollection = db.collection("orders");
+const supportRequestsCollection = db.collection("supportRequests");
+
+auth.onAuthStateChanged(user => {
+  if (user) {
+    //user is signed in
+  } else {
+    //user is not signed in
+  }
+});
 
 //function for signing users in
 async function signIn(email, password) {
@@ -36,6 +48,7 @@ async function signIn(email, password) {
     console.error(errorCode, errorMessage);
   }
 }
+
 //function to register new user using email and password
 async function createNewUser(email, password) {
   try {
@@ -51,10 +64,21 @@ async function createNewUser(email, password) {
   }
 }
 
+//function to updateUser
+async function updateUser(user) {
+  try {
+    const updateUser = functions.httpsCallable("updateUser");
+    const result = await updateUser(user);
+    return result;
+  } catch (error) {
+    const errorCode = error.code;
+    const errorMessage = error.message;
+    console.error(errorCode, errorMessage);
+  }
+}
 //function to add product and image
 async function createProduct(product, imageFile) {
   try {
-    product = addKeywords(product);
     const docRefPromise = productsCollection.add(product);
     const imgUploadPromise = uploadImage(imageFile);
 
@@ -93,16 +117,11 @@ async function editProduct(id, product, imageFile) {
   }
 }
 
-//getProduct by ID
-async function getProduct(id) {
-  //new way to get using cloud functions
-  // const url = `https://us-central1-kids-islands.cloudfunctions.net/getProduct?id=${id}`;
-  // const product = await fetch(url);
-
+//function to add order, include userId, list of productIds, address, time, status
+async function createOrder(order) {
   try {
-    const docSnapShot = await productsCollection.doc(id).get();
-    const product = docSnapShot.data();
-    return product;
+    const result = await ordersCollection.add(order);
+    console.log(result);
   } catch (error) {
     const errorCode = error.code;
     const errorMessage = error.message;
@@ -110,35 +129,61 @@ async function getProduct(id) {
   }
 }
 
-async function searchProducts(name = "", category = "") {
+//function to get orders by userId
+async function getOrdersByUser(uid) {
   try {
-    let query = productsCollection.where("keywords", "array-contains", name);
-    if (category) {
-      query = query.where("category", "==", category);
-    }
-
-    const querySnapshot = await query.get();
-    let docs = [];
-
-    if (querySnapshot.size > 0) {
-      querySnapshot.forEach(doc => docs.push({ id: doc.id, ...doc.data() }));
-    }
-    console.log(docs);
+    const docSnapShot = await ordersCollection.where("userId", "==", uid).get();
+    const orders = docSnapShot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+    return orders;
   } catch (error) {
-    console.error(error);
+    const errorCode = error.code;
+    const errorMessage = error.message;
+    console.error(errorCode, errorMessage);
+  }
+}
+//function to cancel order
+async function cancelOrder(id) {
+  try {
+    const docRef = ordersCollection.doc(id);
+    await docRef.update({ status: "cancelled" });
+  } catch (error) {
+    const errorCode = error.code;
+    const errorMessage = error.message;
+    console.error(errorCode, errorMessage);
   }
 }
 
-function addKeywords(product) {
-  let nameKeywords = [];
-  let current = "";
-  product.name.split("").forEach(letter => {
-    current += letter;
-    nameKeywords.push(current);
+async function addKeywords() {
+  const querySnapshot = await productsCollection.get();
+  querySnapshot.forEach(async doc => {
+    let name = doc.data().name;
+    let keywords = generateKeywords(name);
+    await doc.ref.update({ keywords });
   });
+}
 
-  let keywords = [product.name, product.brand, ...nameKeywords];
-  product = { keywords, ...product };
+function generateKeywords(name = "sample name") {
+  name = name.toLowerCase().replace(/[^a-zA-Z ]/g, "");
+  let keywords = helper(name);
+  let words = name.split(" ");
+  if (words.length > 1) {
+    words.forEach((word, i, words) => {
+      name = name.slice(words[i].length + 1);
+      keywords = [...keywords, ...helper(name)];
+    });
+  }
+  return keywords;
+
+  function helper(name) {
+    let letters = name.split("");
+    let keywords = [];
+    let current = "";
+    letters.forEach(letter => {
+      current += letter;
+      keywords.push(current);
+    });
+    return keywords;
+  }
 }
 
 function uploadImage(file) {
@@ -149,12 +194,29 @@ function uploadImage(file) {
     .child(file.name)
     .put(file);
 }
-
+//function to CreateTicketForSupport
+async function createTicketForSupport(request) {
+  try {
+    const uid = auth.currentUser.uid;
+    const result = await supportRequestsCollection.add({
+      uid: uid,
+      ...request
+    });
+    console.log(result);
+  } catch (error) {
+    const errorCode = error.code;
+    const errorMessage = error.message;
+    console.error(errorCode, errorMessage);
+  }
+}
 export {
   signIn,
   createNewUser,
   createProduct,
-  getProduct,
   editProduct,
-  searchProducts
+  updateUser,
+  createOrder,
+  getOrdersByUser,
+  cancelOrder,
+  createTicketForSupport
 };
