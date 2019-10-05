@@ -95,6 +95,18 @@ class NavBar extends Component {
                   My cart
                 </a>
               </li>
+              <li>
+                <a
+                  className={
+                    sessionStorage.getItem("loginEmail")
+                      ? "nav-link"
+                      : "nav-link disabled"
+                  }
+                  href="/myAccountManagement"
+                >
+                  My account
+                </a>
+              </li>
             </ul>
           </div>
         </nav>
