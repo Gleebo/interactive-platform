@@ -1,0 +1,122 @@
+.navbar-nav li {
+  padding-right: 20px;
+}
+.navbar {
+  padding: 0.8rem;
+}
+
+.carousel-caption {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.carousel-caption h1 {
+  text-transform: uppercase;
+  text-shadow: 10px 10px 10px #000;
+}
+
+.carousel-caption h3 {
+  padding-bottom: 1rem;
+}
+
+.col-12 h1 {
+  margin-top: 1rem;
+}
+
+.my-3 {
+  border-top: 1px solid white;
+  width: 90%;
+}
+
+.my-4 {
+  border-top: 2px solid #b4b4b4;
+  width: 60%;
+}
+
+.container-fluid {
+  margin-top: 3rem;
+}
+
+.col-md-12 h2 {
+  margin-top: 4rem;
+}
+
+.oneP {
+  padding: 10px;
+  margin-top: 40px;
+}
+.footer {
+  background-color: black;
+}
+
+.footer h2,
+.footer p {
+  color: white;
+}
+
+.footer h2 {
+  margin-top: 20px;
+  font-size: 25px;
+}
+
+.footer h3 {
+  color: white;
+  margin-top: 60px;
+  font-size: 60px;
+  font-family: Comic Sans MS;
+  text-align: left;
+}
+
+.navbar-brand span,
+.signInLogo {
+  margin-left: 35px;
+  font-family: Comic Sans MS;
+  color: rgba(17, 190, 190, 0.932);
+  font-size: 25px;
+  font-weight: bold;
+}
+
+.card-img-overlay h5 {
+  font-size: 45px;
+  margin-top: 110px;
+}
+
+.card-img-overlay p {
+  font-size: 20px;
+  margin-top: 40px;
+}
+
+.cartSingle {
+  margin-top: 10p;
+}
+
+.cartSingle hr {
+  border-top: 1px solid rgb(114, 126, 139);
+  width: 100%;
+}
+
+.cartActionSection {
+  background: #e0dada;
+  width: 300;
+  margin-top: 30;
+  margin-bottom: 30;
+  float: right;
+  margin-right: 100;
+}
+
+.cartActionSection span {
+  font-size: 30;
+  font-weight: bolder;
+}
+
+.viewAllText {
+  float: right;
+  margin-right: 90;
+  margin-top: 20;
+}
+
+.p-d-p hr {
+  margin-left: 0;
+  width: 60%;
+}
