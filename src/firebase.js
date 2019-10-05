@@ -287,5 +287,6 @@ export {
   addBrands,
   editBrand,
   signOut,
-  authStateObserver
+  authStateObserver,
+  getUserInfo
 };
