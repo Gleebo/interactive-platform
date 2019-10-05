@@ -1,7 +1,5 @@
 import React, { Component } from "react";
 import { createNewUser } from "../firebase";
-import { async } from "q";
-import { isBigIntLiteral } from "@babel/types";
 
 class SignUp extends Component {
   state = {
@@ -35,7 +33,6 @@ class SignUp extends Component {
       if (infoFromBack instanceof Error) {
         window.alert(infoFromBack.message);
       } else {
-        sessionStorage.setItem("loginEmail", this.state.account.username);
         window.open("/", "_self");
       }
     }

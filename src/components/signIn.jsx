@@ -26,7 +26,6 @@ class SignIn extends Component {
       if (infoFromBack instanceof Error) {
         window.alert(infoFromBack.message);
       } else {
-        sessionStorage.setItem("loginEmail", this.state.account.username);
         window.open("/", "_self");
       }
     }

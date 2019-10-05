@@ -30,9 +30,9 @@ const brandsCollection = db.collection("brands");
 
 auth.onAuthStateChanged(user => {
   if (user) {
-    //user is signed in
+    sessionStorage.setItem("loginEmail", "login");
   } else {
-    //user is not signed in
+    sessionStorage.setItem("loginEmail", "");
   }
 });
 

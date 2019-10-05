@@ -1,5 +1,6 @@
 import React, { Component } from "react";
-import { signOut, getUserInfo } from "../firebase";
+import { signOut } from "../firebase";
+import firebase from "firebase/app";
 
 class MyAccountManagement extends Component {
   state = {
@@ -10,8 +11,17 @@ class MyAccountManagement extends Component {
   };
 
   componentDidMount() {
-    const sss = getUserInfo();
-    console.log(sss);
+    firebase.auth().onAuthStateChanged(user => {
+      if (user) {
+        const account = { ...this.state.account };
+        account.email = user.email;
+        this.setState({ account: account });
+      } else {
+        const account = { ...this.state.account };
+        account.email = "not log in";
+        this.setState({ account: account });
+      }
+    });
   }
 
   async handleLogout() {
@@ -20,7 +30,6 @@ class MyAccountManagement extends Component {
     if (infoFromBack instanceof Error) {
       window.alert("Error happens, log out fail");
     } else {
-      sessionStorage.setItem("loginEmail", "");
       window.open("/", "_self");
     }
   }
@@ -28,6 +37,7 @@ class MyAccountManagement extends Component {
   render() {
     return (
       <div>
+        <span>{this.state.account.email}</span>
         <button className="btn btn-secondary" onClick={this.handleLogout}>
           Log out
         </button>
