@@ -1,4 +1,6 @@
 import React, { Component } from "react";
+import { signIn } from "../firebase";
+import { async } from "q";
 
 class SignIn extends Component {
   state = {
@@ -8,7 +10,7 @@ class SignIn extends Component {
     }
   };
 
-  handleSubmit = e => {
+  handleSubmit = async e => {
     e.preventDefault(); // prevent pre-default function of <form> element
 
     if (
@@ -17,7 +19,16 @@ class SignIn extends Component {
     ) {
       window.alert("sign in information is not complete");
     } else {
-      window.open("/", "_self");
+      const infoFromBack = await signIn(
+        this.state.account.username,
+        this.state.account.password
+      );
+      if (infoFromBack instanceof Error) {
+        window.alert(infoFromBack.message);
+      } else {
+        sessionStorage.setItem("loginEmail", this.state.account.username);
+        window.open("/", "_self");
+      }
     }
   };
 

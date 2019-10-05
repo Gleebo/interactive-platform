@@ -60,17 +60,38 @@ class NavBar extends Component {
                 </button>
               </li>
               <li>
-                <a className="nav-link" href="/signIn">
+                <a
+                  className={
+                    sessionStorage.getItem("loginEmail")
+                      ? "nav-link disabled"
+                      : "nav-link "
+                  }
+                  href="/signIn"
+                >
                   Sign in
                 </a>
               </li>
               <li>
-                <a className="nav-link" href="/signUp">
+                <a
+                  className={
+                    sessionStorage.getItem("loginEmail")
+                      ? "nav-link disabled"
+                      : "nav-link "
+                  }
+                  href="/signUp"
+                >
                   Sign up
                 </a>
               </li>
               <li>
-                <a className="nav-link" href="/cartInterface">
+                <a
+                  className={
+                    sessionStorage.getItem("loginEmail")
+                      ? "nav-link"
+                      : "nav-link disabled"
+                  }
+                  href="/cartInterface"
+                >
                   My cart
                 </a>
               </li>

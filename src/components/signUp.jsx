@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import { createNewUser } from "../firebase";
+import { async } from "q";
+import { isBigIntLiteral } from "@babel/types";
 
 class SignUp extends Component {
   state = {
@@ -10,7 +12,7 @@ class SignUp extends Component {
     }
   };
 
-  handleSubmit = e => {
+  handleSubmit = async e => {
     e.preventDefault(); // prevent pre-default function of <form> element
 
     if (
@@ -26,8 +28,15 @@ class SignUp extends Component {
     } else if (this.state.account.password.length < 6) {
       window.alert("the password should be longer than 6 ");
     } else {
-      createNewUser(this.state.account.username, this.state.account.password);
-      window.open("/", "_self");
+      const infoFromBack = await createNewUser(
+        this.state.account.username,
+        this.state.account.password
+      );
+      if (infoFromBack instanceof Error) {
+        window.alert(infoFromBack.message);
+      } else {
+        window.open("/", "_self");
+      }
     }
   };
 
