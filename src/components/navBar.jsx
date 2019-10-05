@@ -48,16 +48,15 @@ class NavBar extends Component {
                 </a>
               </li>
               <li className="nav-item ">
-                <button
-                  className="btn btn-light"
-                  type="button"
+                <span
+                  className="nav-link "
                   data-toggle="collapse"
                   data-target=".multi-collapse"
                   aria-expanded="false"
                   aria-controls="multiCollapseExample1 multiCollapseExample2 multiCollapseExample3"
                 >
                   Categories
-                </button>
+                </span>
               </li>
               <li>
                 <a
