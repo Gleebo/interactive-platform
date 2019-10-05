@@ -45,12 +45,16 @@ async function signIn(email, password) {
       email,
       password
     );
-
     return userCredential;
   } catch (error) {
     return error;
   }
 }
+
+function getUserInfo() {
+  return auth.currentUser;
+}
+
 async function signOut() {
   try {
     await auth.signOut();
@@ -59,6 +63,7 @@ async function signOut() {
     return error;
   }
 }
+
 //function to register new user using email and password
 async function createNewUser(email, password) {
   try {
@@ -83,6 +88,7 @@ async function updateUser(user) {
     return error;
   }
 }
+
 //function to add product and image
 async function createProduct(product, imageFile) {
   try {
