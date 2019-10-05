@@ -78,7 +78,7 @@ async function createNewUser(email, password) {
   }
 }
 
-//function to updateUser
+//function to updateUser {email, password, phoneNumber, displayName, photoURL}
 async function updateUser(user) {
   try {
     const updateUser = functions.httpsCallable("updateUser");
