@@ -1,4 +1,4 @@
-import firebase from "firebase/app";
+import firebase, { firestore } from "firebase/app";
 import "firebase/auth";
 import "firebase/firestore";
 import "firebase/storage";
@@ -25,6 +25,7 @@ const functions = firebase.functions();
 const productsCollection = db.collection("products");
 const ordersCollection = db.collection("orders");
 const supportRequestsCollection = db.collection("supportRequests");
+const usersCollection = db.collection("users");
 
 auth.onAuthStateChanged(user => {
   if (user) {
@@ -41,7 +42,8 @@ async function signIn(email, password) {
       email,
       password
     );
-    console.log(userCredential);
+
+    return userCredential;
   } catch (error) {
     const errorCode = error.code;
     const errorMessage = error.message;
@@ -56,7 +58,8 @@ async function createNewUser(email, password) {
       email,
       password
     );
-    console.log(userCredential);
+    await usersCollection.doc(userCredential.user.uid).set({ products: [] });
+    return userCredential;
   } catch (error) {
     const errorCode = error.code;
     const errorMessage = error.message;
@@ -120,6 +123,7 @@ async function editProduct(id, product, imageFile) {
 //function to add order, include userId, list of productIds, address, time, status
 async function createOrder(order) {
   try {
+    order["time"] = firestore.Timestamp.fromMillis(Date.now());
     const result = await ordersCollection.add(order);
     console.log(result);
   } catch (error) {
@@ -132,7 +136,10 @@ async function createOrder(order) {
 //function to get orders by userId
 async function getOrdersByUser(uid) {
   try {
-    const docSnapShot = await ordersCollection.where("userId", "==", uid).get();
+    const docSnapShot = await ordersCollection
+      .where("userId", "==", uid)
+      .orderBy("time", "desc")
+      .get();
     const orders = docSnapShot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
     return orders;
   } catch (error) {
@@ -198,8 +205,10 @@ function uploadImage(file) {
 async function createTicketForSupport(request) {
   try {
     const uid = auth.currentUser.uid;
+    const time = firestore.Timestamp.fromMillis(Date.now());
     const result = await supportRequestsCollection.add({
       uid: uid,
+      time: time,
       ...request
     });
     console.log(result);
@@ -209,6 +218,30 @@ async function createTicketForSupport(request) {
     console.error(errorCode, errorMessage);
   }
 }
+//function to add products to cart or modify cart includelist of productIds
+async function updateCart(products) {
+  try {
+    await usersCollection.doc(auth.currentUser.uid).update({ products });
+  } catch (error) {
+    const errorCode = error.code;
+    const errorMessage = error.message;
+    console.error(errorCode, errorMessage);
+  }
+}
+
+//function to get carts by userId
+async function getCart() {
+  try {
+    const docSnapShot = await usersCollection.doc(auth.currentUser.uid).get();
+    const products = docSnapShot.data();
+    return products;
+  } catch (error) {
+    const errorCode = error.code;
+    const errorMessage = error.message;
+    console.error(errorCode, errorMessage);
+  }
+}
+
 export {
   signIn,
   createNewUser,
@@ -218,5 +251,7 @@ export {
   createOrder,
   getOrdersByUser,
   cancelOrder,
-  createTicketForSupport
+  createTicketForSupport,
+  getCart,
+  updateCart
 };
