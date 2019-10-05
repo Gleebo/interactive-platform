@@ -10,6 +10,7 @@ import AllProducts from "./allProducts.jsx";
 import BrandIntro from "./brandIntro.jsx";
 import ProductDetailPage from "./productDetailPage.jsx";
 import ResultPage from "./resultPage.jsx";
+import MyAccountManagement from "./myAccountManagement.jsx";
 
 class MainInterface extends Component {
   render() {
@@ -29,6 +30,10 @@ class MainInterface extends Component {
           <Route path="/notFound" component={NotFound}></Route>
           <Route path="/allProducts" component={AllProducts}></Route>
           <Route path="/resultPage" component={ResultPage}></Route>
+          <Route
+            path="/myAccountManagement"
+            component={MyAccountManagement}
+          ></Route>
         </div>
       </div>
     );
