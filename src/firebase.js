@@ -49,7 +49,14 @@ async function signIn(email, password) {
     return error;
   }
 }
-
+async function signOut() {
+  try {
+    await auth.signOut();
+    return "success";
+  } catch (error) {
+    return error;
+  }
+}
 //function to register new user using email and password
 async function createNewUser(email, password) {
   try {
@@ -270,5 +277,6 @@ export {
   getCart,
   updateCart,
   addBrands,
-  editBrand
+  editBrand,
+  signOut
 };
