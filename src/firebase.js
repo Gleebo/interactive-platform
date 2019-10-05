@@ -26,6 +26,7 @@ const productsCollection = db.collection("products");
 const ordersCollection = db.collection("orders");
 const supportRequestsCollection = db.collection("supportRequests");
 const usersCollection = db.collection("users");
+const brandsCollection = db.collection("brands");
 
 auth.onAuthStateChanged(user => {
   if (user) {
@@ -220,6 +221,42 @@ async function getCart() {
   }
 }
 
+//function to add brand and image
+async function addBrands(brand, imageFile) {
+  try {
+    const docRefPromise = brandsCollection.add(brand);
+    const imgUploadPromise = uploadImage(imageFile);
+
+    //put new porduct and upload image
+    const [docRef, uploadTask] = await Promise.all([
+      docRefPromise,
+      imgUploadPromise
+    ]);
+
+    //get image url and put into product doc in firestore
+    const imgUrl = await uploadTask.ref.getDownloadURL();
+    await docRef.update({ imgUrl });
+  } catch (error) {
+    return error;
+  }
+}
+
+//edit brand and image
+async function editBrand(id, brand, imageFile) {
+  try {
+    const docRef = brandsCollection.doc(id);
+
+    if (imageFile) {
+      const uploadTask = await uploadImage(imageFile);
+      const imgUrl = await uploadTask.ref.getDownloadURL();
+      brand = { ...brand, imgUrl };
+    }
+    await docRef.update(brand);
+  } catch (error) {
+    return error;
+  }
+}
+
 export {
   signIn,
   createNewUser,
@@ -231,5 +268,7 @@ export {
   cancelOrder,
   createTicketForSupport,
   getCart,
-  updateCart
+  updateCart,
+  addBrands,
+  editBrand
 };
