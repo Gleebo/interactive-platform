@@ -1,4 +1,6 @@
 import React, { Component } from "react";
+import { createNewUser } from "../firebase";
+
 class SignUp extends Component {
   state = {
     account: {
@@ -21,7 +23,10 @@ class SignUp extends Component {
       this.state.account.password !== this.state.account.confirmPassword
     ) {
       window.alert("password confirmation error");
+    } else if (this.state.account.password.length < 6) {
+      window.alert("the password should be longer than 6 ");
     } else {
+      createNewUser(this.state.account.username, this.state.account.password);
       window.open("/", "_self");
     }
   };

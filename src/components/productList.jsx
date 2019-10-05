@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import OneProduct from "./oneProduct.jsx";
 import axios from "axios";
-import { getAllProducts } from "./firebase";
 
 class ProductList extends Component {
   state = {

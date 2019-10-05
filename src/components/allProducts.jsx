@@ -2,19 +2,21 @@ import React, { Component } from "react";
 import OneProduct from "./oneProduct.jsx";
 import SearchBar from "./searchBar.jsx";
 import Pagination from "./pagination.jsx";
-import { getAllProducts } from "./firebase";
-import { paginate } from "./utils/paginate";
+
+import { paginate } from "./paginate";
+import axios from "axios";
 
 class AllProducts extends Component {
   state = {
     products: [],
-    thePageSize: 18,
+    thePageSize: 12,
     currentPage: 1
   };
 
   async componentDidMount() {
-    const newArray = getAllProducts(); //getAllProducts() gives back a Promise;
-    const result = await newArray; // use await in async function to convert Promise to real obejct(array here)
+    const { data: result } = await axios.get(
+      "https://us-central1-kids-islands.cloudfunctions.net/getProducts?id=none" //use ? to query id in a link
+    ); // use await in async function to convert Promise to real obejct(array here)
     this.setState({ products: result });
   }
 
