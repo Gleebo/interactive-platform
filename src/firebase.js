@@ -45,9 +45,7 @@ async function signIn(email, password) {
 
     return userCredential;
   } catch (error) {
-    const errorCode = error.code;
-    const errorMessage = error.message;
-    console.error(errorCode, errorMessage);
+    return error;
   }
 }
 
@@ -61,9 +59,7 @@ async function createNewUser(email, password) {
     await usersCollection.doc(userCredential.user.uid).set({ products: [] });
     return userCredential;
   } catch (error) {
-    const errorCode = error.code;
-    const errorMessage = error.message;
-    console.error(errorCode, errorMessage);
+    return error;
   }
 }
 
@@ -74,9 +70,7 @@ async function updateUser(user) {
     const result = await updateUser(user);
     return result;
   } catch (error) {
-    const errorCode = error.code;
-    const errorMessage = error.message;
-    console.error(errorCode, errorMessage);
+    return error;
   }
 }
 //function to add product and image
@@ -95,9 +89,7 @@ async function createProduct(product, imageFile) {
     const imgUrl = await uploadTask.ref.getDownloadURL();
     await docRef.update({ imgUrl });
   } catch (error) {
-    const errorCode = error.code;
-    const errorMessage = error.message;
-    console.error(errorCode, errorMessage);
+    return error;
   }
 }
 
@@ -114,9 +106,7 @@ async function editProduct(id, product, imageFile) {
 
     await docRef.update(product);
   } catch (error) {
-    const errorCode = error.code;
-    const errorMessage = error.message;
-    console.error(errorCode, errorMessage);
+    return error;
   }
 }
 
@@ -127,9 +117,7 @@ async function createOrder(order) {
     const result = await ordersCollection.add(order);
     console.log(result);
   } catch (error) {
-    const errorCode = error.code;
-    const errorMessage = error.message;
-    console.error(errorCode, errorMessage);
+    return error;
   }
 }
 
@@ -143,9 +131,7 @@ async function getOrdersByUser(uid) {
     const orders = docSnapShot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
     return orders;
   } catch (error) {
-    const errorCode = error.code;
-    const errorMessage = error.message;
-    console.error(errorCode, errorMessage);
+    return error;
   }
 }
 //function to cancel order
@@ -154,9 +140,7 @@ async function cancelOrder(id) {
     const docRef = ordersCollection.doc(id);
     await docRef.update({ status: "cancelled" });
   } catch (error) {
-    const errorCode = error.code;
-    const errorMessage = error.message;
-    console.error(errorCode, errorMessage);
+    return error;
   }
 }
 
@@ -211,11 +195,9 @@ async function createTicketForSupport(request) {
       time: time,
       ...request
     });
-    console.log(result);
+    return result;
   } catch (error) {
-    const errorCode = error.code;
-    const errorMessage = error.message;
-    console.error(errorCode, errorMessage);
+    return error;
   }
 }
 //function to add products to cart or modify cart includelist of productIds
@@ -223,9 +205,7 @@ async function updateCart(products) {
   try {
     await usersCollection.doc(auth.currentUser.uid).update({ products });
   } catch (error) {
-    const errorCode = error.code;
-    const errorMessage = error.message;
-    console.error(errorCode, errorMessage);
+    return error;
   }
 }
 
@@ -236,9 +216,7 @@ async function getCart() {
     const products = docSnapShot.data();
     return products;
   } catch (error) {
-    const errorCode = error.code;
-    const errorMessage = error.message;
-    console.error(errorCode, errorMessage);
+    return error;
   }
 }
 
