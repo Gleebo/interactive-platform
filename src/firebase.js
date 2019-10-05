@@ -1,4 +1,4 @@
-import firebase from "firebase/app";
+import firebase, { firestore } from "firebase/app";
 import "firebase/auth";
 import "firebase/firestore";
 import "firebase/storage";
@@ -25,6 +25,7 @@ const functions = firebase.functions();
 const productsCollection = db.collection("products");
 const ordersCollection = db.collection("orders");
 const supportRequestsCollection = db.collection("supportRequests");
+const usersCollection = db.collection("users");
 
 auth.onAuthStateChanged(user => {
   if (user) {
@@ -41,11 +42,10 @@ async function signIn(email, password) {
       email,
       password
     );
-    console.log(userCredential);
+
+    return userCredential;
   } catch (error) {
-    const errorCode = error.code;
-    const errorMessage = error.message;
-    console.error(errorCode, errorMessage);
+    return error;
   }
 }
 
@@ -56,11 +56,10 @@ async function createNewUser(email, password) {
       email,
       password
     );
-    console.log(userCredential);
+    await usersCollection.doc(userCredential.user.uid).set({ products: [] });
+    return userCredential;
   } catch (error) {
-    const errorCode = error.code;
-    const errorMessage = error.message;
-    console.error(errorCode, errorMessage);
+    return error;
   }
 }
 
@@ -71,9 +70,7 @@ async function updateUser(user) {
     const result = await updateUser(user);
     return result;
   } catch (error) {
-    const errorCode = error.code;
-    const errorMessage = error.message;
-    console.error(errorCode, errorMessage);
+    return error;
   }
 }
 //function to add product and image
@@ -92,9 +89,7 @@ async function createProduct(product, imageFile) {
     const imgUrl = await uploadTask.ref.getDownloadURL();
     await docRef.update({ imgUrl });
   } catch (error) {
-    const errorCode = error.code;
-    const errorMessage = error.message;
-    console.error(errorCode, errorMessage);
+    return error;
   }
 }
 
@@ -111,34 +106,32 @@ async function editProduct(id, product, imageFile) {
 
     await docRef.update(product);
   } catch (error) {
-    const errorCode = error.code;
-    const errorMessage = error.message;
-    console.error(errorCode, errorMessage);
+    return error;
   }
 }
 
 //function to add order, include userId, list of productIds, address, time, status
 async function createOrder(order) {
   try {
+    order["time"] = firestore.Timestamp.fromMillis(Date.now());
     const result = await ordersCollection.add(order);
     console.log(result);
   } catch (error) {
-    const errorCode = error.code;
-    const errorMessage = error.message;
-    console.error(errorCode, errorMessage);
+    return error;
   }
 }
 
 //function to get orders by userId
 async function getOrdersByUser(uid) {
   try {
-    const docSnapShot = await ordersCollection.where("userId", "==", uid).get();
+    const docSnapShot = await ordersCollection
+      .where("userId", "==", uid)
+      .orderBy("time", "desc")
+      .get();
     const orders = docSnapShot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
     return orders;
   } catch (error) {
-    const errorCode = error.code;
-    const errorMessage = error.message;
-    console.error(errorCode, errorMessage);
+    return error;
   }
 }
 //function to cancel order
@@ -147,9 +140,7 @@ async function cancelOrder(id) {
     const docRef = ordersCollection.doc(id);
     await docRef.update({ status: "cancelled" });
   } catch (error) {
-    const errorCode = error.code;
-    const errorMessage = error.message;
-    console.error(errorCode, errorMessage);
+    return error;
   }
 }
 
@@ -198,17 +189,37 @@ function uploadImage(file) {
 async function createTicketForSupport(request) {
   try {
     const uid = auth.currentUser.uid;
+    const time = firestore.Timestamp.fromMillis(Date.now());
     const result = await supportRequestsCollection.add({
       uid: uid,
+      time: time,
       ...request
     });
-    console.log(result);
+    return result;
   } catch (error) {
-    const errorCode = error.code;
-    const errorMessage = error.message;
-    console.error(errorCode, errorMessage);
+    return error;
   }
 }
+//function to add products to cart or modify cart includelist of productIds
+async function updateCart(products) {
+  try {
+    await usersCollection.doc(auth.currentUser.uid).update({ products });
+  } catch (error) {
+    return error;
+  }
+}
+
+//function to get carts by userId
+async function getCart() {
+  try {
+    const docSnapShot = await usersCollection.doc(auth.currentUser.uid).get();
+    const products = docSnapShot.data();
+    return products;
+  } catch (error) {
+    return error;
+  }
+}
+
 export {
   signIn,
   createNewUser,
@@ -218,5 +229,7 @@ export {
   createOrder,
   getOrdersByUser,
   cancelOrder,
-  createTicketForSupport
+  createTicketForSupport,
+  getCart,
+  updateCart
 };
