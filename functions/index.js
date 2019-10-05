@@ -6,6 +6,7 @@ const db = admin.firestore();
 const productsCollection = db.collection("products");
 const auth = admin.auth();
 const supportCollection = db.collection("supportRequests");
+const brandsCollection = db.collection("brands");
 
 exports.getProducts = functions.https.onRequest(async (request, response) => {
   const id = request.query.id;
@@ -98,4 +99,24 @@ exports.getSupports = functions.https.onRequest(async (request, response) => {
   });
   response.header("Access-Control-Allow-Origin", "*");
   response.json(supports);
+});
+// the function of get brands list
+exports.getBrands = functions.https.onRequest(async (request, response) => {
+  var querySnapshot;
+  querySnapshot = await brandsCollection.get();
+  const brands = querySnapshot.docs.map(doc => {
+    let id = doc.id;
+    let brandData = doc.data();
+    return { id, ...brandData };
+  });
+  response.header("Access-Control-Allow-Origin", "*");
+  response.json(brands);
+});
+
+exports.getBrandById = functions.https.onRequest(async (request, response) => {
+  const brandID = request.query.id;
+  const querySnapshot = await brandsCollection.doc(brandID).get();
+  const brand = querySnapshot.data();
+  response.header("Access-Control-Allow-Origin", "*");
+  response.json(brand);
 });
