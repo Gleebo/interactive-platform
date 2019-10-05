@@ -5,6 +5,7 @@ admin.initializeApp();
 const db = admin.firestore();
 const productsCollection = db.collection("products");
 const auth = admin.auth();
+const supportCollection = db.collection("supportRequests");
 
 exports.getProducts = functions.https.onRequest(async (request, response) => {
   const id = request.query.id;
@@ -84,4 +85,17 @@ exports.updateUser = functions.https.onCall(async (data, context) => {
   } catch (error) {
     return error;
   }
+});
+
+//for admin protal, the function of get supportRequests list
+exports.getSupports = functions.https.onRequest(async (request, response) => {
+  var querySnapshot;
+  querySnapshot = await supportCollection.orderBy("time", "desc").get();
+  const supports = querySnapshot.docs.map(doc => {
+    let id = doc.id;
+    let supportData = doc.data();
+    return { id, ...supportData };
+  });
+  response.header("Access-Control-Allow-Origin", "*");
+  response.json(supports);
 });

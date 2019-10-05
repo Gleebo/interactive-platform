@@ -1,5 +1,12 @@
-import React, { useState } from "react";
-import { signIn, createTicketForSupport } from "../firebase";
+import React, { useEffect, useState } from "react";
+import {
+  signIn,
+  createTicketForSupport,
+  createNewUser,
+  getCart,
+  updateCart
+} from "../firebase";
+import { firestore } from "firebase";
 
 export function SupportRequestForm() {
   const [request, setRequest] = useState({
@@ -20,6 +27,26 @@ export function SupportRequestForm() {
     event.preventDefault();
     const result = await signIn(user.email, user.password);
   }
+  useEffect(() => {
+    /*
+    // get support list
+    (async function iife() {
+      const result = await fetch(
+        "https://us-central1-kids-islands.cloudfunctions.net/getSupports"
+      );
+      const response = await result.json();
+      console.log(response);
+    })();
+    */
+
+    (async function test() {
+      const result = await signIn("0510rrrr@www.com", "123456");
+      updateCart([{ id: "blah", quantity: 11 }, { id: "bleh", quantity: 20 }]);
+      console.log(await getCart());
+      console.log(result);
+    })();
+  }, []);
+
   return (
     <div>
       <form onSubmit={handleSubmitForSignIn}>
