@@ -36,6 +36,8 @@ auth.onAuthStateChanged(user => {
   }
 });
 
+const authStateObserver = auth.onAuthStateChanged;
+
 //function for signing users in
 async function signIn(email, password) {
   try {
@@ -278,5 +280,6 @@ export {
   updateCart,
   addBrands,
   editBrand,
-  signOut
+  signOut,
+  authStateObserver
 };
