@@ -1,5 +1,8 @@
 import React, { Component } from "react";
 import CartAssemble from "./cartAssemble.jsx";
+import { getCart, updateCart } from "../firebase";
+import firebase from "firebase/app";
+import { async } from "q";
 
 class CartInterface extends Component {
   state = {
@@ -10,6 +13,21 @@ class CartInterface extends Component {
       { id: 4, value: 0, name: "p4_name", price: 5 }
     ]
   };
+
+  async componentDidMount() {
+    firebase.auth().onAuthStateChanged(async user => {
+      if (user) {
+        const productsInCart = await getCart();
+        if (productsInCart) {
+          this.setState({ counters: productsInCart });
+        } else {
+          window.open("/notFound", "_self");
+        }
+      } else {
+        console.log("log out");
+      }
+    });
+  }
 
   handleDelete = product_id => {
     const counters = this.state.counters.filter(c => c.id !== product_id);

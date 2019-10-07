@@ -14,7 +14,7 @@ class MyAccountManagement extends Component {
     firebase.auth().onAuthStateChanged(user => {
       if (user) {
         const account = { ...this.state.account };
-        account.email = user.email;
+        account.email = user.uid;
         this.setState({ account: account });
       } else {
         const account = { ...this.state.account };

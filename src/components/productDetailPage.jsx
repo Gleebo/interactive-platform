@@ -1,8 +1,11 @@
 import React, { Component } from "react";
+import { getCart, updateCart } from "../firebase";
+import firebase from "firebase/app";
 
 class ProductDetailPage extends Component {
   state = {
-    amount: { number: 0 }
+    amount: { number: 0 },
+    products: []
   };
 
   changeAmount = e => {
@@ -22,6 +25,21 @@ class ProductDetailPage extends Component {
     amount.number--;
     if (amount.number >= 0) this.setState({ amount });
   };
+
+  handleAddToCart = (id, amount) => {
+    firebase.auth().onAuthStateChanged(async user => {
+      if (user) {
+        /* let productsInCart = await getCart();
+        productsInCart = [...productsInCart, { id: id, quantity: amount }];
+        this.setState({ products: productsInCart });
+        const newList = { ...this.state.products };
+        updateCart(newList);   */
+      } else {
+        window.alert("Please sign in before this action");
+      }
+    });
+  };
+
   render() {
     return (
       <div className="row" style={{ marginTop: 50, marginBottom: 100 }}>
@@ -80,7 +98,15 @@ class ProductDetailPage extends Component {
             </button>
           </div>
           <hr></hr>
-          <button className="btn btn-danger">Add To Cart</button>
+          <button
+            className="btn btn-danger"
+            onClick={this.handleAddToCart(
+              this.props.location.state.product.id,
+              this.state.amount.number
+            )}
+          >
+            Add To Cart
+          </button>
         </div>
       </div>
     );
