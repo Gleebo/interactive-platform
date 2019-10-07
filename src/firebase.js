@@ -222,9 +222,27 @@ async function updateCart(products) {
 //function to get carts by userId
 async function getCart() {
   try {
+    const productsList = [];
     const docSnapShot = await usersCollection.doc(auth.currentUser.uid).get();
-    const products = docSnapShot.data();
-    return products;
+    const products = docSnapShot.data().products;
+    if (products.length > 0) {
+      products.forEach(async product => {
+        const productId = product.id;
+        const productQuantity = product.quantity;
+        const querySnapshot = await productsCollection.doc(productId).get();
+        const productData = querySnapshot.data();
+        delete productData.keywords;
+        const productName = productData.name;
+        const productPrice = productData.price;
+        productsList.push({
+          productId,
+          productName,
+          productPrice,
+          productQuantity
+        });
+      });
+    }
+    return productsList;
   } catch (error) {
     return error;
   }

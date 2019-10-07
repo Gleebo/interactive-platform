@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { editBrand } from "../firebase";
+import { editBrand, getCart } from "../firebase";
 
 export const EditBrandForm = () => {
   const id = "90Oc3PvlpowNQrV41bBd";
@@ -18,6 +18,7 @@ export const EditBrandForm = () => {
   }
   useEffect(() => {
     // get product info by ID
+    /*
     (async function iife() {
       const result = await fetch(
         "https://us-central1-kids-islands.cloudfunctions.net/getBrandById?id=" +
@@ -27,6 +28,8 @@ export const EditBrandForm = () => {
       setBrand(response);
       console.log(response);
     })();
+    */
+    getCart();
   }, []);
 
   return (
