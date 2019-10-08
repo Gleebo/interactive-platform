@@ -29,7 +29,13 @@ export const EditBrandForm = () => {
       console.log(response);
     })();
     */
-    getCart();
+    (async function iife() {
+      let result = [];
+      result = await getCart();
+      let length = result.length;
+      console.log(result);
+      console.log(length);
+    })();
   }, []);
 
   return (

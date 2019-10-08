@@ -228,19 +228,24 @@ async function updateCart(products) {
 //function to get carts by userId
 async function getCart() {
   try {
-    const productsList = [];
+    let productsList = [];
     const docSnapShot = await usersCollection.doc(auth.currentUser.uid).get();
     const products = docSnapShot.data().products;
     if (products.length > 0) {
-      products.forEach(async product => {
-        const productId = product.id;
-        const productQuantity = product.quantity;
-        const querySnapshot = await productsCollection.doc(productId).get();
-        const productData = querySnapshot.data();
-        delete productData.keywords;
-        const productName = productData.name;
-        const productPrice = productData.price;
-        const productImage = productData.imgUrl;
+      let productId,
+        productQuantity,
+        querySnapshot,
+        productData,
+        productName,
+        productPrice,
+        productImage;
+      for (const [idx, product] of products.entries()) {
+        productId = product.id;
+        querySnapshot = await productsCollection.doc(productId).get();
+        productData = querySnapshot.data();
+        productName = productData.name;
+        productPrice = productData.price;
+        productImage = productData.imgUrl;
         productsList.push({
           productId,
           productName,
@@ -248,7 +253,7 @@ async function getCart() {
           productImage,
           productQuantity
         });
-      });
+      }
     }
     return productsList;
   } catch (error) {
