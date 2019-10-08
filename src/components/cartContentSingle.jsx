@@ -10,7 +10,7 @@ class CartContentSingle extends Component {
       <div className="row text-center cartSingle ">
         <hr></hr>
         <div className="col-3">
-          <img src={"https://picsum.photos/15" + this.props.counter.id}></img>
+          <img src={this.props.counter.productIamge} alt="..."></img>
         </div>
         <div className="col-4 align-self-center">{this.props.children}</div>
         <div className="col-3 align-self-center">
@@ -30,7 +30,7 @@ class CartContentSingle extends Component {
             -
           </button>
           <button
-            onClick={() => this.props.onDelete(this.props.counter.id)}
+            onClick={() => this.props.onDelete(this.props.counter.productId)}
             className="btn btn-warning btn-sm m-2"
           >
             remove
@@ -39,7 +39,7 @@ class CartContentSingle extends Component {
         <div className="col-2 align-self-center">
           <span style={this.styles}>AU$: </span>
           <span style={this.styles}>
-            {this.props.counter.price * this.returnZero()}
+            {this.props.counter.productPrice * this.returnZero()}
           </span>
         </div>
         {/* {this.state.tags.length === 0 && "pls input some tags"}
@@ -49,12 +49,12 @@ class CartContentSingle extends Component {
   }
   getBadgeClass() {
     let BG = "badge m-3 badge-";
-    BG += this.props.counter.value === 0 ? "warning" : "primary";
+    BG += this.props.counter.productQuantity === 0 ? "warning" : "primary";
     return BG;
   }
 
   returnZero() {
-    const count = this.props.counter.value;
+    const count = this.props.counter.productQuantity;
     return count;
   }
 }

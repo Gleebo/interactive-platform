@@ -27,17 +27,11 @@ class ProductDetailPage extends Component {
   };
 
   handleAddToCart = (id, amount) => {
-    firebase.auth().onAuthStateChanged(async user => {
-      if (user) {
-        /* let productsInCart = await getCart();
+    /* let productsInCart = await getCart();
         productsInCart = [...productsInCart, { id: id, quantity: amount }];
         this.setState({ products: productsInCart });
         const newList = { ...this.state.products };
         updateCart(newList);   */
-      } else {
-        window.alert("Please sign in before this action");
-      }
-    });
   };
 
   render() {

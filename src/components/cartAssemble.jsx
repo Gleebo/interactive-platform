@@ -7,7 +7,9 @@ class CartAssemble extends Component {
   calculateAllPrice = () => {
     const counters = this.props.counters;
     let money = 0;
-    counters.map(counter => (money += counter.value * counter.price));
+    counters.map(
+      counter => (money += counter.productQuantity * counter.productPrice)
+    );
     return money;
   };
 
@@ -38,14 +40,14 @@ class CartAssemble extends Component {
         <div>
           {this.props.counters.map(counter => (
             <CartContentSingle
-              key={counter.id} //using in inner React, cant access through component
+              key={counter.productId} //using in inner React, cant access through component
               counter={counter}
               onDelete={this.props.onDelete}
               onIncrement={this.props.onIncrement}
               onDecrement={this.props.onDecrement}
             >
               <h5 className="m-2">
-                product {counter.id} : {counter.name}
+                product {counter.productId} : {counter.productName}
               </h5>
             </CartContentSingle>
           ))}
