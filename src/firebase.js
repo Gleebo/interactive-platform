@@ -240,10 +240,12 @@ async function getCart() {
         delete productData.keywords;
         const productName = productData.name;
         const productPrice = productData.price;
+        const productImage = productData.imgUrl;
         productsList.push({
           productId,
           productName,
           productPrice,
+          productImage,
           productQuantity
         });
       });
