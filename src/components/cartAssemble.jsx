@@ -44,9 +44,7 @@ class CartAssemble extends Component {
               onIncrement={this.props.onIncrement}
               onDecrement={this.props.onDecrement}
             >
-              <h5 className="m-2">
-                product {counter.productId} : {counter.name}
-              </h5>
+              <h5 className="m-2">product : {counter.name}</h5>
             </CartContentSingle>
           ))}
         </div>

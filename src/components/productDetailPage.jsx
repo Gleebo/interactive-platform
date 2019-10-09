@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { getCart, updateCart } from "../firebase";
 import firebase from "firebase/app";
-import { async } from "q";
 
 class ProductDetailPage extends Component {
   state = {
@@ -31,8 +30,11 @@ class ProductDetailPage extends Component {
     firebase.auth().onAuthStateChanged(async user => {
       if (user) {
         const newList = await getCart();
-        this.setState({ products: newList });
-        console.log(newList);
+        let finalArray = [];
+        newList.map(item =>
+          finalArray.push([item.productId, item.productQuantity])
+        );
+        this.setState({ products: finalArray });
       } else {
         console.log("not log in");
       }
@@ -45,17 +47,12 @@ class ProductDetailPage extends Component {
     } else {
       let newCartList = [...this.state.products];
 
-      newCartList.push({
-        brand: this.props.location.state.product.brand,
-        category: this.props.location.state.product.category,
-        productId: this.props.location.state.product.id,
-        name: this.props.location.state.product.name,
-        price: this.props.location.state.product.price,
-        imgUrl: this.props.location.state.product.imgUrl,
-        productQuantity: this.state.amount.number
-      });
+      newCartList.push([
+        this.props.location.state.product.id,
+        this.state.amount.number
+      ]);
 
-      //updateCart(newCartList);
+      updateCart(newCartList);
       this.setState({ products: newCartList });
     }
   };
