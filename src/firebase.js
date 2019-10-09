@@ -240,7 +240,7 @@ async function getCart() {
         productData = querySnapshot.data();
         delete productData.keywords;
         delete productData.description;
-        productsList.push({ ...productData, productQuantity });
+        productsList.push({ productId, ...productData, productQuantity });
       }
     }
     return productsList;
