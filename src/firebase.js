@@ -226,27 +226,15 @@ async function getCart() {
     const docSnapShot = await usersCollection.doc(auth.currentUser.uid).get();
     const products = docSnapShot.data().products;
     if (products.length > 0) {
-      let productId,
-        productQuantity,
-        querySnapshot,
-        productData,
-        productName,
-        productPrice,
-        productImage;
+      let productId, productQuantity, querySnapshot, productData;
       for (const [idx, product] of products.entries()) {
         productId = product.id;
+        productQuantity = product.quantity;
         querySnapshot = await productsCollection.doc(productId).get();
         productData = querySnapshot.data();
-        productName = productData.name;
-        productPrice = productData.price;
-        productImage = productData.imgUrl;
-        productsList.push({
-          productId,
-          productName,
-          productPrice,
-          productImage,
-          productQuantity
-        });
+        delete productData.keywords;
+        delete productData.description;
+        productsList.push({ ...productData, productQuantity });
       }
     }
     return productsList;
