@@ -6,36 +6,7 @@ import { async } from "q";
 
 class CartInterface extends Component {
   state = {
-    counters: [
-      {
-        produntId: 1,
-        productQuantity: 0,
-        productName: "P1_name",
-        productPrice: 30,
-        productImage: "https://picsum.photos/200"
-      },
-      {
-        produntId: 2,
-        productQuantity: 0,
-        productName: "P2_name",
-        productPrice: 20,
-        productImage: "https://picsum.photos/200"
-      },
-      {
-        produntId: 3,
-        productQuantity: 0,
-        productName: "P3_name",
-        productPrice: 10,
-        productImage: "https://picsum.photos/200"
-      },
-      {
-        produntId: 4,
-        productQuantity: 0,
-        productName: "p4_name",
-        productPrice: 5,
-        productImage: "https://picsum.photos/200"
-      }
-    ]
+    counters: []
   };
 
   componentDidMount() {
@@ -45,7 +16,7 @@ class CartInterface extends Component {
 
         if (productsInCart) {
           console.log(productsInCart);
-          // this.setState({ counters: productsInCart });
+          this.setState({ counters: productsInCart });
         } else {
           window.open("/notFound", "_self");
         }

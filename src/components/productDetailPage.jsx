@@ -39,21 +39,24 @@ class ProductDetailPage extends Component {
     });
   }
 
-  handleAddToCart = (id, amount) => {
+  handleAddToCart = amount => {
     if (amount === 0) {
       window.alert("product amount is now 0");
     } else {
-      let newCartList = [{ ...this.state.products }];
-      console.log(newCartList);
-      /* newCartList.push({
-        productId: this.props.location.state.product.imgUrl,
-        productName: this.props.location.state.product.name,
-        productPrice: this.props.location.state.product.price,
-        productImage: this.props.location.state.product.imgUrl,
+      let newCartList = [...this.state.products];
+
+      newCartList.push({
+        brand: this.props.location.state.product.brand,
+        category: this.props.location.state.product.category,
+        productId: this.props.location.state.product.id,
+        name: this.props.location.state.product.name,
+        price: this.props.location.state.product.price,
+        imgUrl: this.props.location.state.product.imgUrl,
         productQuantity: this.state.amount.number
       });
-      updateCart(newCartList);
-      this.setState({ products: newCartList });   */
+
+      //updateCart(newCartList);
+      this.setState({ products: newCartList });
     }
   };
 
@@ -117,12 +120,7 @@ class ProductDetailPage extends Component {
           <hr></hr>
           <button
             className="btn btn-danger"
-            onClick={() =>
-              this.handleAddToCart(
-                this.props.location.state.product.id,
-                this.state.amount.number
-              )
-            }
+            onClick={() => this.handleAddToCart(this.state.amount.number)}
           >
             Add To Cart
           </button>

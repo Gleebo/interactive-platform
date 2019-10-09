@@ -10,7 +10,11 @@ class CartContentSingle extends Component {
       <div className="row text-center cartSingle ">
         <hr></hr>
         <div className="col-3">
-          <img src={this.props.counter.productImage} alt="..."></img>
+          <img
+            style={{ height: 200, width: 200 }}
+            src={this.props.counter.imgUrl}
+            alt="..."
+          ></img>
         </div>
         <div className="col-4 align-self-center">{this.props.children}</div>
         <div className="col-3 align-self-center">
@@ -39,7 +43,7 @@ class CartContentSingle extends Component {
         <div className="col-2 align-self-center">
           <span style={this.styles}>AU$: </span>
           <span style={this.styles}>
-            {this.props.counter.productPrice * this.returnZero()}
+            {this.props.counter.price * this.returnZero()}
           </span>
         </div>
         {/* {this.state.tags.length === 0 && "pls input some tags"}

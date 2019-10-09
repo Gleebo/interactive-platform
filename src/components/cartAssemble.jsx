@@ -7,9 +7,7 @@ class CartAssemble extends Component {
   calculateAllPrice = () => {
     const counters = this.props.counters;
     let money = 0;
-    counters.map(
-      counter => (money += counter.productQuantity * counter.productPrice)
-    );
+    counters.map(counter => (money += counter.productQuantity * counter.price));
     return money;
   };
 
@@ -47,7 +45,7 @@ class CartAssemble extends Component {
               onDecrement={this.props.onDecrement}
             >
               <h5 className="m-2">
-                product {counter.productId} : {counter.productName}
+                product {counter.productId} : {counter.name}
               </h5>
             </CartContentSingle>
           ))}
