@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { getCart, updateCart } from "../firebase";
 import firebase from "firebase/app";
+import { async } from "q";
 
 class ProductDetailPage extends Component {
   state = {
@@ -26,12 +27,34 @@ class ProductDetailPage extends Component {
     if (amount.number >= 0) this.setState({ amount });
   };
 
+  componentDidMount() {
+    firebase.auth().onAuthStateChanged(async user => {
+      if (user) {
+        const newList = await getCart();
+        this.setState({ products: newList });
+        console.log(newList);
+      } else {
+        console.log("not log in");
+      }
+    });
+  }
+
   handleAddToCart = (id, amount) => {
-    /* let productsInCart = await getCart();
-        productsInCart = [...productsInCart, { id: id, quantity: amount }];
-        this.setState({ products: productsInCart });
-        const newList = { ...this.state.products };
-        updateCart(newList);   */
+    if (amount === 0) {
+      window.alert("product amount is now 0");
+    } else {
+      let newCartList = [{ ...this.state.products }];
+      console.log(newCartList);
+      /* newCartList.push({
+        productId: this.props.location.state.product.imgUrl,
+        productName: this.props.location.state.product.name,
+        productPrice: this.props.location.state.product.price,
+        productImage: this.props.location.state.product.imgUrl,
+        productQuantity: this.state.amount.number
+      });
+      updateCart(newCartList);
+      this.setState({ products: newCartList });   */
+    }
   };
 
   render() {
@@ -94,10 +117,12 @@ class ProductDetailPage extends Component {
           <hr></hr>
           <button
             className="btn btn-danger"
-            onClick={this.handleAddToCart(
-              this.props.location.state.product.id,
-              this.state.amount.number
-            )}
+            onClick={() =>
+              this.handleAddToCart(
+                this.props.location.state.product.id,
+                this.state.amount.number
+              )
+            }
           >
             Add To Cart
           </button>

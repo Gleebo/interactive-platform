@@ -10,7 +10,7 @@ class CartContentSingle extends Component {
       <div className="row text-center cartSingle ">
         <hr></hr>
         <div className="col-3">
-          <img src={this.props.counter.productIamge} alt="..."></img>
+          <img src={this.props.counter.productImage} alt="..."></img>
         </div>
         <div className="col-4 align-self-center">{this.props.children}</div>
         <div className="col-3 align-self-center">

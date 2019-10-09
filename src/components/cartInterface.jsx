@@ -7,20 +7,45 @@ import { async } from "q";
 class CartInterface extends Component {
   state = {
     counters: [
-      { id: 1, value: 0, name: "P1_name", price: 30 },
-      { id: 2, value: 0, name: "P2_name", price: 20 },
-      { id: 3, value: 0, name: "P3_name", price: 10 },
-      { id: 4, value: 0, name: "p4_name", price: 5 }
+      {
+        produntId: 1,
+        productQuantity: 0,
+        productName: "P1_name",
+        productPrice: 30,
+        productImage: "https://picsum.photos/200"
+      },
+      {
+        produntId: 2,
+        productQuantity: 0,
+        productName: "P2_name",
+        productPrice: 20,
+        productImage: "https://picsum.photos/200"
+      },
+      {
+        produntId: 3,
+        productQuantity: 0,
+        productName: "P3_name",
+        productPrice: 10,
+        productImage: "https://picsum.photos/200"
+      },
+      {
+        produntId: 4,
+        productQuantity: 0,
+        productName: "p4_name",
+        productPrice: 5,
+        productImage: "https://picsum.photos/200"
+      }
     ]
   };
 
-  async componentDidMount() {
+  componentDidMount() {
     firebase.auth().onAuthStateChanged(async user => {
       if (user) {
         const productsInCart = await getCart();
+
         if (productsInCart) {
           console.log(productsInCart);
-          this.setState({ counters: productsInCart });
+          // this.setState({ counters: productsInCart });
         } else {
           window.open("/notFound", "_self");
         }
