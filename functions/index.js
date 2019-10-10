@@ -7,6 +7,7 @@ const productsCollection = db.collection("products");
 const auth = admin.auth();
 const supportCollection = db.collection("supportRequests");
 const brandsCollection = db.collection("brands");
+const usersCollection = db.collection("users");
 
 exports.getProducts = functions.https.onRequest(async (request, response) => {
   const id = request.query.id;
@@ -81,11 +82,28 @@ exports.updateUser = functions.https.onCall(async (data, context) => {
   try {
     const user = data.user;
     const uid = context.auth.uid;
-    const userRecord = await auth.updateUser(uid, user);
-    return { userRecord };
+    const writeResult = await usersCollection.doc(uid).update(user);
+    return writeResult;
   } catch (error) {
     return error;
   }
+});
+
+//get cart with product info
+exports.getCart = functions.https.onCall(async (data, context) => {
+  const uid = context.auth.uid;
+  const cartRef = await usersCollection.doc(uid).get();
+  const cart = cartRef.data().products.map(async item => {
+    const product = await productsCollection.doc(item.id).get();
+    return { product, quantity: item.quantity };
+  });
+  const products = await Promise.all(cart);
+  const productsInCart = products.map(doc => {
+    const product = doc.product.data();
+    delete product.keywords;
+    return { id: doc.product.id, ...product, qunatity: doc.quantity };
+  });
+  return productsInCart;
 });
 
 //for admin protal, the function of get supportRequests list

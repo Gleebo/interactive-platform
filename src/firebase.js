@@ -78,7 +78,7 @@ async function updateUser(user) {
   try {
     const updateUser = functions.httpsCallable("updateUser");
     const result = await updateUser(user);
-    return result;
+    return result.data;
   } catch (error) {
     return error;
   }
@@ -210,7 +210,7 @@ async function createTicketForSupport(request) {
     return error;
   }
 }
-//function to add products to cart or modify cart includelist of productIds
+//function to add products to cart or modify cart includelist of productIds and quantity: [{id:id, quantity: 2}, ...]
 async function updateCart(products) {
   try {
     await usersCollection.doc(auth.currentUser.uid).update({ products });
@@ -219,28 +219,11 @@ async function updateCart(products) {
   }
 }
 
-//function to get carts by userId
+//get products in cart and quantity (specifically called "quantity"!)
 async function getCart() {
-  try {
-    let productsList = [];
-    const docSnapShot = await usersCollection.doc(auth.currentUser.uid).get();
-    const products = docSnapShot.data().products;
-    if (products.length > 0) {
-      let productId, productQuantity, querySnapshot, productData;
-      for (const [idx, product] of products.entries()) {
-        productId = product.id;
-        productQuantity = product.quantity;
-        querySnapshot = await productsCollection.doc(productId).get();
-        productData = querySnapshot.data();
-        delete productData.keywords;
-        delete productData.description;
-        productsList.push({ productId, ...productData, productQuantity });
-      }
-    }
-    return productsList;
-  } catch (error) {
-    return error;
-  }
+  const getCartFunc = functions.httpsCallable("getCart");
+  const cart = await getCartFunc();
+  return cart.data;
 }
 
 //function to add brand and image
