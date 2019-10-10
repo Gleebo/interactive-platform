@@ -7,7 +7,7 @@ class CartAssemble extends Component {
   calculateAllPrice = () => {
     const counters = this.props.counters;
     let money = 0;
-    counters.map(counter => (money += counter.productQuantity * counter.price));
+    counters.map(counter => (money += counter.qunatity * counter.price));
     return money;
   };
 
@@ -48,10 +48,17 @@ class CartAssemble extends Component {
             </CartContentSingle>
           ))}
         </div>
-        <div className="cartActionSection text-center">
+        <div
+          className="cartActionSection text-center"
+          style={{ marginBottom: 50, marginRight: 50, marginTop: 30 }}
+        >
           <div>
-            <span>Total: AU$</span>
-            <span>{this.calculateAllPrice()}</span>
+            <span style={{ fontSize: 30, fontWeight: "bolder" }}>
+              Total: AU${" "}
+            </span>
+            <span style={{ fontSize: 30, fontWeight: "bolder" }}>
+              {this.calculateAllPrice()}
+            </span>
           </div>
           <div>
             <button

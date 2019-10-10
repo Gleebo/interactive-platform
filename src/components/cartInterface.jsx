@@ -25,9 +25,7 @@ class CartInterface extends Component {
   }
 
   handleDelete = product_id => {
-    const counters = this.state.counters.filter(
-      c => c.productId !== product_id
-    );
+    const counters = this.state.counters.filter(c => c.id !== product_id);
     this.setState({ counters: counters }); // old array : new array
   };
 
@@ -35,7 +33,7 @@ class CartInterface extends Component {
     const counters = [...this.state.counters];
     const index = counters.indexOf(counter);
     counters[index] = { ...counter }; // confused
-    counters[index].productQuantity++;
+    counters[index].qunatity++;
     this.setState({ counters: counters });
   };
 
@@ -43,13 +41,13 @@ class CartInterface extends Component {
     const counters = [...this.state.counters];
     const index = counters.indexOf(counter);
     counters[index] = { ...counter }; // confused
-    if (counters[index].productQuantity > 0) counters[index].productQuantity--;
+    if (counters[index].qunatity > 0) counters[index].qunatity--;
     this.setState({ counters: counters });
   };
 
   handleReset = () => {
     const counters = this.state.counters.map(c => {
-      c.productQuantity = 0;
+      c.qunatity = 0;
       return c;
     });
     this.setState({ counters: counters });

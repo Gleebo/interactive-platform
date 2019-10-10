@@ -2,7 +2,7 @@ import React from "react";
 import SearchBar from "./searchBar.jsx";
 import ProductList from "./productList.jsx";
 import Carousel from "./carousel.jsx";
-import Jumbotron from "./jumbotron.jsx";
+
 import WelcomeSection from "./welcomeSection.jsx";
 import ThreeCategory from "./threeCategory.jsx";
 import TwoColSection from "./twoColSection.jsx";

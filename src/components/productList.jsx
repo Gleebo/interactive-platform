@@ -25,7 +25,10 @@ class ProductList extends Component {
         <div className="row justify-content-center">
           {this.state.products.map(product => OneProduct(product))}
         </div>
-        <div className="viewAllText">
+        <div
+          className="viewAllText"
+          style={{ marginTop: 10, marginRight: 100 }}
+        >
           <a href="/allProducts">View all ></a>
         </div>
       </main>

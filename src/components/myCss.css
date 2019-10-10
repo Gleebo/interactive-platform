@@ -98,22 +98,12 @@
 
 .cartActionSection {
   background: #e0dada;
-  width: 300;
-  margin-top: 30;
-  margin-bottom: 30;
-  float: right;
-  margin-right: 100;
-}
 
-.cartActionSection span {
-  font-size: 30;
-  font-weight: bolder;
+  float: right;
 }
 
 .viewAllText {
   float: right;
-  margin-right: 90;
-  margin-top: 20;
 }
 
 .p-d-p hr {

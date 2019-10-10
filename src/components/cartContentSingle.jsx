@@ -53,12 +53,12 @@ class CartContentSingle extends Component {
   }
   getBadgeClass() {
     let BG = "badge m-3 badge-";
-    BG += this.props.counter.productQuantity === 0 ? "warning" : "primary";
+    BG += this.props.counter.qunatity === 0 ? "warning" : "primary";
     return BG;
   }
 
   returnZero() {
-    const count = this.props.counter.productQuantity;
+    const count = this.props.counter.qunatity;
     return count;
   }
 }

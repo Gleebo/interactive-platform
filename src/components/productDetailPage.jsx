@@ -30,9 +30,10 @@ class ProductDetailPage extends Component {
     firebase.auth().onAuthStateChanged(async user => {
       if (user) {
         const newList = await getCart();
+        console.log(newList);
         let finalArray = [];
         newList.map(item =>
-          finalArray.push([item.productId, item.productQuantity])
+          finalArray.push({ id: item.id, qunatity: item.qunatity })
         );
         this.setState({ products: finalArray });
       } else {
@@ -41,18 +42,16 @@ class ProductDetailPage extends Component {
     });
   }
 
-  handleAddToCart = amount => {
+  handleAddToCart = async (id, amount) => {
     if (amount === 0) {
       window.alert("product amount is now 0");
     } else {
       let newCartList = [...this.state.products];
 
-      newCartList.push([
-        this.props.location.state.product.id,
-        this.state.amount.number
-      ]);
-
-      updateCart(newCartList);
+      newCartList.push({ id: id, qunatity: amount });
+      console.log(newCartList);
+      const s = await updateCart(newCartList);
+      console.log(s);
       this.setState({ products: newCartList });
     }
   };
@@ -117,7 +116,12 @@ class ProductDetailPage extends Component {
           <hr></hr>
           <button
             className="btn btn-danger"
-            onClick={() => this.handleAddToCart(this.state.amount.number)}
+            onClick={() =>
+              this.handleAddToCart(
+                this.props.location.state.product.id,
+                this.state.amount.number
+              )
+            }
           >
             Add To Cart
           </button>
