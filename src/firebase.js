@@ -74,7 +74,25 @@ async function createNewUser(email, password) {
   }
 }
 
-//function to updateUser {email, password, phoneNumber, displayName, photoURL}
+async function updateUserEmail(email) {
+  try {
+    await auth.currentUser.updateEmail(email);
+    return "success";
+  } catch (err) {
+    return err;
+  }
+}
+
+async function updateUserPassword(password) {
+  try {
+    await auth.currentUser.updatePassword(password);
+    return "success";
+  } catch (err) {
+    return err;
+  }
+}
+
+//function to updateUser {phoneNumber, displayName, photoURL}
 async function updateUser(user) {
   try {
     await usersCollection.doc(auth.currentUser.uid).update(user);
@@ -287,5 +305,7 @@ export {
   addBrands,
   editBrand,
   signOut,
-  getUserInfo
+  getUserInfo,
+  updateUserEmail,
+  updateUserPassword
 };
