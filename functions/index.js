@@ -77,18 +77,6 @@ exports.searchAhead = functions.https.onRequest(async (request, response) => {
   response.json(suggestions);
 });
 
-//data can include email and password
-exports.updateUser = functions.https.onCall(async (data, context) => {
-  try {
-    const user = data.user;
-    const uid = context.auth.uid;
-    const writeResult = await usersCollection.doc(uid).update(user);
-    return writeResult;
-  } catch (error) {
-    return error;
-  }
-});
-
 //get cart with product info
 exports.getCart = functions.https.onCall(async (data, context) => {
   const uid = context.auth.uid;

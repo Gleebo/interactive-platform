@@ -51,10 +51,6 @@ async function signIn(email, password) {
   }
 }
 
-function getUserInfo() {
-  return auth.currentUser;
-}
-
 async function signOut() {
   try {
     await auth.signOut();
@@ -81,12 +77,18 @@ async function createNewUser(email, password) {
 //function to updateUser {email, password, phoneNumber, displayName, photoURL}
 async function updateUser(user) {
   try {
-    const updateUser = functions.httpsCallable("updateUser");
-    const result = await updateUser(user);
-    return result.data;
+    await usersCollection.doc(auth.currentUser.uid).update(user);
+    return "success";
   } catch (error) {
     return error;
   }
+}
+
+async function getUserInfo() {
+  const userSnapshot = await usersCollection.doc(auth.currentUser.uid).get();
+  const user = userSnapshot.data();
+  delete user.products;
+  return { ...user, email: auth.currentUser.email };
 }
 
 //function to add product and image
@@ -203,7 +205,7 @@ function uploadImage(file) {
     .child(file.name)
     .put(file);
 }
-//function to CreateTicketForSupport
+//function to CreateTicketForSupport include title and content.
 async function createTicketForSupport(request) {
   try {
     const uid = auth.currentUser.uid;
