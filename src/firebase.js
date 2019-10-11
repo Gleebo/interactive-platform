@@ -28,6 +28,8 @@ const supportRequestsCollection = db.collection("supportRequests");
 const usersCollection = db.collection("users");
 const brandsCollection = db.collection("brands");
 
+auth.setPersistence(firebase.auth.Auth.Persistence.SESSION);
+
 auth.onAuthStateChanged(user => {
   if (user) {
     sessionStorage.setItem("loginEmail", "login");
@@ -35,8 +37,6 @@ auth.onAuthStateChanged(user => {
     sessionStorage.setItem("loginEmail", "");
   }
 });
-
-const authStateObserver = auth.onAuthStateChanged;
 
 //function for signing users in
 async function signIn(email, password) {
@@ -130,6 +130,8 @@ async function editProduct(id, product, imageFile) {
 async function createOrder(order) {
   try {
     order["time"] = firestore.Timestamp.fromMillis(Date.now());
+    order["uid"] = auth.currentUser.uid;
+    order["status"] = "processing";
     const result = await ordersCollection.add(order);
     console.log(result);
   } catch (error) {
@@ -141,7 +143,7 @@ async function createOrder(order) {
 async function getOrdersByUser(uid) {
   try {
     const docSnapShot = await ordersCollection
-      .where("userId", "==", uid)
+      .where("uid", "==", uid)
       .orderBy("time", "desc")
       .get();
     const orders = docSnapShot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
