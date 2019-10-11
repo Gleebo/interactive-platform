@@ -93,16 +93,20 @@ exports.updateUser = functions.https.onCall(async (data, context) => {
 exports.getCart = functions.https.onCall(async (data, context) => {
   const uid = context.auth.uid;
   const cartRef = await usersCollection.doc(uid).get();
-  const cart = cartRef.data().products.map(async item => {
-    const product = await productsCollection.doc(item.id).get();
-    return { product, quantity: item.quantity };
-  });
-  const products = await Promise.all(cart);
-  const productsInCart = products.map(doc => {
-    const product = doc.product.data();
-    delete product.keywords;
-    return { id: doc.product.id, ...product, qunatity: doc.quantity };
-  });
+  var productsInCart = [];
+  const cart = cartRef.data().products;
+  if (cart.length > 0) {
+    const cartProducts = cart.map(async item => {
+      const product = await productsCollection.doc(item.id).get();
+      return { product, quantity: item.quantity };
+    });
+    const products = await Promise.all(cartProducts);
+    productsInCart = products.map(doc => {
+      const product = doc.product.data();
+      delete product.keywords;
+      return { id: doc.product.id, ...product, quantity: doc.quantity };
+    });
+  }
   return productsInCart;
 });
 

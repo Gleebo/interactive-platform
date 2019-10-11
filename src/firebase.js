@@ -45,7 +45,6 @@ async function signIn(email, password) {
       email,
       password
     );
-
     return userCredential;
   } catch (error) {
     return error;
