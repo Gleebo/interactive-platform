@@ -140,10 +140,10 @@ async function createOrder(order) {
 }
 
 //function to get orders by userId
-async function getOrdersByUser(uid) {
+async function getOrdersByUser() {
   try {
     const docSnapShot = await ordersCollection
-      .where("uid", "==", uid)
+      .where("uid", "==", auth.currentUser.uid)
       .orderBy("time", "desc")
       .get();
     const orders = docSnapShot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
@@ -285,6 +285,5 @@ export {
   addBrands,
   editBrand,
   signOut,
-  authStateObserver,
   getUserInfo
 };
