@@ -33,7 +33,7 @@ class ProductDetailPage extends Component {
         console.log(newList);
         let finalArray = [];
         newList.map(item =>
-          finalArray.push({ id: item.id, qunatity: item.qunatity })
+          finalArray.push({ id: item.id, quantity: item.quantity })
         );
         this.setState({ products: finalArray });
       } else {
@@ -48,11 +48,12 @@ class ProductDetailPage extends Component {
     } else {
       let newCartList = [...this.state.products];
 
-      newCartList.push({ id: id, qunatity: amount });
+      newCartList.push({ id: id, quantity: amount });
       console.log(newCartList);
       const s = await updateCart(newCartList);
       console.log(s);
       this.setState({ products: newCartList });
+      window.alert("add in the cart successfully.");
     }
   };
 

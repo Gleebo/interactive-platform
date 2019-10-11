@@ -33,7 +33,7 @@ class CartInterface extends Component {
     const counters = [...this.state.counters];
     const index = counters.indexOf(counter);
     counters[index] = { ...counter }; // confused
-    counters[index].qunatity++;
+    counters[index].quantity++;
     this.setState({ counters: counters });
   };
 
@@ -41,13 +41,13 @@ class CartInterface extends Component {
     const counters = [...this.state.counters];
     const index = counters.indexOf(counter);
     counters[index] = { ...counter }; // confused
-    if (counters[index].qunatity > 0) counters[index].qunatity--;
+    if (counters[index].quantity > 0) counters[index].quantity--;
     this.setState({ counters: counters });
   };
 
   handleReset = () => {
     const counters = this.state.counters.map(c => {
-      c.qunatity = 0;
+      c.quantity = 0;
       return c;
     });
     this.setState({ counters: counters });

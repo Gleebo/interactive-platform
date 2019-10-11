@@ -1,24 +1,26 @@
 import React, { Component } from "react";
-import { signOut } from "../firebase";
+import { signOut, updateUser, getUserInfo } from "../firebase";
 import firebase from "firebase/app";
-import { async } from "q";
 
 class MyAccountManagement extends Component {
   state = {
     account: {
-      email: "",
       schoolName: "",
-      phoneNumber: ""
+      phoneNumber: "",
+      address: ""
     }
   };
 
   componentDidMount() {
-    firebase.auth().onAuthStateChanged(user => {
+    firebase.auth().onAuthStateChanged(async user => {
       if (user) {
         const account = { ...this.state.account };
-        account.email = user.email;
-        //account.schoolName = user.schoolName;
-        // account.phoneNumber = user.phoneNumber;
+
+        const userInfo = await getUserInfo();
+
+        account.schoolName = userInfo.schoolName;
+        account.phoneNumber = userInfo.phoneNumber;
+        account.address = userInfo.address;
         this.setState({ account: account });
       } else {
         const account = { ...this.state.account };
@@ -40,11 +42,11 @@ class MyAccountManagement extends Component {
 
   handleUpdate = async e => {
     e.preventDefault();
-    /*
-    
-    waiting for implementation
-    
-    */
+
+    updateUser(this.state.account);
+
+    window.alert("update successfully");
+    window.open("/", "_self");
   };
 
   handleChange = e => {
@@ -62,17 +64,6 @@ class MyAccountManagement extends Component {
               <span className="signInLogo">KidIslands</span>
             </div>
             <form onSubmit={this.handleUpdate}>
-              <div className="form-group">
-                <label htmlFor="theEamil">Email</label>
-                <input
-                  value={this.state.account.email}
-                  name="email"
-                  onChange={this.handleChange}
-                  id="theEamil"
-                  type="text"
-                  className="form-control"
-                />
-              </div>
               <div className="form-group">
                 <label htmlFor="theSchoolName">School Name</label>
                 <input
@@ -95,8 +86,23 @@ class MyAccountManagement extends Component {
                   className="form-control"
                 />
               </div>
+              <div className="form-group">
+                <label htmlFor="theAddress">Address</label>
+                <input
+                  value={this.state.account.address}
+                  name="address"
+                  onChange={this.handleChange}
+                  id="theAddress"
+                  type="text"
+                  className="form-control"
+                />
+              </div>
+              <div style={{ float: "right" }}>
+                <a href="/emailPasswordUpdate">update email or password ></a>
+              </div>
               <button className="btn btn-primary">Confoirm Update</button>
             </form>
+
             <div style={{ marginTop: 5, marginBottom: 200 }}>
               <button
                 style={{ width: 148 }}

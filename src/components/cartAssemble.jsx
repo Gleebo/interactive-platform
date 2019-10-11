@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import CartContentSingle from "./cartContentSingle.jsx";
+import { Link } from "react-router-dom";
 
 class CartAssemble extends Component {
   state = {};
@@ -7,8 +8,16 @@ class CartAssemble extends Component {
   calculateAllPrice = () => {
     const counters = this.props.counters;
     let money = 0;
-    counters.map(counter => (money += counter.qunatity * counter.price));
+    counters.map(counter => (money += counter.quantity * counter.price));
     return money;
+  };
+
+  payall = () => {
+    if (this.props.counters.length === 0) {
+      window.alert("nothing in the cart");
+    } else {
+      window.open("/finalPayInterface", "_self");
+    }
   };
 
   render() {
@@ -73,7 +82,12 @@ class CartAssemble extends Component {
             >
               reset
             </button>
-            <button className="btn btn-secondary m-1 btn-sm">pay all</button>
+            <button
+              className="btn btn-secondary m-1 btn-sm"
+              onClick={this.payall}
+            >
+              pay all
+            </button>
           </div>
         </div>
       </div>
