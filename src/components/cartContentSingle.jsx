@@ -34,7 +34,7 @@ class CartContentSingle extends Component {
             -
           </button>
           <button
-            onClick={() => this.props.onDelete(this.props.counter.productId)}
+            onClick={() => this.props.onDelete(this.props.counter.id)}
             className="btn btn-warning btn-sm m-2"
           >
             remove
