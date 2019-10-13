@@ -1,41 +1,66 @@
-import React from "react";
+import React, { Component } from "react";
+import { async } from "q";
+import axios from "axios";
+import { Link } from "react-router-dom";
 
-const TwoColSection = () => {
-  return (
-    <main className="container">
-      <div className="container-fluid padding">
-        <div className="row padiing ">
-          <div className="col-md-12 col-lg-6 ">
-            <img
-              className="img-fluid"
-              src="https://images-na.ssl-images-amazon.com/images/I/91U3OBIZ0-L.jpg"
-              alt="..."
-              style={{ width: 360, height: 360 }}
-            />
-          </div>
+class TwoColSection extends Component {
+  state = {
+    product: {}
+  };
 
-          <div className="col-md-12 col-lg-6">
-            <h2>I Wish You More</h2>
-            <p>dfashdfuhasdofhaodhfaousdf</p>
-            <p>sdfadsfsadf</p>
-            <p>hahsdfjasodfjaoisdjfaisdjfoiasjdoifjasoidfjiasdjfs</p>
+  async componentWillMount() {
+    const { data: homePageProduct } = await axios.get(
+      "https://us-central1-kids-islands.cloudfunctions.net/getProductById?id=vrjIOa1Exk6XyxIr3gnq"
+    );
+    homePageProduct.id = "vrjIOa1Exk6XyxIr3gnq";
+    console.log(homePageProduct);
 
-            <a href="/productPage" className="btn btn-primary">
-              Buy now
-            </a>
+    this.setState({ product: homePageProduct });
+  }
 
-            <a
-              href="/productPage"
-              className="btn btn-secondary"
-              style={{ marginLeft: 25 }}
-            >
-              More books
-            </a>
+  render() {
+    const product = this.state.product;
+
+    return (
+      <main className="container">
+        <div className="container-fluid padding">
+          <div className="row padiing ">
+            <div className="col-md-12 col-lg-6 ">
+              <img
+                className="img-fluid"
+                src={this.state.product.imgUrl}
+                alt="..."
+                style={{ width: 360, height: 360 }}
+              />
+            </div>
+
+            <div className="col-md-12 col-lg-6">
+              <h2>{this.state.product.brand}</h2>
+              <p>{this.state.product.description}</p>
+
+              <Link
+                className="btn btn-primary"
+                to={{
+                  pathname: "/productDetailPage",
+                  state: { product } //how to attach data using Link to jump to new page
+                }}
+              >
+                Buy now
+              </Link>
+
+              <a
+                href="/allProducts"
+                className="btn btn-secondary"
+                style={{ marginLeft: 25 }}
+              >
+                More products
+              </a>
+            </div>
           </div>
         </div>
-      </div>
-    </main>
-  );
-};
+      </main>
+    );
+  }
+}
 
 export default TwoColSection;

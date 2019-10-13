@@ -29,7 +29,7 @@ class NavBar extends Component {
     const { data: brands } = await axios.get(
       "https://us-central1-kids-islands.cloudfunctions.net/getBrands"
     );
-    console.log(brands);
+
     this.setState({ brands });
   }
 

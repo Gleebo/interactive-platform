@@ -43,17 +43,23 @@ class ProductDetailPage extends Component {
   }
 
   handleAddToCart = async (id, amount) => {
-    if (amount === 0) {
-      window.alert("product amount is now 0");
-    } else {
-      let newCartList = [...this.state.products];
+    const loginStatus = sessionStorage.getItem("loginEmail");
 
-      newCartList.push({ id: id, quantity: amount });
-      console.log(newCartList);
-      const s = await updateCart(newCartList);
-      console.log(s);
-      this.setState({ products: newCartList });
-      window.alert("add in the cart successfully. Find detail in my cart");
+    if (loginStatus) {
+      if (amount === 0) {
+        window.alert("product amount is now 0");
+      } else {
+        let newCartList = [...this.state.products];
+
+        newCartList.push({ id: id, quantity: amount });
+        console.log(newCartList);
+        const s = await updateCart(newCartList);
+        console.log(s);
+        this.setState({ products: newCartList });
+        window.alert("add in the cart successfully. Find detail in my cart");
+      }
+    } else {
+      window.alert("Please login first");
     }
   };
 
