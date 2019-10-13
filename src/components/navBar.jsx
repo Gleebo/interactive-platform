@@ -1,11 +1,13 @@
 import React, { Component } from "react";
 
 import OneNavLink from "./oneNavLink.jsx";
+import axios from "axios";
+import BrandIntro from "./brandIntro";
 
 class NavBar extends Component {
   state = {
     brands: [
-      { id: 1, name: "Nike" },
+      /* { id: 1, name: "Nike" },
       {
         id: 2,
         name: "Li Ning"
@@ -17,11 +19,20 @@ class NavBar extends Component {
       {
         id: 4,
         name: "UA"
-      }
+      }   */
     ],
     subjects: [],
     properties: []
   };
+
+  async componentWillMount() {
+    const { data: brands } = await axios.get(
+      "https://us-central1-kids-islands.cloudfunctions.net/getBrands"
+    );
+    console.log(brands);
+    this.setState({ brands });
+  }
+
   render() {
     return (
       <div>

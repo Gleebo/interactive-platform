@@ -53,7 +53,7 @@ class ProductDetailPage extends Component {
       const s = await updateCart(newCartList);
       console.log(s);
       this.setState({ products: newCartList });
-      window.alert("add in the cart successfully.");
+      window.alert("add in the cart successfully. Find detail in my cart");
     }
   };
 

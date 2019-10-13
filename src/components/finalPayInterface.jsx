@@ -46,6 +46,8 @@ class FinalPayInterface extends Component {
 
   handlePay = async () => {
     createOrder(this.state);
+    window.alert("payment is finished, we will return to home page");
+    window.open("/", "_self");
   };
 
   render() {
@@ -87,9 +89,9 @@ class FinalPayInterface extends Component {
                   id="shippingMethod"
                 >
                   <option>shipping method 1</option>
-                  <option>shippint method 2</option>
-                  <option>shippint method 3</option>
-                  <option>shippint method 4</option>
+                  <option>shipping method 2</option>
+                  <option>shipping method 3</option>
+                  <option>shipping method 4</option>
                 </select>
               </div>
             </form>
