@@ -2,7 +2,6 @@ import React, { Component } from "react";
 
 import OneNavLink from "./oneNavLink.jsx";
 import axios from "axios";
-import BrandIntro from "./brandIntro";
 
 class NavBar extends Component {
   state = {
@@ -33,6 +32,12 @@ class NavBar extends Component {
     this.setState({ brands });
   }
 
+  adminLogout = () => {
+    //wait for backend connection
+    sessionStorage.setItem("adminLogin", "");
+    window.open("/", "_self");
+  };
+
   render() {
     return (
       <div>
@@ -40,6 +45,17 @@ class NavBar extends Component {
           <a className="navbar-brand" href="/">
             <span>KidIslands</span>
           </a>
+          <button
+            className={
+              sessionStorage.getItem("adminLogin")
+                ? "btn btn-light visible"
+                : "btn btn-light invisible "
+            }
+            style={{ color: "red" }}
+            onClick={this.adminLogout}
+          >
+            admin mode log out
+          </button>
           <button
             className="navbar-toggler"
             type="button"
@@ -72,7 +88,8 @@ class NavBar extends Component {
               <li>
                 <a
                   className={
-                    sessionStorage.getItem("loginEmail")
+                    sessionStorage.getItem("loginEmail") ||
+                    sessionStorage.getItem("adminLogin")
                       ? "nav-link disabled"
                       : "nav-link "
                   }
@@ -84,7 +101,8 @@ class NavBar extends Component {
               <li>
                 <a
                   className={
-                    sessionStorage.getItem("loginEmail")
+                    sessionStorage.getItem("loginEmail") ||
+                    sessionStorage.getItem("adminLogin")
                       ? "nav-link disabled"
                       : "nav-link "
                   }
@@ -156,7 +174,7 @@ class NavBar extends Component {
                   <br></br>
                   <a href="#">Toys</a>
                   <br></br>
-                  <a href="#">Toola</a>
+                  <a href="#">Tools</a>
                 </div>
               </div>
             </div>

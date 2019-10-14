@@ -23,6 +23,14 @@ const Footer = () => {
       </div>
       <hr className="my-3"></hr>
       <div className="container-fluid footer">
+        <a
+          href="/adminLogIn"
+          className={
+            sessionStorage.getItem("loginEmail") ? "invisible" : "visible"
+          }
+        >
+          <p>admin access</p>
+        </a>
         <p>2019 KidIslands Limited. All Rights Reserved</p>
       </div>
     </div>

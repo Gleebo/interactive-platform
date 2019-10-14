@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 const ThreeCategory = () => {
   return (
@@ -15,9 +16,11 @@ const ThreeCategory = () => {
             <div className="card-img-overlay">
               <h5>Brands</h5>
               <p>Nike/Adidas/Li Ning/Anta...</p>
-              <button type="button" className="btn btn-outline-light">
-                Learn more
-              </button>
+              <Link to="/allProducts">
+                <button type="button" className="btn btn-outline-light">
+                  Learn more
+                </button>
+              </Link>
             </div>
           </div>
         </div>

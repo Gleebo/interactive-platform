@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import OneProduct from "./oneProduct.jsx";
+
 import SearchBar from "./searchBar.jsx";
 import Pagination from "./pagination.jsx";
 

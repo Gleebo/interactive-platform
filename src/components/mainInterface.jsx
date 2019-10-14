@@ -13,6 +13,8 @@ import ResultPage from "./resultPage.jsx";
 import MyAccountManagement from "./myAccountManagement.jsx";
 import FinalPayInterface from "./finalPayInterface.jsx";
 import EmailPasswordUpdate from "./emailPasswordUpdate.jsx";
+import AdminLogIn from "./adminLogIn.jsx";
+import AdminManageHome from "./adminManageHome.jsx";
 
 class MainInterface extends Component {
   render() {
@@ -44,6 +46,8 @@ class MainInterface extends Component {
             path="/emailPasswordUpdate"
             component={EmailPasswordUpdate}
           ></Route>
+          <Route path="/adminLogIn" component={AdminLogIn}></Route>
+          <Route path="/adminManageHome" component={AdminManageHome}></Route>
         </div>
       </div>
     );
