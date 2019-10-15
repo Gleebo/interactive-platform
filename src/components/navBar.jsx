@@ -70,7 +70,14 @@ class NavBar extends Component {
           <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
             <ul className="navbar-nav ml-auto">
               <li className="nav-item active">
-                <a className="nav-link" href="/">
+                <a
+                  className="nav-link"
+                  href={
+                    sessionStorage.getItem("adminLogin")
+                      ? "/adminManageHome"
+                      : "/"
+                  }
+                >
                   Home
                 </a>
               </li>
