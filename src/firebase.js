@@ -67,8 +67,13 @@ async function createNewUser(email, password) {
       email,
       password
     );
-    await usersCollection.doc(userCredential.user.uid).set({ products: [] });
-    return userCredential;
+    const docSnapshot = await usersCollection.doc("currentUserNumber").get();
+    const currentUserNumber = docSnapshot.data().number + 1;
+    await docSnapshot.ref.update({ number: currentUserNumber });
+    await usersCollection
+      .doc(userCredential.user.uid)
+      .set({ userNumber: currentUserNumber });
+    return currentUserNumber;
   } catch (error) {
     return error;
   }
@@ -143,6 +148,19 @@ async function editProduct(id, product, imageFile) {
     await docRef.update(product);
   } catch (error) {
     return error;
+  }
+}
+
+//delete products function [products...];
+async function deleteProducts(ids = []) {
+  try {
+    const docDeletePromises = ids.map(id => {
+      return productsCollection.doc(id).delete();
+    });
+    await Promise.all(docDeletePromises);
+    return "success";
+  } catch (err) {
+    return err;
   }
 }
 
@@ -295,6 +313,7 @@ export {
   createNewUser,
   createProduct,
   editProduct,
+  deleteProducts,
   updateUser,
   createOrder,
   getOrdersByUser,
