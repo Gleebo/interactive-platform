@@ -15,6 +15,7 @@ import FinalPayInterface from "./finalPayInterface.jsx";
 import EmailPasswordUpdate from "./emailPasswordUpdate.jsx";
 import AdminLogIn from "./adminLogIn.jsx";
 import AdminManageHome from "./adminManageHome.jsx";
+import ProductDetailManagePage from "./productDetailManagePage.jsx";
 
 class MainInterface extends Component {
   render() {
@@ -48,6 +49,10 @@ class MainInterface extends Component {
           ></Route>
           <Route path="/adminLogIn" component={AdminLogIn}></Route>
           <Route path="/adminManageHome" component={AdminManageHome}></Route>
+          <Route
+            path="/productDetailManagePage"
+            component={ProductDetailManagePage}
+          ></Route>
         </div>
       </div>
     );
