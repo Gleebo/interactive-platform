@@ -26,7 +26,10 @@ const Footer = () => {
         <a
           href="/adminLogIn"
           className={
-            sessionStorage.getItem("loginEmail") ? "invisible" : "visible"
+            sessionStorage.getItem("loginEmail") ||
+            sessionStorage.getItem("adminLogin")
+              ? "invisible"
+              : "visible"
           }
         >
           <p>admin access</p>

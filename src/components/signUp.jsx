@@ -77,7 +77,7 @@ class SignUp extends Component {
               />
             </div>
             <div className="form-group">
-              <label htmlFor="theConfirmPassword">Conform Password</label>
+              <label htmlFor="theConfirmPassword">Confirm Password</label>
               <input
                 value={account.confirmPassword}
                 name="confirmPassword"

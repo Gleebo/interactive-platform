@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { async } from "q";
+import { adminLogin } from "../firebase";
 
 class AdminLogIn extends Component {
   state = {
@@ -12,9 +13,19 @@ class AdminLogIn extends Component {
   handleSubmit = async e => {
     e.preventDefault();
 
-    //wait for backend connection
-    sessionStorage.setItem("adminLogin", "yes");
-    window.open("/adminManageHome", "_self");
+    const result = await adminLogin(
+      this.state.adminUser.username,
+      this.state.adminUser.password
+    );
+
+    if (result === "admin login successful") {
+      sessionStorage.setItem("adminLogin", "yes");
+      window.open("/adminManageHome", "_self");
+    } else if (result === "this account does not have admin rights") {
+      window.alert(result);
+    } else if (result instanceof Error) {
+      window.alert(result.message);
+    }
   };
 
   handleChange = e => {

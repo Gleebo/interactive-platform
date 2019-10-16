@@ -4,6 +4,8 @@ import axios from "axios";
 import OneProduct from "./oneProduct.jsx";
 import NotFound from "./notFound.jsx";
 import OneProductForManagement from "./oneProductForManagement.jsx";
+import { deleteProducts } from "../firebase";
+import { async } from "q";
 
 class ResultPage extends Component {
   state = {
@@ -34,20 +36,26 @@ class ResultPage extends Component {
 
   handleCheckTrue = prodcut => {
     const newSelectedProducts = [...this.state.selectedProducts];
-    newSelectedProducts.push({ id: prodcut.id });
+    newSelectedProducts.push(prodcut.id);
     this.setState({ selectedProducts: newSelectedProducts });
   };
 
   handleCheckFalse = product_id => {
     const newSelectedProducts = this.state.selectedProducts.filter(
-      c => c.id !== product_id
+      c => c !== product_id
     );
     this.setState({ selectedProducts: newSelectedProducts });
   };
 
-  deleteClick = () => {
+  deleteClick = async () => {
     // wait for backend connection.
-    console.log(this.state.selectedProducts);
+    const result = await deleteProducts(this.state.selectedProducts);
+    if (result) {
+      window.alert("delete successfully");
+      window.location.reload();
+    } else if (result instanceof Error) {
+      window.alert(result.message);
+    }
   };
 
   render() {
