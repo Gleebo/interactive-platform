@@ -108,14 +108,14 @@ class ProductDetailPage extends Component {
             <button
               className="btn btn-outline-primary btn-sm"
               style={{ marginLeft: 15 }}
-              onClick={this.increaseAmount}
+              onClick={() => this.increaseAmount()}
             >
               +
             </button>
             <button
               className="btn btn-outline-primary btn-sm"
               style={{ marginLeft: 8 }}
-              onClick={this.decreaseAmount}
+              onClick={() => this.decreaseAmount()}
             >
               -
             </button>

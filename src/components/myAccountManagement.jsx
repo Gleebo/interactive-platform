@@ -20,9 +20,14 @@ class MyAccountManagement extends Component {
         const userInfo = await getUserInfo();
 
         account.userNumber = userInfo.userNumber;
-        account.schoolName = userInfo.schoolName;
-        account.phoneNumber = userInfo.phoneNumber;
-        account.address = userInfo.address;
+        account.schoolName =
+          typeof userInfo.schoolName === "undefined" ? "" : userInfo.schoolName;
+        account.phoneNumber =
+          typeof userInfo.phoneNumber === "undefined"
+            ? ""
+            : userInfo.phoneNumber;
+        account.address =
+          typeof userInfo.address === "undefined" ? "" : userInfo.address;
         this.setState({ account: account });
         console.log(userInfo);
       } else {
@@ -46,7 +51,7 @@ class MyAccountManagement extends Component {
   handleUpdate = async e => {
     e.preventDefault();
 
-    updateUser(this.state.account);
+    await updateUser(this.state.account);
 
     window.alert("update successfully");
     window.open("/", "_self");
