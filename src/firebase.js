@@ -224,7 +224,7 @@ async function adminLogin(email, password) {
   const userInfoDocSnapshot = await usersCollection
     .doc(auth.currentUser.uid)
     .get();
-  if (!userInfoDocSnapshot.data().type === "admin") {
+  if (userInfoDocSnapshot.data().type !== "admin") {
     await signOut();
     return "this account does not have admin rights";
   } else {
@@ -320,6 +320,20 @@ async function deleteProducts(ids = []) {
     return err;
   }
 }
+
+async function setWelcomeText(text) {
+  const docSnapShot = await productsCollection.doc("homePage").get();
+  await docSnapShot.ref.update({ welcomeText: text });
+  return "welcome text updated";
+}
+
+async function getWelcomeText() {
+  const docSnapshot = await productsCollection.doc("homePage").get();
+}
+
+footerProduct;
+
+promotedProducts;
 
 export {
   signIn,
