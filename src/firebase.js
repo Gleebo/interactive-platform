@@ -326,22 +326,75 @@ async function deleteProducts(ids = []) {
 }
 
 async function setWelcomeText(text) {
-  const docSnapShot = await productsCollection.doc("homePage").get();
-  await docSnapShot.ref.update({ welcomeText: text });
-  return "welcome text updated";
+  try {
+    const docSnapShot = await productsCollection.doc("homePage").get();
+    await docSnapShot.ref.update({ welcomeText: text });
+    return "welcome text updated";
+  } catch (err) {
+    return err;
+  }
 }
 
 async function getWelcomeText() {
-  const docSnapshot = await productsCollection.doc("homePage").get();
-  const { welcomeText } = docSnapshot.data();
-  return welcomeText;
+  try {
+    const docSnapshot = await productsCollection.doc("homePage").get();
+    const { welcomeText } = docSnapshot.data();
+    return welcomeText;
+  } catch (err) {
+    return err;
+  }
 }
 
 async function setfooterProduct(id) {
-  const docSnapshot = await productsCollection.doc("homepage").get();
+  try {
+    const docSnapshot = await productsCollection.doc("homepage").get();
+    await docSnapshot.ref.update({ footerProduct: id });
+    return "success";
+  } catch (err) {
+    return err;
+  }
 }
 
-async function setPromotedProducts() {}
+async function getFooterProduct() {
+  try {
+    const docSnapshot = await productsCollection.doc("homepage").get();
+    const { footerProduct } = docSnapshot.data();
+    const productSnapshot = await productsCollection.doc(footerProduct).get();
+    const product = productSnapshot.data();
+    delete product.keywords;
+    return { id: productSnapshot.id, ...product };
+  } catch (err) {
+    return err;
+  }
+}
+
+async function setPromotedProducts(ids = []) {
+  try {
+    const docSnapshot = await productsCollection.doc("homepage").get();
+    await docSnapshot.ref.update({ promotedProducts: ids });
+    return "success";
+  } catch (err) {
+    return err;
+  }
+}
+async function getPromotedProducts() {
+  try {
+    const docSnapshot = await productsCollection.doc("homepage").get();
+    const { promotedProducts } = docSnapshot.data();
+    const docSnapshotsPromises = promotedProducts.map(id =>
+      productsCollection.doc(id).get()
+    );
+    const docSnapshots = await Promise.all(docSnapshotsPromises);
+    const products = docSnapshots.map(doc => {
+      let product = doc.data();
+      delete product.keywords;
+      return { id: doc.id, ...product };
+    });
+    return products;
+  } catch (err) {
+    return err;
+  }
+}
 
 export {
   signIn,
@@ -362,5 +415,11 @@ export {
   getUserInfo,
   updateUserEmail,
   updateUserPassword,
-  adminLogin
+  adminLogin,
+  getWelcomeText,
+  setWelcomeText,
+  getPromotedProducts,
+  setPromotedProducts,
+  getFooterProduct,
+  setfooterProduct
 };
