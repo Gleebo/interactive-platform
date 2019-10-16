@@ -5,6 +5,7 @@ import firebase from "firebase/app";
 class MyAccountManagement extends Component {
   state = {
     account: {
+      userNumber: "",
       schoolName: "",
       phoneNumber: "",
       address: ""
@@ -18,10 +19,12 @@ class MyAccountManagement extends Component {
 
         const userInfo = await getUserInfo();
 
+        account.userNumber = userInfo.userNumber;
         account.schoolName = userInfo.schoolName;
         account.phoneNumber = userInfo.phoneNumber;
         account.address = userInfo.address;
         this.setState({ account: account });
+        console.log(userInfo);
       } else {
         const account = { ...this.state.account };
         account.email = "not log in";
@@ -63,6 +66,9 @@ class MyAccountManagement extends Component {
             <div className="text-center" style={{ marginBottom: 14 }}>
               <span className="signInLogo">KidIslands</span>
             </div>
+            <span style={{ color: "blue" }}>
+              user ID : {this.state.account.userNumber}
+            </span>
             <form onSubmit={this.handleUpdate}>
               <div className="form-group">
                 <label htmlFor="theSchoolName">School Name</label>

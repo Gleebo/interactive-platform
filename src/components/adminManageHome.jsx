@@ -31,10 +31,11 @@ class AdminManageHome extends Component {
                 src="http://icons.iconarchive.com/icons/paomedia/small-n-flat/1024/sign-add-icon.png"
                 alt="..."
               ></img>
-
-              <button className="btn btn-light" style={{ float: "right" }}>
-                Add Products To Database
-              </button>
+              <a href="/addProduct">
+                <button className="btn btn-light" style={{ float: "right" }}>
+                  Add Products To Database
+                </button>
+              </a>
             </div>
             <div className="col text-center">
               <img

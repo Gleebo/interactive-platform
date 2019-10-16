@@ -2,24 +2,12 @@ import React, { Component } from "react";
 
 import OneNavLink from "./oneNavLink.jsx";
 import axios from "axios";
+import { async } from "q";
+import { signOut } from "../firebase";
 
 class NavBar extends Component {
   state = {
-    brands: [
-      /* { id: 1, name: "Nike" },
-      {
-        id: 2,
-        name: "Li Ning"
-      },
-      {
-        id: 3,
-        name: "Anta"
-      },
-      {
-        id: 4,
-        name: "UA"
-      }   */
-    ],
+    brands: [],
     subjects: [],
     properties: []
   };
@@ -32,11 +20,17 @@ class NavBar extends Component {
     this.setState({ brands });
   }
 
-  adminLogout = () => {
-    //wait for backend connection
-    sessionStorage.setItem("adminLogin", "");
-    window.open("/", "_self");
-  };
+  async handleLogout() {
+    const infoFromBack = await signOut();
+
+    if (infoFromBack instanceof Error) {
+      window.alert("Error happens, log out fail");
+    } else {
+      sessionStorage.setItem("adminLogin", "");
+
+      window.open("/", "_self");
+    }
+  }
 
   render() {
     return (
@@ -52,7 +46,7 @@ class NavBar extends Component {
                 : "btn btn-light invisible "
             }
             style={{ color: "red" }}
-            onClick={this.adminLogout}
+            onClick={this.handleLogout}
           >
             admin mode log out
           </button>

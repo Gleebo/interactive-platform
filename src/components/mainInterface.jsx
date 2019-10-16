@@ -16,6 +16,7 @@ import EmailPasswordUpdate from "./emailPasswordUpdate.jsx";
 import AdminLogIn from "./adminLogIn.jsx";
 import AdminManageHome from "./adminManageHome.jsx";
 import ProductDetailManagePage from "./productDetailManagePage.jsx";
+import AddProduct from "./addProduct.jsx";
 
 class MainInterface extends Component {
   render() {
@@ -53,6 +54,7 @@ class MainInterface extends Component {
             path="/productDetailManagePage"
             component={ProductDetailManagePage}
           ></Route>
+          <Route path="/addProduct" component={AddProduct}></Route>
         </div>
       </div>
     );
