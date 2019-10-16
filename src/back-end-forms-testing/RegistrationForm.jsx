@@ -5,25 +5,27 @@ export const RegistrationForm = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   return (
-    <form
-      onSubmit={async event => {
-        event.preventDefault();
-        console.log(await createNewUser(email, password));
-      }}
-    >
-      <input
-        type="email"
-        onChange={e => {
-          setEmail(e.target.value);
+    <div>
+      <form
+        onSubmit={async event => {
+          event.preventDefault();
+          console.log(await createNewUser(email, password));
         }}
-      />
-      <input
-        type="password"
-        onChange={e => {
-          setPassword(e.target.value);
-        }}
-      />
-      <input type="submit" value="Submit" />
-    </form>
+      >
+        <input
+          type="email"
+          onChange={e => {
+            setEmail(e.target.value);
+          }}
+        />
+        <input
+          type="password"
+          onChange={e => {
+            setPassword(e.target.value);
+          }}
+        />
+        <input type="submit" value="Submit" />
+      </form>
+    </div>
   );
 };

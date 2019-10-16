@@ -194,6 +194,7 @@ async function getOrdersByUser() {
     return error;
   }
 }
+
 //function to cancel order
 async function cancelOrder(id) {
   try {
@@ -202,15 +203,6 @@ async function cancelOrder(id) {
   } catch (error) {
     return error;
   }
-}
-
-async function addKeywords() {
-  const querySnapshot = await productsCollection.get();
-  querySnapshot.forEach(async doc => {
-    let name = doc.data().name;
-    let keywords = generateKeywords(name);
-    await doc.ref.update({ keywords });
-  });
 }
 
 function generateKeywords(name = "sample name") {
@@ -314,7 +306,7 @@ async function editBrand(id, brand, imageFile) {
   }
 }
 
-//------------------------------------------------------Admin stuff---------------------------------------//
+//------------------------------------------Admin stuff---------------------------------------//
 
 async function adminLogin(email, password) {
   await signIn(email, password);
@@ -347,5 +339,6 @@ export {
   signOut,
   getUserInfo,
   updateUserEmail,
-  updateUserPassword
+  updateUserPassword,
+  adminLogin
 };

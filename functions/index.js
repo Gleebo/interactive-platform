@@ -126,3 +126,15 @@ exports.getBrandById = functions.https.onRequest(async (request, response) => {
   response.header("Access-Control-Allow-Origin", "*");
   response.json(brand);
 });
+
+exports.createAdmin = functions.https.onCall(async function(data, context) {
+  const userCredentials = data.userCredentials;
+  const userDocSnapshot = await usersCollection.doc(context.auth.uid).get();
+  if (userDocSnapshot.data().type === "admin") {
+    const userRecord = await auth.createUser(userCredentials);
+    await usersCollection.doc(userRecord.uid).set({ type: "admin" });
+    return "successfully created new admin user";
+  } else {
+    return "this account has no admin rights";
+  }
+});
