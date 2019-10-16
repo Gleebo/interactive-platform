@@ -220,7 +220,7 @@ async function getCart() {
 //------------------------------------------Admin stuff---------------------------------------//
 
 async function adminLogin(email, password) {
-  try {
+  
     await signIn(email, password);
     const userInfoDocSnapshot = await usersCollection
       .doc(auth.currentUser.uid)
@@ -231,9 +231,7 @@ async function adminLogin(email, password) {
     } else {
       return "admin login successful";
     }
-  } catch (err) {
-    return err;
-  }
+  
 }
 
 //function to add brand and image
@@ -333,8 +331,19 @@ async function setWelcomeText(text) {
 
 async function getWelcomeText() {
   const docSnapshot = await productsCollection.doc("homePage").get();
+  const { welcomeText } = docSnapshot.data();
+  return welcomeText;
 }
 
+<<<<<<< HEAD
+=======
+async function setfooterProduct(id) {
+  const docSnapshot = await productsCollection.doc("homepage").get();
+}
+
+async function setPromotedProducts() {}
+
+>>>>>>> 2f0b2c0a7d8753d35fcc9cd28d1e939cd93d665e
 export {
   signIn,
   createNewUser,
