@@ -220,15 +220,19 @@ async function getCart() {
 //------------------------------------------Admin stuff---------------------------------------//
 
 async function adminLogin(email, password) {
-  await signIn(email, password);
-  const userInfoDocSnapshot = await usersCollection
-    .doc(auth.currentUser.uid)
-    .get();
-  if (userInfoDocSnapshot.data().type !== "admin") {
-    await signOut();
-    return "this account does not have admin rights";
-  } else {
-    return "admin login successful";
+  try {
+    await signIn(email, password);
+    const userInfoDocSnapshot = await usersCollection
+      .doc(auth.currentUser.uid)
+      .get();
+    if (userInfoDocSnapshot.data().type !== "admin") {
+      await signOut();
+      return "this account does not have admin rights";
+    } else {
+      return "admin login successful";
+    }
+  } catch (err) {
+    return err;
   }
 }
 
@@ -329,11 +333,15 @@ async function setWelcomeText(text) {
 
 async function getWelcomeText() {
   const docSnapshot = await productsCollection.doc("homePage").get();
+  const { welcomeText } = docSnapshot.data();
+  return welcomeText;
 }
 
-footerProduct;
+async function setfooterProduct(id) {
+  const docSnapshot = await productsCollection.doc("homepage").get();
+}
 
-promotedProducts;
+async function setPromotedProducts() {}
 
 export {
   signIn,
