@@ -3,6 +3,7 @@ import "firebase/auth";
 import "firebase/firestore";
 import "firebase/storage";
 import "firebase/functions";
+import generate from "@babel/generator";
 
 //configuration object
 var firebaseConfig = {
@@ -72,7 +73,7 @@ async function createNewUser(email, password) {
     await docSnapshot.ref.update({ number: currentUserNumber });
     await usersCollection
       .doc(userCredential.user.uid)
-      .set({ userNumber: currentUserNumber });
+      .set({ userNumber: currentUserNumber, type: "regular" });
     return currentUserNumber;
   } catch (error) {
     return error;
@@ -117,6 +118,7 @@ async function getUserInfo() {
 //function to add product and image
 async function createProduct(product, imageFile) {
   try {
+    product["keywords"] = generateKeywords(product.name);
     const docRefPromise = productsCollection.add(product);
     const imgUploadPromise = uploadImage(imageFile);
 
@@ -138,6 +140,8 @@ async function createProduct(product, imageFile) {
 async function editProduct(id, product, imageFile) {
   try {
     const docRef = productsCollection.doc(id);
+    const keywords = generateKeywords(product.name);
+    product["keywords"] = keywords;
 
     if (imageFile) {
       const uploadTask = await uploadImage(imageFile);
@@ -241,6 +245,7 @@ function uploadImage(file) {
     .child(file.name)
     .put(file);
 }
+
 //function to CreateTicketForSupport include title and content.
 async function createTicketForSupport(request) {
   try {
@@ -256,6 +261,7 @@ async function createTicketForSupport(request) {
     return error;
   }
 }
+
 //function to add products to cart or modify cart includelist of productIds and quantity: [{id:id, quantity: 2}, ...]
 async function updateCart(products) {
   try {
@@ -305,6 +311,21 @@ async function editBrand(id, brand, imageFile) {
     await docRef.update(brand);
   } catch (error) {
     return error;
+  }
+}
+
+//------------------------------------------------------Admin stuff---------------------------------------//
+
+async function adminLogin(email, password) {
+  await signIn(email, password);
+  const userInfoDocSnapshot = await usersCollection
+    .doc(auth.currentUser.uid)
+    .get();
+  if (!userInfoDocSnapshot.data().type === "admin") {
+    signOut();
+    return "this accaount does not have admin rights";
+  } else {
+    return "admin login successful";
   }
 }
 
