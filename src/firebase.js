@@ -3,7 +3,6 @@ import "firebase/auth";
 import "firebase/firestore";
 import "firebase/storage";
 import "firebase/functions";
-import generate from "@babel/generator";
 
 //configuration object
 var firebaseConfig = {
@@ -217,6 +216,38 @@ async function getCart() {
   return cart.data;
 }
 
+const searchProducts = (function() {
+  let lastDoc = null;
+  const reset = () => (lastDoc = null);
+  const next = async (keyword = "", category = "", limit = 10) => {
+    let query = productsCollection.orderBy("name");
+    if (keyword !== "") {
+      query = query.where("keywords", "array-contains", keyword);
+    }
+    if (category !== "") {
+      query = query.where("category", "==", category);
+    }
+    if (lastDoc) {
+      query = query.startAfter(lastDoc);
+    }
+
+    const querySnapshot = await query.limit(limit).get();
+
+    if (querySnapshot.docs.length > 0) {
+      lastDoc = querySnapshot.docs[querySnapshot.docs.length - 1];
+    } else {
+      return [];
+    }
+    const products = querySnapshot.docs.map(doc => {
+      let product = doc.data();
+      delete product.keywords;
+      return { id: doc.id, ...product };
+    });
+    return products;
+  };
+  return { next, reset };
+})();
+
 //------------------------------------------Admin stuff---------------------------------------//
 
 async function adminLogin(email, password) {
@@ -377,6 +408,7 @@ async function setPromotedProducts(ids = []) {
     return err;
   }
 }
+
 async function getPromotedProducts() {
   try {
     const docSnapshot = await productsCollection.doc("homepage").get();
@@ -395,6 +427,57 @@ async function getPromotedProducts() {
     return err;
   }
 }
+
+const getSupportTickets = (() => {
+  let lastDoc = null;
+  const reset = () => (lastDoc = null);
+  async function next() {
+    let query = supportRequestsCollection.orderBy("time");
+
+    if (lastDoc) {
+      query = query.startAfter(lastDoc).limit(10);
+    } else {
+      query = query.limit(10);
+    }
+    const querySnapshot = await query.get();
+
+    if (querySnapshot.docs.length > 0) {
+      lastDoc = querySnapshot.docs[querySnapshot.docs.length - 1];
+      console.log(lastDoc.data());
+    } else {
+      return [];
+    }
+    const result = querySnapshot.docs.map(doc => doc.data());
+    return result;
+  }
+  return { next, reset };
+})();
+
+async function setOrderStatus(id, status) {
+  await ordersCollection.doc(id).update({ status: status });
+}
+
+const getOrders = (() => {
+  let lastDoc = null;
+  const reset = () => (lastDoc = null);
+  async function next(limit = 10) {
+    let query = lastDoc
+      ? ordersCollection.startAfter(lastDoc).limit(limit)
+      : ordersCollection.limit(limit);
+    const querySnapshot = await query.get();
+    if (querySnapshot.docs.length > 0) {
+      lastDoc = querySnapshot.docs[querySnapshot.docs.length - 1];
+    } else {
+      return [];
+    }
+    const orders = querySnapshot.docs.map(doc => ({
+      id: doc.id,
+      ...doc.data()
+    }));
+    return orders;
+  }
+  return { next, reset };
+})();
 
 export {
   signIn,
@@ -421,5 +504,9 @@ export {
   getPromotedProducts,
   setPromotedProducts,
   getFooterProduct,
-  setfooterProduct
+  setfooterProduct,
+  getSupportTickets,
+  searchProducts,
+  setOrderStatus,
+  getOrders
 };
