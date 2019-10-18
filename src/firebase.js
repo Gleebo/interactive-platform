@@ -132,7 +132,6 @@ async function getOrdersByUser() {
   try {
     const docSnapShot = await ordersCollection
       .where("uid", "==", auth.currentUser.uid)
-      .orderBy("time", "desc")
       .get();
     const orders = docSnapShot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
     return orders;
