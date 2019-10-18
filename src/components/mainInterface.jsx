@@ -18,6 +18,8 @@ import AdminManageHome from "./adminManageHome.jsx";
 import ProductDetailManagePage from "./productDetailManagePage.jsx";
 import AddProduct from "./addProduct.jsx";
 import AdminForHomeManagement from "./adminForHomeManagement.jsx";
+import OrderManagement from "./orderManagement.jsx";
+import UserOrders from "./userOrders.jsx";
 
 class MainInterface extends Component {
   render() {
@@ -60,6 +62,8 @@ class MainInterface extends Component {
             path="/adminForHomeManagement"
             component={AdminForHomeManagement}
           ></Route>
+          <Route path="/orderManagement" component={OrderManagement}></Route>
+          <Route path="/userOrders" component={UserOrders}></Route>
         </div>
       </div>
     );

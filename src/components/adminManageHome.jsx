@@ -53,9 +53,11 @@ class AdminManageHome extends Component {
                 src="https://d1nhio0ox7pgb.cloudfront.net/_img/o_collection_png/green_dark_grey/256x256/plain/purchase_order.png"
                 alt="..."
               ></img>
-              <button className="btn btn-light" style={{ marginLeft: 20 }}>
-                Orders Management
-              </button>
+              <a href="/orderManagement">
+                <button className="btn btn-light" style={{ marginLeft: 20 }}>
+                  Orders Management
+                </button>
+              </a>
             </div>
           </div>
         </div>

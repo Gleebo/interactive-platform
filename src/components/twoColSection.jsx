@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { async } from "q";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import { getFooterProduct } from "../firebase";
 
 class TwoColSection extends Component {
   state = {
@@ -9,13 +10,8 @@ class TwoColSection extends Component {
   };
 
   async componentWillMount() {
-    const { data: homePageProduct } = await axios.get(
-      "https://us-central1-kids-islands.cloudfunctions.net/getProductById?id=vrjIOa1Exk6XyxIr3gnq"
-    );
-    homePageProduct.id = "vrjIOa1Exk6XyxIr3gnq";
-    console.log(homePageProduct);
-
-    this.setState({ product: homePageProduct });
+    const u = await getFooterProduct();
+    this.setState({ product: u });
   }
 
   render() {
@@ -27,10 +23,10 @@ class TwoColSection extends Component {
           <div className="row padiing ">
             <div className="col-md-12 col-lg-6 ">
               <img
-                className="img-fluid"
+                className="img-fluid float-right"
                 src={this.state.product.imgUrl}
                 alt="..."
-                style={{ width: 360, height: 360 }}
+                style={{ width: 300, height: 300, marginRight: 60 }}
               />
             </div>
 
