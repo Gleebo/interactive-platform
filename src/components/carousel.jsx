@@ -1,43 +1,92 @@
-import React from "react";
+import React, { Component } from "react";
+import { getPromotedProducts } from "../firebase";
+import { Link } from "react-router-dom";
 
-const Carousel = () => {
-  return (
-    <div id="slides" className="carousel slide" data-ride="carousel">
-      <ol className="carousel-indicators">
-        <li data-target="#slides" data-slide-to="0" className="active"></li>
-        <li data-target="#slides" data-slide-to="1"></li>
-        <li data-target="#slides" data-slide-to="2"></li>
-      </ol>
+class Carousel extends Component {
+  state = {
+    products: {
+      one: {},
+      two: {},
+      three: {}
+    }
+  };
 
-      <div className="carousel-inner text-center">
-        <div className="carousel-item active">
-          <img
-            src="https://www.robin-noorda.com/uploads/1/6/8/3/16830688/3347022_orig.jpg"
-            alt="..."
-          ></img>
-          <div className="carousel-caption">
-            <h1 className="display-2">ProductTitle</h1>
-            <h3>Product Description</h3>
-            <button type="button" className="btn btn-outline-light btn-lg">
-              Learn More
-            </button>
+  async componentDidMount() {
+    const products = { ...this.state.products };
+    const arr = await getPromotedProducts();
+    products.one = arr[0];
+    products.two = arr[1];
+    products.three = arr[2];
+
+    this.setState({ products });
+    console.log(this.state.products.two);
+  }
+
+  render() {
+    const product = this.state.products.one;
+
+    return (
+      <div id="slides" className="carousel slide" data-ride="carousel">
+        <ol className="carousel-indicators">
+          <li data-target="#slides" data-slide-to="0" className="active"></li>
+          <li data-target="#slides" data-slide-to="1"></li>
+          <li data-target="#slides" data-slide-to="2"></li>
+        </ol>
+
+        <div className="carousel-inner text-center">
+          <div className="carousel-item active">
+            <img
+              src={this.state.products.one.imgUrl}
+              style={{ height: 400, width: 1120 }}
+              alt="..."
+            ></img>
+            <div className="carousel-caption">
+              <h1 className="display-2">{this.state.products.one.name}</h1>
+              <h3>{this.state.products.one.description}</h3>
+              <Link
+                to={{
+                  pathname: "/productDetailPage",
+                  state: { product } //how to attach data using Link to jump to new page
+                }}
+              >
+                <button type="button" className="btn btn-outline-light btn-lg">
+                  Learn More
+                </button>
+              </Link>
+            </div>
+          </div>
+          <div className="carousel-item">
+            <img
+              src={this.state.products.two.imgUrl}
+              style={{ height: 400, width: 1120 }}
+              alt="..."
+            ></img>
+            <div className="carousel-caption">
+              <h1 className="display-2">{this.state.products.two.name}</h1>
+              <h3>{this.state.products.two.description}</h3>
+              <button type="button" className="btn btn-outline-light btn-lg">
+                Learn More
+              </button>
+            </div>
+          </div>
+          <div className="carousel-item">
+            <img
+              src={this.state.products.three.imgUrl}
+              style={{ height: 400, width: 1120 }}
+              alt="..."
+            ></img>
+            <div className="carousel-caption">
+              <h1 className="display-2">{this.state.products.three.name}</h1>
+              <h3>{this.state.products.three.description}</h3>
+              <button type="button" className="btn btn-outline-light btn-lg">
+                Learn More
+              </button>
+            </div>
           </div>
         </div>
-        <div className="carousel-item">
-          <img
-            src="https://www.robin-noorda.com/uploads/1/6/8/3/16830688/3347022_orig.jpg"
-            alt="..."
-          ></img>
-        </div>
-        <div className="carousel-item">
-          <img
-            src="https://www.robin-noorda.com/uploads/1/6/8/3/16830688/3347022_orig.jpg"
-            alt="..."
-          ></img>
-        </div>
       </div>
-    </div>
-  );
-};
+    );
+  }
+}
 
 export default Carousel;
