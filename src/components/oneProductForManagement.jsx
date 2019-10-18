@@ -66,6 +66,12 @@ class OneProductForManagement extends Component {
             select
           </label>
         </div>
+        <div>
+          <span>
+            product id: <br></br>
+            {this.props.product.id}
+          </span>
+        </div>
       </div>
     );
   }

@@ -28,6 +28,9 @@ class AddProduct extends Component {
   }
 
   imageChange = e => {
+    if (typeof e.currentTarget.files[0] === "undefined") {
+      return;
+    }
     this.setState({ imgFile: e.currentTarget.files[0] });
   };
 
@@ -43,8 +46,20 @@ class AddProduct extends Component {
 
   handleUpdate = async e => {
     e.preventDefault();
+    const { product, imgFile } = { ...this.state };
 
-    console.log(this.state.product);
+    if (
+      product.name === "" ||
+      product.category === "" ||
+      product.price === "" ||
+      product.description === "" ||
+      imgFile === null
+    ) {
+      window.alert("product info is not complete");
+    } else {
+      await createProduct(product, imgFile);
+      window.alert("successfully upload");
+    }
   };
 
   render() {
@@ -54,14 +69,24 @@ class AddProduct extends Component {
       <div>
         <div className="d-flex justify-content-center">
           <div style={{ marginTop: 100, width: 400 }}>
+            <div style={{ marginBottom: 12 }}>
+              <input
+                style={{ display: "none" }}
+                type="file"
+                onChange={this.imageChange}
+                ref={fileInput => (this.fileInput = fileInput)}
+              ></input>
+              <button
+                className="btn btn-primary"
+                onClick={() => this.fileInput.click()}
+              >
+                Select Image
+              </button>
+              <span style={{ marginLeft: 20 }}>
+                {imgFile === null ? "" : imgFile.name}
+              </span>
+            </div>
             <form onSubmit={this.handleUpdate}>
-              <div className="form-froup">
-                <input
-                  className="btn btn-light"
-                  type="file"
-                  onChange={this.imageChange}
-                ></input>
-              </div>
               <div className="form-group">
                 <label htmlFor="theName">Product Name</label>
                 <textarea

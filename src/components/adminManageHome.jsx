@@ -43,7 +43,9 @@ class AdminManageHome extends Component {
                 src="https://cdn.pixabay.com/photo/2017/09/12/06/26/home-2741413_960_720.png"
                 alt="..."
               ></img>
-              <button className="btn btn-light">Home Page Management</button>
+              <a href="/adminForHomeManagement">
+                <button className="btn btn-light">Home Page Management</button>
+              </a>
             </div>
             <div className="col">
               <img
