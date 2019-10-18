@@ -113,15 +113,24 @@ class MyAccountManagement extends Component {
               </div>
               <button className="btn btn-primary">Confoirm Update</button>
             </form>
-
-            <div style={{ marginTop: 5, marginBottom: 200 }}>
-              <button
-                style={{ width: 148 }}
-                className="btn btn-secondary "
-                onClick={this.handleLogout}
-              >
-                Log out
-              </button>
+            <div className="row">
+              <div style={{ marginTop: 5, marginBottom: 200 }}>
+                <button
+                  style={{ width: 148, marginLeft: 15 }}
+                  className="btn btn-secondary "
+                  onClick={this.handleLogout}
+                >
+                  Log out
+                </button>
+                <a href="/userOrders">
+                  <button
+                    className="btn btn-success "
+                    style={{ marginLeft: 60, width: 148 }}
+                  >
+                    My Orders
+                  </button>
+                </a>
+              </div>
             </div>
           </div>
         </div>
