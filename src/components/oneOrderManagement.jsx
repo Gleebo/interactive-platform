@@ -7,15 +7,25 @@ class OneOrderManagement extends Component {
     if (order.status === "processing") {
       return (
         <div className="row">
-          <div className="col-4">
-            <span>user id: {order.uid}</span>
+          <div className="col-3">
+            <span>user id: </span>
             <br></br>
-            <span>order id: {order.id}</span>
+            <span>{order.uid} </span>
+            <br></br>
+            <span>order id: </span>
+            <br></br>
+            <span> {order.id}</span>
           </div>
-          <div className="col-2 text-center">
-            products number: {order.productsForPay.length}
+          <div className="col-4 text-center">
+            {order.productsForPay.map(product => (
+              <img
+                style={{ height: 55, width: 55, marginTop: 20 }}
+                src={product.imgUrl}
+                alt="..."
+              ></img>
+            ))}
           </div>
-          <div className="col-3 text-center">
+          <div className="col-3 ">
             <span>payment method : </span>
             <br></br>
             <span>{order.method.payment}</span>
@@ -24,7 +34,7 @@ class OneOrderManagement extends Component {
             <br></br>
             <span>{order.method.shipping}</span>
           </div>
-          <div className="col-3 text-center">
+          <div className="col-2 text-center">
             <span>{order.status}</span>
             <br></br>
             <button
@@ -39,15 +49,25 @@ class OneOrderManagement extends Component {
     } else if (order.status === "shipping") {
       return (
         <div className="row">
-          <div className="col-4">
-            <span>user id: {order.uid}</span>
+          <div className="col-3">
+            <span>user id: </span>
             <br></br>
-            <span>order id: {order.id}</span>
+            <span>{order.uid} </span>
+            <br></br>
+            <span>order id: </span>
+            <br></br>
+            <span> {order.id}</span>
           </div>
-          <div className="col-2 text-center">
-            products number: {order.productsForPay.length}
+          <div className="col-4 text-center">
+            {order.productsForPay.map(product => (
+              <img
+                style={{ height: 55, width: 55, marginTop: 20 }}
+                src={product.imgUrl}
+                alt="..."
+              ></img>
+            ))}
           </div>
-          <div className="col-3 text-center">
+          <div className="col-3 ">
             <span>payment method : </span>
             <br></br>
             <span>{order.method.payment}</span>
@@ -56,7 +76,7 @@ class OneOrderManagement extends Component {
             <br></br>
             <span>{order.method.shipping}</span>
           </div>
-          <div className="col-3 text-center">
+          <div className="col-2 text-center">
             <span>{order.status}</span>
             <br></br>
             <button
@@ -71,15 +91,25 @@ class OneOrderManagement extends Component {
     } else {
       return (
         <div className="row">
-          <div className="col-4">
-            <span>user id: {order.uid}</span>
+          <div className="col-3">
+            <span>user id: </span>
             <br></br>
-            <span>order id: {order.id}</span>
+            <span>{order.uid} </span>
+            <br></br>
+            <span>order id: </span>
+            <br></br>
+            <span> {order.id}</span>
           </div>
-          <div className="col-2 text-center">
-            products number: {order.productsForPay.length}
+          <div className="col-4 text-center">
+            {order.productsForPay.map(product => (
+              <img
+                style={{ height: 55, width: 55, marginTop: 20 }}
+                src={product.imgUrl}
+                alt="..."
+              ></img>
+            ))}
           </div>
-          <div className="col-3 text-center">
+          <div className="col-3 ">
             <span>payment method : </span>
             <br></br>
             <span>{order.method.payment}</span>
@@ -88,7 +118,7 @@ class OneOrderManagement extends Component {
             <br></br>
             <span>{order.method.shipping}</span>
           </div>
-          <div className="col-3 text-center">
+          <div className="col-2 text-center">
             <span>{order.status}</span>
             <button style={{ display: "none" }}></button>
           </div>
