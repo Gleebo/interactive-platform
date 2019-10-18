@@ -378,7 +378,7 @@ async function getWelcomeText() {
 
 async function setfooterProduct(id) {
   try {
-    const docSnapshot = await productsCollection.doc("homepage").get();
+    const docSnapshot = await productsCollection.doc("homePage").get();
     await docSnapshot.ref.update({ footerProduct: id });
     return "success";
   } catch (err) {
@@ -388,7 +388,7 @@ async function setfooterProduct(id) {
 
 async function getFooterProduct() {
   try {
-    const docSnapshot = await productsCollection.doc("homepage").get();
+    const docSnapshot = await productsCollection.doc("homePage").get();
     const { footerProduct } = docSnapshot.data();
     const productSnapshot = await productsCollection.doc(footerProduct).get();
     const product = productSnapshot.data();
@@ -401,7 +401,7 @@ async function getFooterProduct() {
 
 async function setPromotedProducts(ids = []) {
   try {
-    const docSnapshot = await productsCollection.doc("homepage").get();
+    const docSnapshot = await productsCollection.doc("homePage").get();
     await docSnapshot.ref.update({ promotedProducts: ids });
     return "success";
   } catch (err) {
@@ -411,7 +411,7 @@ async function setPromotedProducts(ids = []) {
 
 async function getPromotedProducts() {
   try {
-    const docSnapshot = await productsCollection.doc("homepage").get();
+    const docSnapshot = await productsCollection.doc("homePage").get();
     const { promotedProducts } = docSnapshot.data();
     const docSnapshotsPromises = promotedProducts.map(id =>
       productsCollection.doc(id).get()
