@@ -153,7 +153,7 @@ class AddProduct extends Component {
                 />
               </div>
 
-              <button className="btn btn-primary">Confoirm Add</button>
+              <button className="btn btn-primary">Confirm</button>
             </form>
 
             <div style={{ marginTop: 5, marginBottom: 200 }}>

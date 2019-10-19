@@ -4,7 +4,7 @@ import SearchBar from "./searchBar.jsx";
 class AdminManageHome extends Component {
   state = {};
 
-  componentDidMount() {}
+  componentDidMount() { }
 
   render() {
     return (
@@ -12,8 +12,8 @@ class AdminManageHome extends Component {
         <SearchBar />
         <div className="text-center">
           <span style={{ color: "green" }}>
-            delete and edit product should be done using the searchBar to find
-            target product
+            Delete and edit products should be done using the Search Bar to find the
+            targets
           </span>
         </div>
         <div
