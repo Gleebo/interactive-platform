@@ -74,7 +74,7 @@ class AdminForHomeManagement extends Component {
         <div className="container" style={{ marginTop: 50 }}>
           <h3>Footer Product </h3>
           <div style={{ marginBottom: 20 }}>
-            <span>input product id to set the footer product in home page</span>
+            <span>Input product id to set the footer product in home page</span>
           </div>
           <input
             style={{ width: 300, marginRight: 30 }}
@@ -95,7 +95,7 @@ class AdminForHomeManagement extends Component {
           <h3>Welcome Section Text </h3>
           <div style={{ marginBottom: 20 }}>
             <span>
-              input welcome text id to set the welcome section text in home page
+              Input welcome text id to set the welcome section text in home page
             </span>
           </div>
           <textarea
@@ -117,7 +117,7 @@ class AdminForHomeManagement extends Component {
           <h3>Products For Carousel </h3>
           <div style={{ marginBottom: 20 }}>
             <span>
-              input three product ids to set the Carousel in home page
+              Input three product ids to set the Carousel in home page
             </span>
           </div>
 
