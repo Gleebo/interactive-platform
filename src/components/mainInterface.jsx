@@ -20,6 +20,8 @@ import AddProduct from "./addProduct.jsx";
 import AdminForHomeManagement from "./adminForHomeManagement.jsx";
 import OrderManagement from "./orderManagement.jsx";
 import UserOrders from "./userOrders.jsx";
+import AskQuestion from "./askQuestion.jsx";
+import CheckQuestions from "./checkQuestions.jsx";
 
 class MainInterface extends Component {
   render() {
@@ -64,6 +66,8 @@ class MainInterface extends Component {
           ></Route>
           <Route path="/orderManagement" component={OrderManagement}></Route>
           <Route path="/userOrders" component={UserOrders}></Route>
+          <Route path="/askQuestion" component={AskQuestion}></Route>
+          <Route path="/checkQuestions" component={CheckQuestions}></Route>
         </div>
       </div>
     );

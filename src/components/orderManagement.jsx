@@ -14,7 +14,7 @@ class OrderManagement extends Component {
   async componentDidMount() {
     const orders = { ...this.state.orders };
 
-    const k = await getOrders.next(20);
+    const k = await getOrders.next(25);
     const p = k.filter(c => c.status === "processing");
     orders.processingArray = p;
 

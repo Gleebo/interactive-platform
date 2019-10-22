@@ -442,7 +442,7 @@ const getSupportTickets = (() => {
 
     if (querySnapshot.docs.length > 0) {
       lastDoc = querySnapshot.docs[querySnapshot.docs.length - 1];
-      console.log(lastDoc.data());
+      //console.log(lastDoc.data());
     } else {
       return [];
     }

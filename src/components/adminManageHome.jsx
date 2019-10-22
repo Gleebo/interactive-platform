@@ -4,7 +4,7 @@ import SearchBar from "./searchBar.jsx";
 class AdminManageHome extends Component {
   state = {};
 
-  componentDidMount() { }
+  componentDidMount() {}
 
   render() {
     return (
@@ -12,8 +12,8 @@ class AdminManageHome extends Component {
         <SearchBar />
         <div className="text-center">
           <span style={{ color: "green" }}>
-            Delete and edit products should be done using the Search Bar to find the
-            targets
+            Delete and edit products should be done using the Search Bar to find
+            the targets
           </span>
         </div>
         <div
@@ -56,6 +56,24 @@ class AdminManageHome extends Component {
               <a href="/orderManagement">
                 <button className="btn btn-light" style={{ marginLeft: 20 }}>
                   Orders Management
+                </button>
+              </a>
+            </div>
+          </div>
+          <div className="row" style={{ marginTop: 30, marginBottom: 100 }}>
+            <div className="col-4">
+              <img
+                style={{
+                  width: 200,
+                  height: 200,
+                  float: "right"
+                }}
+                src="http://www.iconarchive.com/download/i75883/martz90/circle/messages.ico"
+                alt="..."
+              ></img>
+              <a href="/checkQuestions">
+                <button className="btn btn-light" style={{ float: "right" }}>
+                  Check Messages From Users
                 </button>
               </a>
             </div>
