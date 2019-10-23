@@ -8,7 +8,7 @@ class CheckQuestions extends Component {
   };
 
   async componentDidMount() {
-    const res = await getSupportTickets.next(15);
+    const res = await getSupportTickets.next(10);
     this.setState({ questions: res });
     console.log(this.state.questions);
   }
