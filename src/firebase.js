@@ -187,9 +187,11 @@ function uploadImage(file) {
 async function createTicketForSupport(request) {
   try {
     const uid = auth.currentUser.uid;
+    const email = auth.currentUser.email;
     const time = firestore.Timestamp.fromMillis(Date.now());
     const result = await supportRequestsCollection.add({
       uid: uid,
+      email: email,
       time: time,
       ...request
     });

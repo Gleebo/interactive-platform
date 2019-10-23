@@ -45,9 +45,14 @@ class FinalPayInterface extends Component {
   };
 
   handlePay = async () => {
-    createOrder(this.state);
-    window.alert("payment is finished, we will return to home page");
-    window.open("/", "_self");
+    const thing = await createOrder(this.state);
+    if (thing instanceof Error) {
+      console.log(thing.message);
+      window.alert("error happens");
+    } else {
+      window.alert("payment is finished, we will return to home page");
+      window.open("/", "_self");
+    }
   };
 
   render() {
