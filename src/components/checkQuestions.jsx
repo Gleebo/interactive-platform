@@ -22,9 +22,13 @@ class CheckQuestions extends Component {
       <div>
         <div className="container">
           {this.state.questions.map(question => (
-            <div className="row" style={{ marginTop: 30 }}>
-              <div className="col-3 text-center"></div>
-              <div className="col-9 ">
+            <div className="row" style={{ marginTop: 30, marginBottom: 50 }}>
+              <div className="col-4 text-center">
+                <span>From: </span>
+                <br></br>
+                <span>{question.email}</span>
+              </div>
+              <div className="col-8 ">
                 <span>Title: {question.title}</span>
                 <br></br>
                 <span>Message: {question.content}</span>
