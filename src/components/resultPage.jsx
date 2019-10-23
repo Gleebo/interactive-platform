@@ -6,6 +6,7 @@ import NotFound from "./notFound.jsx";
 import OneProductForManagement from "./oneProductForManagement.jsx";
 import { deleteProducts } from "../firebase";
 import { async } from "q";
+import { searchProducts } from "../firebase";
 
 class ResultPage extends Component {
   state = {
@@ -15,21 +16,30 @@ class ResultPage extends Component {
 
   async componentDidUpdate() {
     const keyword = this.props.location.state.keyword;
+
     const { data: resultProducts } = await axios.get(
       "https://us-central1-kids-islands.cloudfunctions.net/searchProducts?keyword=" +
-      keyword +
-      "&id=none&category=all"
+        keyword +
+        "&id=none&category=all"
     );
-    if (this.state.resultProducts.length !== resultProducts.length)
+    if (resultProducts.length >= 1) {
+      if (
+        this.state.resultProducts.length !== resultProducts.length ||
+        this.state.resultProducts[0].id !== resultProducts[0].id
+      )
+        this.setState({ resultProducts });
+    } else {
       this.setState({ resultProducts });
+    }
   }
 
   async componentDidMount() {
     const keyword = this.props.location.state.keyword;
+
     const { data: resultProducts } = await axios.get(
       "https://us-central1-kids-islands.cloudfunctions.net/searchProducts?keyword=" +
-      keyword +
-      "&id=none&category=all"
+        keyword +
+        "&id=none&category=all"
     );
     this.setState({ resultProducts });
   }
@@ -101,8 +111,8 @@ class ResultPage extends Component {
                   product={oneResultProduct}
                 />
               ) : (
-                  OneProduct(oneResultProduct)
-                )
+                OneProduct(oneResultProduct)
+              )
             )}
           </div>
         </div>

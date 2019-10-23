@@ -26,7 +26,11 @@ class Carousel extends Component {
     const product = this.state.products.one;
 
     return (
-      <div id="slides" className="carousel slide carousel-fade" data-ride="carousel">
+      <div
+        id="slides"
+        className="carousel slide carousel-fade"
+        data-ride="carousel"
+      >
         <ol className="carousel-indicators">
           <li data-target="#slides" data-slide-to="0" className="active"></li>
           <li data-target="#slides" data-slide-to="1"></li>
@@ -37,7 +41,7 @@ class Carousel extends Component {
           <div className="carousel-item active">
             <img
               src={this.state.products.one.imgUrl}
-              style={{ height: 700, width: 100 + '%' }}
+              style={{ height: 470, width: 90 + "%" }}
               alt="..."
             ></img>
             <div className="carousel-caption">
@@ -58,7 +62,7 @@ class Carousel extends Component {
           <div className="carousel-item">
             <img
               src={this.state.products.two.imgUrl}
-              style={{ height: 700, width: 100 + '%' }}
+              style={{ height: 470, width: 90 + "%" }}
               alt="..."
             ></img>
             <div className="carousel-caption">
@@ -72,7 +76,7 @@ class Carousel extends Component {
           <div className="carousel-item">
             <img
               src={this.state.products.three.imgUrl}
-              style={{ height: 700, width: 100 + '%' }}
+              style={{ height: 470, width: 90 + "%" }}
               alt="..."
             ></img>
             <div className="carousel-caption">

@@ -12,13 +12,13 @@ const Footer = () => {
           <a
             className={
               sessionStorage.getItem("loginEmail") ||
-                sessionStorage.getItem("adminLogin")
+              sessionStorage.getItem("adminLogin")
                 ? "visible"
                 : "invisible"
             }
             href="/askQuestion"
           >
-            Ask Questions
+            <p>Ask Questions</p>
           </a>
         </div>
         <div className="col-md-4">
@@ -38,7 +38,7 @@ const Footer = () => {
           href="/adminLogIn"
           className={
             sessionStorage.getItem("loginEmail") ||
-              sessionStorage.getItem("adminLogin")
+            sessionStorage.getItem("adminLogin")
               ? "invisible"
               : "visible"
           }

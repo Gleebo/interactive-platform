@@ -116,7 +116,7 @@ class MyAccountManagement extends Component {
             <div className="row">
               <div style={{ marginTop: 5, marginBottom: 200 }}>
                 <button
-                  style={{ width: 148, marginLeft: 15 }}
+                  style={{ width: 139, marginLeft: 15 }}
                   className="btn btn-secondary "
                   onClick={this.handleLogout}
                 >

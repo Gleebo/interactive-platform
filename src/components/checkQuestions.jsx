@@ -10,7 +10,7 @@ class CheckQuestions extends Component {
   async componentDidMount() {
     const res = await getSupportTickets.next(10);
     let resFinal = [];
-    resFinal = res.reverse();
+    resFinal = res;
     this.setState({ questions: resFinal });
     console.log(this.state.questions);
   }

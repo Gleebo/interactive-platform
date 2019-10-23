@@ -29,7 +29,7 @@ class SearchBar extends Component {
                   autoFocus
                   className="form-control form-control-lg form-control-borderless"
                   type="search"
-                  placeholder="Input keywords to search"
+                  placeholder="Input keyword to find products"
                 />
               </div>
 
