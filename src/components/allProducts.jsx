@@ -6,46 +6,60 @@ import Pagination from "./pagination.jsx";
 
 import { paginate } from "./paginate";
 import axios from "axios";
+import { searchProducts } from "../firebase";
+import { async } from "q";
 
 class AllProducts extends Component {
   state = {
-    products: [],
-    thePageSize: 12,
-    currentPage: 1
+    products: []
+    // thePageSize: 12,
+    // currentPage: 1
   };
 
   async componentDidMount() {
-    const { data: result } = await axios.get(
+    /*const { data: result } = await axios.get(
       "https://us-central1-kids-islands.cloudfunctions.net/getProducts?id=none" //use ? to query id in a link
-    ); // use await in async function to convert Promise to real obejct(array here)
+    ); // use await in async function to convert Promise to real obejct(array here)  */
+    const result = await searchProducts.next();
     this.setState({ products: result });
+    console.log(result);
   }
 
-  handlePageChange = page => {
-    this.setState({ currentPage: page });
+  loadMore = async () => {
+    const res = await searchProducts.next();
+    let oldArray = this.state.products;
+    let newArray = oldArray.concat(res);
+    this.setState({ products: newArray });
   };
 
+  /* handlePageChange = page => {
+    this.setState({ currentPage: page });
+  };
+*/
   render() {
-    const onePageProducts = paginate(
+    /* const onePageProducts = paginate(
       this.state.products,
       this.state.currentPage,
       this.state.thePageSize
-    );
+    );    */
 
     return (
-      <div className=" text-center">
+      <div className=" text-center container">
         <SearchBar />
         <div className="row justify-content-center">
-          {onePageProducts.map(product => OneProduct(product))}
+          {this.state.products.map(product => OneProduct(product))}
         </div>
 
-        <div style={{ marginTop: 30, marginBottom: 60 }}>
-          <Pagination
-            productsCount={this.state.products.length}
-            pageSize={this.state.thePageSize}
-            onPageChange={this.handlePageChange}
-            currentPage={this.state.currentPage}
-          />
+        <div>
+          <div style={{ marginRight: 100 }}>
+            <button
+              style={{ marginBottom: 50, marginTop: 20 }}
+              className="btn btn-primary float-right"
+              onClick={() => this.loadMore()}
+            >
+              Load More
+            </button>
+          </div>
         </div>
       </div>
     );

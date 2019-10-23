@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { async } from "q";
-import { getSupportTickets, getUserInfo } from "../firebase";
+import { getSupportTickets } from "../firebase";
 
 class CheckQuestions extends Component {
   state = {
@@ -9,12 +9,21 @@ class CheckQuestions extends Component {
 
   async componentDidMount() {
     const res = await getSupportTickets.next(10);
-    this.setState({ questions: res });
+    let resFinal = [];
+    resFinal = res.reverse();
+    this.setState({ questions: resFinal });
     console.log(this.state.questions);
   }
 
   getEmailByUid = async uid => {
     //wait for develop
+  };
+
+  loadMore = async () => {
+    const res = await getSupportTickets.next(10);
+    let oldArray = this.state.questions;
+    let newArray = oldArray.concat(res);
+    this.setState({ questions: newArray });
   };
 
   render() {
@@ -35,6 +44,14 @@ class CheckQuestions extends Component {
               </div>
             </div>
           ))}
+          <div style={{ marginBottom: 180 }}>
+            <button
+              className="btn btn-primary float-right"
+              onClick={() => this.loadMore()}
+            >
+              Load More
+            </button>
+          </div>
         </div>
       </div>
     );
