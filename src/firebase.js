@@ -221,12 +221,12 @@ async function getCart() {
 const searchProducts = (function() {
   let lastDoc = null;
   const reset = () => (lastDoc = null);
-  const next = async (
+  const next = async ({
     keyword = "",
     category = "",
     subject = "",
     limit = 10
-  ) => {
+  }) => {
     let query = productsCollection.orderBy("name");
     if (keyword !== "") {
       query = query.where("keywords", "array-contains", keyword.toLowerCase());
