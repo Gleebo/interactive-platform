@@ -55,8 +55,7 @@ class EmailPasswordUpdate extends Component {
       <div style={{ marginTop: 100 }} className="d-flex justify-content-center">
         <div style={{ width: 30 + "%" }}>
           <span style={{ color: "red" }}>
-            Notice: you are about to change some confidential information of
-            yours
+            Notice: you are about to change some confidential information
           </span>
           <form onSubmit={this.handleUpdate}>
             <div className="form-group">
@@ -84,7 +83,7 @@ class EmailPasswordUpdate extends Component {
               />
             </div>
 
-            <button className="btn btn-primary">Confoirm Update</button>
+            <button className="btn btn-primary">Confirm Update</button>
           </form>
         </div>
       </div>

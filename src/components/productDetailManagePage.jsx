@@ -119,7 +119,7 @@ class ProductDetailManagePage extends Component {
                 />
               </div>
 
-              <button className="btn btn-primary">Confoirm Update</button>
+              <button className="btn btn-primary">Confirm Update</button>
             </form>
 
             <div style={{ marginTop: 5, marginBottom: 200 }}>

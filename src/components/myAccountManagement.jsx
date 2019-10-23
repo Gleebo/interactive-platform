@@ -109,9 +109,9 @@ class MyAccountManagement extends Component {
                 />
               </div>
               <div style={{ float: "right" }}>
-                <a href="/emailPasswordUpdate">update email or password ></a>
+                <a href="/emailPasswordUpdate">Update email or password ></a>
               </div>
-              <button className="btn btn-primary">Confoirm Update</button>
+              <button className="btn btn-primary">Confirm Update</button>
             </form>
             <div className="row">
               <div style={{ marginTop: 5, marginBottom: 200 }}>

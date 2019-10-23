@@ -17,8 +17,8 @@ class ResultPage extends Component {
     const keyword = this.props.location.state.keyword;
     const { data: resultProducts } = await axios.get(
       "https://us-central1-kids-islands.cloudfunctions.net/searchProducts?keyword=" +
-        keyword +
-        "&id=none&category=all"
+      keyword +
+      "&id=none&category=all"
     );
     if (this.state.resultProducts.length !== resultProducts.length)
       this.setState({ resultProducts });
@@ -28,8 +28,8 @@ class ResultPage extends Component {
     const keyword = this.props.location.state.keyword;
     const { data: resultProducts } = await axios.get(
       "https://us-central1-kids-islands.cloudfunctions.net/searchProducts?keyword=" +
-        keyword +
-        "&id=none&category=all"
+      keyword +
+      "&id=none&category=all"
     );
     this.setState({ resultProducts });
   }
@@ -87,7 +87,7 @@ class ResultPage extends Component {
                 style={{ color: "red" }}
                 onClick={this.deleteClick}
               >
-                delete selected
+                Delete selected
               </button>
             </div>
           </div>
@@ -101,8 +101,8 @@ class ResultPage extends Component {
                   product={oneResultProduct}
                 />
               ) : (
-                OneProduct(oneResultProduct)
-              )
+                  OneProduct(oneResultProduct)
+                )
             )}
           </div>
         </div>

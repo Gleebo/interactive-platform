@@ -63,12 +63,12 @@ class OneProductForManagement extends Component {
             class="custom-control-label"
             for={"customCheck1" + this.props.product.id}
           >
-            select
+            Selection
           </label>
         </div>
         <div>
           <span>
-            product id: <br></br>
+            Product ID: <br></br>
             {this.props.product.id}
           </span>
         </div>

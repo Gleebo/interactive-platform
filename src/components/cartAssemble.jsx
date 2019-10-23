@@ -74,19 +74,19 @@ class CartAssemble extends Component {
               onClick={this.props.onAllDelete}
               className="btn btn-secondary m-1 btn-sm"
             >
-              remove all
+              Remove all
             </button>
             <button
               onClick={this.props.onReset}
               className="btn btn-secondary m-1 btn-sm"
             >
-              reset
+              Reset
             </button>
             <button
               className="btn btn-secondary m-1 btn-sm"
               onClick={this.payall}
             >
-              pay all
+              Pay all
             </button>
           </div>
         </div>
