@@ -26,7 +26,7 @@ const BrandIntro = brand => {
               Introduction: {brand.location.state.description}
             </p>
             <p className="card-text">
-              <small className="text-muted">Google us to lean more</small>
+              <small className="text-muted">Google us to learn more</small>
             </p>
           </div>
         </div>

@@ -48,7 +48,7 @@ class NavBar extends Component {
             style={{ color: "red" }}
             onClick={this.handleLogout}
           >
-            admin mode log out
+            Admin mode log out
           </button>
           <button
             className="navbar-toggler"
@@ -90,7 +90,7 @@ class NavBar extends Component {
                 <a
                   className={
                     sessionStorage.getItem("loginEmail") ||
-                    sessionStorage.getItem("adminLogin")
+                      sessionStorage.getItem("adminLogin")
                       ? "nav-link disabled"
                       : "nav-link "
                   }
@@ -103,7 +103,7 @@ class NavBar extends Component {
                 <a
                   className={
                     sessionStorage.getItem("loginEmail") ||
-                    sessionStorage.getItem("adminLogin")
+                      sessionStorage.getItem("adminLogin")
                       ? "nav-link disabled"
                       : "nav-link "
                   }

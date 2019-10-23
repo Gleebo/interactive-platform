@@ -8,11 +8,11 @@ class OneOrderManagement extends Component {
       return (
         <div className="row">
           <div className="col-3">
-            <span>user id: </span>
+            <span>User id: </span>
             <br></br>
             <span>{order.uid} </span>
             <br></br>
-            <span>order id: </span>
+            <span>Order id: </span>
             <br></br>
             <span> {order.id}</span>
           </div>
@@ -26,11 +26,11 @@ class OneOrderManagement extends Component {
             ))}
           </div>
           <div className="col-3 ">
-            <span>payment method : </span>
+            <span>Payment method : </span>
             <br></br>
             <span>{order.method.payment}</span>
             <br></br>
-            <span>shipping method : </span>
+            <span>Shipping method : </span>
             <br></br>
             <span>{order.method.shipping}</span>
           </div>
@@ -41,7 +41,7 @@ class OneOrderManagement extends Component {
               className="btn btn-primary"
               onClick={() => this.props.onToShipping(this.props.order)}
             >
-              to shipping
+              To be shipped
             </button>
           </div>
         </div>
@@ -50,11 +50,11 @@ class OneOrderManagement extends Component {
       return (
         <div className="row">
           <div className="col-3">
-            <span>user id: </span>
+            <span>User id: </span>
             <br></br>
             <span>{order.uid} </span>
             <br></br>
-            <span>order id: </span>
+            <span>Order id: </span>
             <br></br>
             <span> {order.id}</span>
           </div>
@@ -68,11 +68,11 @@ class OneOrderManagement extends Component {
             ))}
           </div>
           <div className="col-3 ">
-            <span>payment method : </span>
+            <span>Payment method : </span>
             <br></br>
             <span>{order.method.payment}</span>
             <br></br>
-            <span>shipping method : </span>
+            <span>Shipping method : </span>
             <br></br>
             <span>{order.method.shipping}</span>
           </div>
@@ -83,7 +83,7 @@ class OneOrderManagement extends Component {
               className="btn btn-success"
               onClick={() => this.props.onToDone(this.props.order)}
             >
-              to done
+              Completed
             </button>
           </div>
         </div>
@@ -92,11 +92,11 @@ class OneOrderManagement extends Component {
       return (
         <div className="row">
           <div className="col-3">
-            <span>user id: </span>
+            <span>User id: </span>
             <br></br>
             <span>{order.uid} </span>
             <br></br>
-            <span>order id: </span>
+            <span>Order id: </span>
             <br></br>
             <span> {order.id}</span>
           </div>
@@ -110,11 +110,11 @@ class OneOrderManagement extends Component {
             ))}
           </div>
           <div className="col-3 ">
-            <span>payment method : </span>
+            <span>Payment method : </span>
             <br></br>
             <span>{order.method.payment}</span>
             <br></br>
-            <span>shipping method : </span>
+            <span>Shipping method : </span>
             <br></br>
             <span>{order.method.shipping}</span>
           </div>

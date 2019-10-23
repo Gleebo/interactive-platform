@@ -27,6 +27,7 @@ const ordersCollection = db.collection("orders");
 const supportRequestsCollection = db.collection("supportRequests");
 const usersCollection = db.collection("users");
 const brandsCollection = db.collection("brands");
+const propertiesCollection = db.collection("properties").doc("properties");
 
 auth.setPersistence(firebase.auth.Auth.Persistence.SESSION);
 
@@ -220,13 +221,21 @@ async function getCart() {
 const searchProducts = (function() {
   let lastDoc = null;
   const reset = () => (lastDoc = null);
-  const next = async (keyword = "", category = "", limit = 10) => {
+  const next = async ({
+    keyword = "",
+    category = "",
+    subject = "",
+    limit = 10
+  }) => {
     let query = productsCollection.orderBy("name");
     if (keyword !== "") {
-      query = query.where("keywords", "array-contains", keyword);
+      query = query.where("keywords", "array-contains", keyword.toLowerCase());
     }
     if (category !== "") {
-      query = query.where("category", "==", category);
+      query = query.where("category", "==", category.toLowerCase());
+    }
+    if (subject !== "") {
+      query = query.where("subject", "==", subject.toLowerCase());
     }
     if (lastDoc) {
       query = query.startAfter(lastDoc);
@@ -249,6 +258,15 @@ const searchProducts = (function() {
   return { next, reset };
 })();
 
+async function getCategoriesAndSubjects() {
+  try {
+    const docSnapshot = await propertiesCollection.get();
+    return docSnapshot.data();
+  } catch (error) {
+    return error;
+  }
+}
+
 //------------------------------------------Admin stuff---------------------------------------//
 
 async function adminLogin(email, password) {
@@ -265,6 +283,22 @@ async function adminLogin(email, password) {
     }
   } catch (err) {
     return err;
+  }
+}
+
+async function setCategories(categories = []) {
+  try {
+    await propertiesCollection.update({ categories });
+  } catch (error) {
+    return error;
+  }
+}
+
+async function setSubjects(subjects = []) {
+  try {
+    await propertiesCollection.update({ subjects });
+  } catch (error) {
+    return error;
   }
 }
 
@@ -433,7 +467,7 @@ const getSupportTickets = (() => {
   let lastDoc = null;
   const reset = () => (lastDoc = null);
   async function next() {
-    let query = supportRequestsCollection.orderBy("time");
+    let query = supportRequestsCollection.orderBy("time", "desc");
 
     if (lastDoc) {
       query = query.startAfter(lastDoc).limit(10);
@@ -509,5 +543,8 @@ export {
   getSupportTickets,
   searchProducts,
   setOrderStatus,
-  getOrders
+  getOrders,
+  getCategoriesAndSubjects,
+  setCategories,
+  setSubjects
 };

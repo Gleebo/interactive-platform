@@ -80,12 +80,12 @@ class FinalPayInterface extends Component {
                   <option>Paypal</option>
                   <option>Alipay</option>
                   <option>Applepay</option>
-                  <option>Master card</option>
+                  <option>Card</option>
                 </select>
               </div>
               <div class="form-group">
                 <label for="shippingMethod" style={{ float: "left" }}>
-                  Shipping method select
+                  Shipping method selection
                 </label>
                 <select
                   name="shipping"
@@ -93,10 +93,10 @@ class FinalPayInterface extends Component {
                   class="form-control"
                   id="shippingMethod"
                 >
-                  <option>shipping method 1</option>
-                  <option>shipping method 2</option>
-                  <option>shipping method 3</option>
-                  <option>shipping method 4</option>
+                  <option>Standard Shipping</option>
+                  <option>Expedited Shipping</option>
+                  <option>Overnight Shipping</option>
+                  {/* <option>shipping method 4</option> */}
                 </select>
               </div>
             </form>

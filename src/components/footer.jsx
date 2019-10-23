@@ -12,13 +12,13 @@ const Footer = () => {
           <a
             className={
               sessionStorage.getItem("loginEmail") ||
-              sessionStorage.getItem("adminLogin")
+                sessionStorage.getItem("adminLogin")
                 ? "visible"
                 : "invisible"
             }
             href="/askQuestion"
           >
-            Ask Question
+            Ask Questions
           </a>
         </div>
         <div className="col-md-4">
@@ -38,12 +38,12 @@ const Footer = () => {
           href="/adminLogIn"
           className={
             sessionStorage.getItem("loginEmail") ||
-            sessionStorage.getItem("adminLogin")
+              sessionStorage.getItem("adminLogin")
               ? "invisible"
               : "visible"
           }
         >
-          <p>admin access</p>
+          <p>Admin Access</p>
         </a>
         <p>2019 KidIslands Limited. All Rights Reserved</p>
       </div>

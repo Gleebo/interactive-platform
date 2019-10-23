@@ -110,3 +110,7 @@
   margin-left: 0;
   width: 60%;
 }
+a:link { text-decoration: none;color: blue}
+a:active { text-decoration:blink; color: red}
+a:hover { text-decoration:none;color: red}
+a:visited { text-decoration: none;color: black}
