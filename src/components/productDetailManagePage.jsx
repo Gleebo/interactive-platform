@@ -124,7 +124,7 @@ class ProductDetailManagePage extends Component {
 
             <div style={{ marginTop: 5, marginBottom: 200 }}>
               <button
-                style={{ width: 148 }}
+                style={{ width: 139 }}
                 className="btn btn-secondary "
                 onClick={this.handleCancel}
               >

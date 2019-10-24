@@ -4,8 +4,6 @@ import OneProduct from "./oneProduct.jsx";
 import SearchBar from "./searchBar.jsx";
 import Pagination from "./pagination.jsx";
 
-import { paginate } from "./paginate";
-import axios from "axios";
 import { searchProducts } from "../firebase";
 import { async } from "q";
 
@@ -22,7 +20,6 @@ class AllProducts extends Component {
     ); // use await in async function to convert Promise to real obejct(array here)  */
     const result = await searchProducts.next();
     this.setState({ products: result });
-    console.log(result);
   }
 
   loadMore = async () => {

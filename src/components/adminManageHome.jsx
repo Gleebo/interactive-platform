@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import SearchBar from "./searchBar.jsx";
+import AllProductsForAdmin from "./allProductsForAdmin.jsx";
 
 class AdminManageHome extends Component {
   state = {};
@@ -60,7 +61,7 @@ class AdminManageHome extends Component {
               </a>
             </div>
           </div>
-          <div className="row" style={{ marginTop: 30, marginBottom: 100 }}>
+          <div className="row" style={{ marginTop: 30, marginBottom: 40 }}>
             <div className="col-4">
               <img
                 style={{
@@ -78,6 +79,9 @@ class AdminManageHome extends Component {
               </a>
             </div>
           </div>
+        </div>
+        <div>
+          <AllProductsForAdmin />
         </div>
       </div>
     );
