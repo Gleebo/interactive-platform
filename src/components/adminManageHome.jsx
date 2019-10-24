@@ -78,6 +78,21 @@ class AdminManageHome extends Component {
                 </button>
               </a>
             </div>
+            <div className="col-4 text-center">
+              <img
+                style={{
+                  width: 200,
+                  height: 200
+                }}
+                src="https://cdn.dribbble.com/users/1057455/screenshots/2673531/icons3.jpg"
+                alt="..."
+              ></img>
+              <a href="/cNs">
+                <button className="btn btn-light">
+                  Categories and Subjects
+                </button>
+              </a>
+            </div>
           </div>
         </div>
         <div>

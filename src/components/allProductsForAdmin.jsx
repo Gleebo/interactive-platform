@@ -10,12 +10,13 @@ class AllProductsForAdmin extends Component {
   };
 
   async componentDidMount() {
-    const products = await searchProducts.next();
+    const products = await searchProducts.next({});
     this.setState({ products });
+    console.log(products);
   }
 
   loadMore = async () => {
-    const res = await searchProducts.next();
+    const res = await searchProducts.next({});
     let oldArray = this.state.products;
     let newArray = oldArray.concat(res);
     this.setState({ products: newArray });

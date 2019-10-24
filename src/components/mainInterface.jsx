@@ -22,6 +22,7 @@ import OrderManagement from "./orderManagement.jsx";
 import UserOrders from "./userOrders.jsx";
 import AskQuestion from "./askQuestion.jsx";
 import CheckQuestions from "./checkQuestions.jsx";
+import CNs from "./cNs.jsx";
 
 class MainInterface extends Component {
   render() {
@@ -68,6 +69,7 @@ class MainInterface extends Component {
           <Route path="/userOrders" component={UserOrders}></Route>
           <Route path="/askQuestion" component={AskQuestion}></Route>
           <Route path="/checkQuestions" component={CheckQuestions}></Route>
+          <Route path="/cNs" component={CNs}></Route>
         </div>
       </div>
     );
