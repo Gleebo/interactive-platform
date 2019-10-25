@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { createProduct } from "../firebase";
+import { createProduct, getCategoriesAndSubjects } from "../firebase";
 import { async } from "q";
 import axios from "axios";
 
@@ -9,10 +9,13 @@ class AddProduct extends Component {
       name: "",
       brand: "",
       category: "",
+      subject: "",
       description: "",
       price: ""
     },
     brandsOption: [],
+    categoriesOption: [],
+    subjectsOption: [],
     imgFile: null
   };
 
@@ -24,7 +27,14 @@ class AddProduct extends Component {
 
     const product = { ...this.state.product };
     product.brand = brandsOption[0].name;
+
+    const cNs = await getCategoriesAndSubjects();
+    product.category = cNs.categories[0];
+    product.subject = cNs.subjects[0];
     this.setState({ product });
+
+    this.setState({ categoriesOption: cNs.categories });
+    this.setState({ subjectsOption: cNs.subjects });
   }
 
   imageChange = e => {
@@ -63,7 +73,13 @@ class AddProduct extends Component {
   };
 
   render() {
-    const { product, imgFile, brandsOption } = { ...this.state };
+    const {
+      product,
+      imgFile,
+      brandsOption,
+      categoriesOption,
+      subjectsOption
+    } = { ...this.state };
 
     return (
       <div>
@@ -113,14 +129,34 @@ class AddProduct extends Component {
 
               <div className="form-group">
                 <label htmlFor="theCategory">Product Category</label>
-                <input
+                <select
                   value={product.category}
                   name="category"
                   onChange={this.handleChange}
                   id="theCategory"
                   type="text"
                   className="form-control"
-                />
+                >
+                  {categoriesOption.map(cate => (
+                    <option>{cate}</option>
+                  ))}
+                </select>
+              </div>
+
+              <div className="form-group">
+                <label htmlFor="theSubject">Product Subject</label>
+                <select
+                  value={product.subject}
+                  name="subject"
+                  onChange={this.handleChange}
+                  id="theSubject"
+                  type="text"
+                  className="form-control"
+                >
+                  {subjectsOption.map(sub => (
+                    <option>{sub}</option>
+                  ))}
+                </select>
               </div>
 
               <div class="form-group">

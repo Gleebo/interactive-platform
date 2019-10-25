@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import axios from "axios";
-import { editProduct } from "../firebase";
+import { editProduct, getCategoriesAndSubjects } from "../firebase";
 
 class ProductDetailManagePage extends Component {
   state = {
@@ -11,13 +11,17 @@ class ProductDetailManagePage extends Component {
       brand: "",
       description: "",
       imgUrl: "",
-      category: ""
+      category: "",
+      subject: ""
     },
-    brandsOption: []
+    brandsOption: [],
+    categoriesOption: [],
+    subjectsOption: []
   };
 
   async componentWillMount() {
     const product = { ...this.state.product };
+    product.subject = this.props.location.state.product.subject;
     product.category = this.props.location.state.product.category;
     product.id = this.props.location.state.product.id;
     product.name = this.props.location.state.product.name;
@@ -31,6 +35,10 @@ class ProductDetailManagePage extends Component {
       "https://us-central1-kids-islands.cloudfunctions.net/getBrands"
     );
     this.setState({ brandsOption });
+
+    const cNs = await getCategoriesAndSubjects();
+    this.setState({ categoriesOption: cNs.categories });
+    this.setState({ subjectsOption: cNs.subjects });
   }
 
   handleCancel = () => {
@@ -46,12 +54,19 @@ class ProductDetailManagePage extends Component {
   handleUpdate = async e => {
     e.preventDefault();
 
-    await editProduct(this.state.product.id, this.state.product);
-    window.open("/adminManageHome", "_self");
+    const res = await editProduct(this.state.product.id, this.state.product);
+    if (res instanceof Error) {
+      window.alert("error happens");
+    } else {
+      window.alert("update successfully");
+      window.open("/adminManageHome", "_self");
+    }
   };
 
   render() {
-    const { product, brandsOption } = { ...this.state };
+    const { product, brandsOption, categoriesOption, subjectsOption } = {
+      ...this.state
+    };
 
     return (
       <div>
@@ -87,6 +102,40 @@ class ProductDetailManagePage extends Component {
                   type="text"
                   className="form-control"
                 />
+              </div>
+
+              <div class="form-group">
+                <label for="theCategory" style={{ float: "left" }}>
+                  Product Category
+                </label>
+                <select
+                  value={product.category}
+                  name="category"
+                  onChange={this.handleChange}
+                  class="form-control"
+                  id="theCategory"
+                >
+                  {categoriesOption.map(cate => (
+                    <option>{cate}</option>
+                  ))}
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label for="theSubject" style={{ float: "left" }}>
+                  Product Subject
+                </label>
+                <select
+                  value={product.subject}
+                  name="subject"
+                  onChange={this.handleChange}
+                  class="form-control"
+                  id="theSubject"
+                >
+                  {subjectsOption.map(sub => (
+                    <option>{sub}</option>
+                  ))}
+                </select>
               </div>
 
               <div class="form-group">

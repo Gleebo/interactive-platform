@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { getCart, updateCart } from "../firebase";
 import firebase from "firebase/app";
+import { Subject } from "rxjs";
 
 class ProductDetailPage extends Component {
   state = {
@@ -94,6 +95,11 @@ class ProductDetailPage extends Component {
               <span>
                 Category: {this.props.location.state.product.category}
               </span>
+            </h5>
+
+            <h5>
+              {" "}
+              <span>Subject: {this.props.location.state.product.subject}</span>
             </h5>
 
             <span>{this.props.location.state.product.description}</span>

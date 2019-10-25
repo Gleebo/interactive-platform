@@ -3,13 +3,13 @@ import React, { Component } from "react";
 import OneNavLink from "./oneNavLink.jsx";
 import axios from "axios";
 import { async } from "q";
-import { signOut } from "../firebase";
+import { signOut, getCategoriesAndSubjects } from "../firebase";
 
 class NavBar extends Component {
   state = {
     brands: [],
     subjects: [],
-    properties: []
+    categories: []
   };
 
   async componentWillMount() {
@@ -18,6 +18,9 @@ class NavBar extends Component {
     );
 
     this.setState({ brands });
+    const cNs = await getCategoriesAndSubjects();
+    this.setState({ subjects: cNs.subjects });
+    this.setState({ categories: cNs.categories });
   }
 
   async handleLogout() {
@@ -90,7 +93,7 @@ class NavBar extends Component {
                 <a
                   className={
                     sessionStorage.getItem("loginEmail") ||
-                      sessionStorage.getItem("adminLogin")
+                    sessionStorage.getItem("adminLogin")
                       ? "nav-link disabled"
                       : "nav-link "
                   }
@@ -103,7 +106,7 @@ class NavBar extends Component {
                 <a
                   className={
                     sessionStorage.getItem("loginEmail") ||
-                      sessionStorage.getItem("adminLogin")
+                    sessionStorage.getItem("adminLogin")
                       ? "nav-link disabled"
                       : "nav-link "
                   }
@@ -155,13 +158,11 @@ class NavBar extends Component {
               <div className="card card-body">
                 <div className="text-center">
                   <h5>Subjects</h5>
-                  <a href="#">English</a>
-                  <br></br>
-                  <a href="#">Chinese</a>
-                  <br></br>
-                  <a href="#">Music</a>
-                  <br></br>
-                  <a href="#">History</a>
+                  {this.state.subjects.map(sub => (
+                    <div>
+                      <a href="#">{sub}</a>
+                    </div>
+                  ))}
                 </div>
               </div>
             </div>
@@ -170,12 +171,12 @@ class NavBar extends Component {
             <div className="collapse multi-collapse" id="multiCollapseExample3">
               <div className="card card-body">
                 <div className="text-center">
-                  <h5>Properties</h5>
-                  <a href="#">Books</a>
-                  <br></br>
-                  <a href="#">Toys</a>
-                  <br></br>
-                  <a href="#">Tools</a>
+                  <h5>Categories</h5>
+                  {this.state.categories.map(cate => (
+                    <div>
+                      <a href="#">{cate}</a>
+                    </div>
+                  ))}
                 </div>
               </div>
             </div>
