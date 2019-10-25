@@ -67,15 +67,22 @@ class MyAccountManagement extends Component {
     return (
       <div>
         <div className="d-flex justify-content-center">
-          <div style={{ marginTop: 100, width: 400 }}>
-            <div className="text-center" style={{ marginBottom: 14 }}>
-              <span className="signInLogo">KidIslands</span>
+          <div style={{ marginTop: 50, width: 400 }}>
+            <div className="text-right">
+              <a href="/userOrders" style={{ marginRight: 10 }}>
+                <button
+                  className="btn btn-outline-primary "
+                  style={{ width: 148 }}
+                >
+                  My Orders
+                </button>
+              </a>
             </div>
-            <span style={{ color: "blue" }}>
-              user ID : {this.state.account.userNumber}
+            <span style={{ color: "grey", fontSize: 12 }}>
+              UserID : {this.state.account.userNumber}
             </span>
             <form onSubmit={this.handleUpdate}>
-              <div className="form-group">
+              <div className="form-group" style={{ marginTop: 20 }}>
                 <label htmlFor="theSchoolName">School Name</label>
                 <input
                   value={this.state.account.schoolName}
@@ -108,30 +115,25 @@ class MyAccountManagement extends Component {
                   className="form-control"
                 />
               </div>
-              <div style={{ float: "right" }}>
-                <a href="/emailPasswordUpdate">Update email or password ></a>
+              <div className="text-right">
+                <a href="/emailPasswordUpdate">Update email or password >></a>
               </div>
-              <button className="btn btn-primary">Confirm Update</button>
-            </form>
-            <div className="row">
-              <div style={{ marginTop: 5, marginBottom: 200 }}>
+              <div style={{ marginTop: 50 }}>
                 <button
-                  style={{ width: 139, marginLeft: 15 }}
+                  style={{ width: "40%" }}
                   className="btn btn-secondary "
                   onClick={this.handleLogout}
                 >
                   Log out
                 </button>
-                <a href="/userOrders">
-                  <button
-                    className="btn btn-success "
-                    style={{ marginLeft: 60, width: 148 }}
-                  >
-                    My Orders
-                  </button>
-                </a>
+                <button
+                  style={{ width: "50%", float: "right" }}
+                  className="btn btn-primary"
+                >
+                  Confirm Update
+                </button>
               </div>
-            </div>
+            </form>
           </div>
         </div>
       </div>
