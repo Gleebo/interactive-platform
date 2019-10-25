@@ -8,6 +8,7 @@ const auth = admin.auth();
 const supportCollection = db.collection("supportRequests");
 const brandsCollection = db.collection("brands");
 const usersCollection = db.collection("users");
+const propertiesCollection = db.collection("properties");
 
 exports.getProducts = functions.https.onRequest(async (request, response) => {
   const id = request.query.id;
@@ -138,3 +139,77 @@ exports.createAdmin = functions.https.onCall(async function(data, context) {
     return "this account has no admin rights";
   }
 });
+
+exports.deleteAllProductsByCategory = functions.https.onCall(async function(
+  data,
+  context
+) {
+  const category = data.category;
+  const querySnapshot = await productsCollection
+    .where("category", "==", category)
+    .get();
+  const deletePromises = querySnapshot.docs.map(doc => doc.ref.delete());
+  await Promise.all(deletePromises);
+  const docSnapshot = await propertiesCollection.doc("properties").get();
+  const { categories } = docSnapshot.data();
+  const newCategories = categories.filter(cat => cat !== category);
+  await propertiesCollection
+    .doc("properties")
+    .update({ categories: newCategories });
+  return "deleted";
+});
+
+exports.deleteAllProductsBySubject = functions.https.onCall(async function(
+  data,
+  context
+) {
+  const subject = data.subject;
+  const querySnapshot = await productsCollection
+    .where("subject", "==", subject)
+    .get();
+  const deletePromises = querySnapshot.docs.map(doc => doc.ref.delete());
+  await Promise.all(deletePromises);
+  const docSnapshot = await propertiesCollection.doc("properties").get();
+  const { subjects } = docSnapshot.data();
+  const newSubjects = subjects.filter(sub => sub !== subject);
+  await propertiesCollection
+    .doc("properties")
+    .update({ subjects: newSubjects });
+  return "deleted";
+});
+
+exports.onDeleteProductListener = functions.firestore
+  .document("products/{productId}")
+  .onDelete(async (snapshot, context) => {
+    const { category = "", subject = "" } = snapshot.data();
+    if (category !== "") {
+      const querySnapshot = await productsCollection
+        .where("category", "==", category)
+        .limit(10)
+        .get();
+      if (querySnapshot.docs.length === 0) {
+        const docSnapshot = await propertiesCollection.doc("properties").get();
+        const { categories } = docSnapshot.data();
+        const newCategories = categories.filter(cat => cat !== category);
+        await propertiesCollection
+          .doc("properties")
+          .update({ categories: newCategories });
+        return;
+      }
+    }
+    if (subject !== "") {
+      const querySnapshot = await productsCollection
+        .where("subject", "==", subject)
+        .limit(10)
+        .get();
+      if (querySnapshot.docs.length === 0) {
+        const docSnapshot = await propertiesCollection.doc("properties").get();
+        const { subjects } = docSnapshot.data();
+        const newSubjects = subjects.filter(sub => sub !== subject);
+        await propertiesCollection
+          .doc("properties")
+          .update({ subjects: newSubjects });
+        return;
+      }
+    }
+  });

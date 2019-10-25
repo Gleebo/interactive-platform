@@ -391,6 +391,42 @@ async function deleteProducts(ids = []) {
   }
 }
 
+async function deleteAllProductsByCategory(category = "") {
+  const func = functions.httpsCallable("deleteAllProductsByCategory");
+  try {
+    const result = await func({ category });
+    return result.data;
+    // const querySnapshot = await productsCollection
+    //   .where("category", "==", category)
+    //   .get();
+    // const deletePromises = querySnapshot.docs.map(doc => doc.ref.delete());
+    // await Promise.all(deletePromises);
+    // const { categories } = await getCategoriesAndSubjects();
+    // const newCategories = categories.filter(cat => cat !== category);
+    // await setCategories(newCategories);
+  } catch (error) {
+    return error;
+  }
+}
+
+async function deleteAllProductsBySubject(subject = "") {
+  const func = functions.httpsCallable("deleteAllProductsBySubject");
+  try {
+    const result = await func({ subject });
+    return result.data;
+    // const querySnapshot = await productsCollection
+    //   .where("subject", "==", subject)
+    //   .get();
+    // const deletePromises = querySnapshot.docs.map(doc => doc.ref.delete());
+    // await Promise.all(deletePromises);
+    // const { subjects } = await getCategoriesAndSubjects();
+    // const newSubjects = subjects.filter(sub => sub !== subject);
+    // await setSubjects(newSubjects);
+  } catch (error) {
+    return error;
+  }
+}
+
 async function setWelcomeText(text) {
   try {
     const docSnapShot = await productsCollection.doc("homePage").get();
@@ -546,5 +582,7 @@ export {
   getOrders,
   getCategoriesAndSubjects,
   setCategories,
-  setSubjects
+  setSubjects,
+  deleteAllProductsByCategory,
+  deleteAllProductsBySubject
 };
