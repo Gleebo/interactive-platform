@@ -13,7 +13,6 @@
 
 .carousel-caption h1 {
   text-transform: uppercase;
-  text-shadow: 10px 10px 10px #000;
 }
 
 .carousel-caption h3 {
@@ -72,7 +71,7 @@
 .signInLogo {
   margin-left: 35px;
   font-family: Comic Sans MS;
-  color: rgba(17, 190, 190, 0.932);
+  color: rgb(77, 158, 241);
   font-size: 25px;
   font-weight: bold;
 }
@@ -97,8 +96,6 @@
 }
 
 .cartActionSection {
-  background: #e0dada;
-
   float: right;
 }
 
@@ -110,7 +107,30 @@
   margin-left: 0;
   width: 60%;
 }
-a:link { text-decoration: none;color: blue}
-a:active { text-decoration:blink; color: red}
-a:hover { text-decoration:none;color: red}
-a:visited { text-decoration: none;color: black}
+a:link {
+  text-decoration: none;
+  color: #383d41;
+}
+a:active {
+  text-decoration: blink;
+  color: red;
+}
+a:hover {
+  text-decoration: none;
+  color: red;
+}
+a:visited {
+  text-decoration: none;
+  color: black;
+}
+.OneProduct {
+  text-align: left;
+  font-size: 14px;
+  color: #666;
+  display: block;
+}
+.info {
+  font-size: 14px;
+  text-align: left;
+  color: rgb(34, 33, 33);
+}

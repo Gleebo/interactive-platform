@@ -61,7 +61,7 @@ const ThreeCategory = () => {
           </div>
         </div>
       </div>
-      <hr className="my-4"></hr>
+      <hr className="my-5"></hr>
     </div>
   );
 };

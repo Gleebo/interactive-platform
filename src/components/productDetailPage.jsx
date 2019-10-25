@@ -66,78 +66,79 @@ class ProductDetailPage extends Component {
 
   render() {
     return (
-      <div className="row" style={{ marginTop: 50, marginBottom: 100 }}>
-        <div className="col-md-12 col-lg-6 text-center align-self-center">
-          <img
-            src={this.props.location.state.product.imgUrl}
-            alt="..."
-            style={{ height: 370, width: 370 }}
-          ></img>
-        </div>
-        <div className="col-md-12 col-lg-6 align-self-center p-d-p">
-          <div style={{ width: 350 }}>
-            <h4>{this.props.location.state.product.name}</h4>
+      <div>
+        <div className="row" style={{ marginTop: 50, marginBottom: 100 }}>
+          <div className="col-md-12 col-lg-6 text-center">
+            <img
+              src={this.props.location.state.product.imgUrl}
+              alt="..."
+              style={{ height: 370, width: 370 }}
+            ></img>
           </div>
-          <hr></hr>
-          <h4>
-            <span className="badge badge-primary">
-              AU$: {this.props.location.state.product.price}
-            </span>
-          </h4>
-          <div style={{ width: 350 }}>
+          <div className="col-md-12 col-lg-6 align-self-center p-d-p">
+            <hr className="my-5" />
             <h5>
               {" "}
-              <span>Brand: {this.props.location.state.product.brand}</span>
+              <span>{this.props.location.state.product.brand}</span>
             </h5>
+            <div style={{ width: 350 }}>
+              <p style={{ fontSize: "0.9rem" }}>
+                {this.props.location.state.product.name}
+              </p>
+            </div>
 
-            <h5>
+            <h6>AU$: {this.props.location.state.product.price}</h6>
+
+            <div style={{ marginTop: 25 }}>
+              <input
+                value={this.state.amount.number}
+                onChange={this.changeAmount}
+                autoFocus
+                style={{ width: 60, height: 31 }}
+              ></input>
+              <button
+                className="btn btn-outline-primary btn-sm"
+                style={{ marginLeft: 15 }}
+                onClick={() => this.increaseAmount()}
+              >
+                +
+              </button>
+              <button
+                className="btn btn-outline-primary btn-sm"
+                style={{ marginLeft: 8 }}
+                onClick={() => this.decreaseAmount()}
+              >
+                -
+              </button>
+              <button
+                className="btn btn-primary"
+                style={{ marginLeft: "80px" }}
+                onClick={() =>
+                  this.handleAddToCart(
+                    this.props.location.state.product.id,
+                    this.state.amount.number
+                  )
+                }
+              >
+                Add To Cart
+              </button>
+            </div>
+            <hr className="my-5" />
+            <h6>
               {" "}
               <span>
                 Category: {this.props.location.state.product.category}
               </span>
-            </h5>
-
-            <h5>
+            </h6>
+            <h6>
               {" "}
               <span>Subject: {this.props.location.state.product.subject}</span>
-            </h5>
-
-            <span>{this.props.location.state.product.description}</span>
+            </h6>
+            <h6>Description:</h6>
+            <p className="OneProduct">
+              {this.props.location.state.product.description}
+            </p>
           </div>
-          <div style={{ marginTop: 25 }}>
-            <input
-              value={this.state.amount.number}
-              onChange={this.changeAmount}
-              autoFocus
-              style={{ width: 60 }}
-            ></input>
-            <button
-              className="btn btn-outline-primary btn-sm"
-              style={{ marginLeft: 15 }}
-              onClick={() => this.increaseAmount()}
-            >
-              +
-            </button>
-            <button
-              className="btn btn-outline-primary btn-sm"
-              style={{ marginLeft: 8 }}
-              onClick={() => this.decreaseAmount()}
-            >
-              -
-            </button>
-          </div>
-          <hr></hr>
-          <button
-            className="btn btn-danger"
-            onClick={() =>
-              this.handleAddToCart(
-                this.props.location.state.product.id,
-                this.state.amount.number
-              )
-            }
-          >
-            Add To Cart
-          </button>
         </div>
       </div>
     );

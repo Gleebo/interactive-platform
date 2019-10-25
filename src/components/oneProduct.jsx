@@ -13,12 +13,14 @@ const OneProduct = product => {
         className="card oneP"
         style={{ width: 12 + "rem", height: 24 + "rem" }}
       >
-        <img
-          src={product.imgUrl}
-          className="card-img-top"
-          alt="..."
-          style={{ width: 100 + "%", height: 172 }}
-        />
+        <div>
+          <img
+            src={product.imgUrl}
+            className="card-img-top"
+            alt="..."
+            style={{ width: 100 + "%", height: 172 }}
+          />
+        </div>
         <div
           className="card-body"
           style={{
@@ -27,14 +29,15 @@ const OneProduct = product => {
             textOverflow: "ellipsis",
             display: "-webkit-box",
             webkitLineClamp: "5",
-            webkitBoxOrient: "vertical"
+            webkitBoxOrient: "vertical",
+            height: "123px"
           }}
         >
-          <h5>{product.name}</h5>
+          <p className="OneProduct">{product.name}</p>
 
           {/*<p className="card-text">{product.desciption}</p>*/}
         </div>
-        <h5 className="card-body">AU$: {product.price}</h5>
+        <h6 className="card-body">AU$: {product.price}</h6>
       </div>
     </Link>
   );

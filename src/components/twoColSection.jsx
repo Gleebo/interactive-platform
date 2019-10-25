@@ -32,10 +32,10 @@ class TwoColSection extends Component {
 
             <div className="col-md-12 col-lg-6">
               <h2>{this.state.product.brand}</h2>
-              <p>{this.state.product.description}</p>
+              <p className="OneProduct">{this.state.product.description}</p>
 
               <Link
-                className="btn btn-primary"
+                className="btn btn-outline-primary"
                 to={{
                   pathname: "/productDetailPage",
                   state: { product } //how to attach data using Link to jump to new page
@@ -46,7 +46,7 @@ class TwoColSection extends Component {
 
               <a
                 href="/allProducts"
-                className="btn btn-secondary"
+                className="btn btn-outline-info"
                 style={{ marginLeft: 25 }}
               >
                 More products

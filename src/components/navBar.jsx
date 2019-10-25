@@ -38,9 +38,17 @@ class NavBar extends Component {
   render() {
     return (
       <div>
-        <nav className="navbar navbar-expand-lg navbar-light bg-light">
+        <nav
+          className="navbar navbar-expand-lg navbar-light"
+          style={{ border: "0.5px solid rgb(206, 212, 218)" }}
+        >
           <a className="navbar-brand" href="/">
-            <span>KidIslands</span>
+            <img
+              width="200px"
+              height="70px"
+              alt="logo"
+              src="https://firebasestorage.googleapis.com/v0/b/kids-islands.appspot.com/o/Screen%20Shot%202019-10-26%20at%2012.45.13%20am.png?alt=media&token=878e0906-d031-449e-aaa9-d4dfb3604178"
+            ></img>
           </a>
           <button
             className={

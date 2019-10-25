@@ -16,7 +16,7 @@ class SearchBar extends Component {
     return (
       <div className="row justify-content-center m-2 ">
         <div className="col-12 col-md-10 col-lg-8">
-          <form className="card card-sm">
+          <form className="card card-sm" style={{ border: "0px" }}>
             <div className="card-body row no-gutters align-items-center">
               <div className="col-auto">
                 <i className="fas fa-search h4 text-body"></i>
@@ -40,7 +40,10 @@ class SearchBar extends Component {
                     state: { keyword: this.state.input.key }
                   }}
                 >
-                  <button className="btn btn-lg btn-success m-2" type="submit">
+                  <button
+                    className="btn btn-lg btn-outline-secondary m-2"
+                    type="submit"
+                  >
                     Search
                   </button>
                 </Link>

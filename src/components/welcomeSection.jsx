@@ -22,7 +22,7 @@ class WelcomeSection extends Component {
         <div className="row welcome text-center">
           <div className="col-12">
             <h1 className="display-5">Learn with KidIslands</h1>
-            <hr className="my-4"></hr>
+            <hr className="my-5"></hr>
           </div>
 
           <div className="col-12 ">

@@ -62,9 +62,8 @@ class FinalPayInterface extends Component {
           className="text-center "
           style={{ marginTop: 100, width: 35 + "%" }}
         >
-          <span style={{ fontSize: 25, fontWeight: "bold" }}>
-            Total Price: AU$ {this.calculateAllPrice()}
-          </span>
+          <h5>Subtotal (GST inclusive): AU$ {this.calculateAllPrice()}</h5>
+          <hr />
           <div className="text-center">
             <form>
               <div class="form-group">
@@ -103,14 +102,14 @@ class FinalPayInterface extends Component {
           </div>
           <button
             className="btn btn-secondary"
-            style={{ float: "left", marginLeft: 80 }}
+            style={{ float: "left", width: "45%", marginTop: "30px" }}
             onClick={() => this.canael()}
           >
             Cancel
           </button>
           <button
             className="btn btn-primary"
-            style={{ float: "right", marginRight: 80 }}
+            style={{ float: "right", width: "45%", marginTop: "30px" }}
             onClick={() => this.handlePay()}
           >
             Pay Now

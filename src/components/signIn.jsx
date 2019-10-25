@@ -69,7 +69,12 @@ class SignIn extends Component {
                 className="form-control"
               />
             </div>
-            <button className="btn btn-primary">Sign In</button>
+            <button
+              className="btn btn-primary"
+              style={{ width: "100%", marginTop: "20px" }}
+            >
+              Sign In
+            </button>
           </form>
         </div>
       </div>

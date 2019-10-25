@@ -87,7 +87,12 @@ class SignUp extends Component {
                 className="form-control"
               />
             </div>
-            <button className="btn btn-primary">Sign Up</button>
+            <button
+              className="btn btn-primary"
+              style={{ width: "100%", marginTop: "20px" }}
+            >
+              Sign Up
+            </button>
           </form>
         </div>
       </div>
