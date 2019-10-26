@@ -38,7 +38,6 @@ class ResultPage extends Component {
     const kind = sessionStorage.getItem("kind");
     if (kind === "cate") {
       const category = sessionStorage.getItem("keyOfKind");
-      console.log(category);
       const res = await searchProducts.next({
         keyword: "",
         category: category,
@@ -48,7 +47,6 @@ class ResultPage extends Component {
       console.log(res);
     } else if (kind === "sub") {
       const subject = sessionStorage.getItem("keyOfKind");
-      console.log(subject);
       const res = await searchProducts.next({ subject: subject });
       console.log(res);
     } else {
