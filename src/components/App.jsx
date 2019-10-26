@@ -8,5 +8,5 @@ import PropertiesTest from "../back-end-forms-testing/PropertiesTest";
 import LazyLoad from "../back-end-forms-testing/lazyloadTest";
 
 export default function App() {
-  return <PropertiesTest />;
+  return <TestForm />;
 }

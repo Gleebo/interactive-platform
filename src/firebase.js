@@ -227,15 +227,15 @@ const searchProducts = (function() {
     subject = "",
     limit = 10
   }) => {
-    let query = productsCollection.orderBy("name", "asc");
+    let query = productsCollection.orderBy("name", "desc");
     if (keyword !== "") {
       query = query.where("keywords", "array-contains", keyword.toLowerCase());
     }
     if (category !== "") {
-      query = query.where("category", "==", category.toLowerCase());
+      query = query.where("category", "==", category);
     }
     if (subject !== "") {
-      query = query.where("subject", "==", subject.toLowerCase());
+      query = query.where("subject", "==", subject);
     }
     if (lastDoc) {
       query = query.startAfter(lastDoc);

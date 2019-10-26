@@ -55,10 +55,56 @@ export default function TestForm() {
       <input
         type="button"
         value="button"
-        onClick={async () =>
-          setProducts(await searchProducts.next({ keyword: input }))
-        }
+        onClick={async () => {
+          console.table(
+            await searchProducts.next({
+              keyword: "test"
+            })
+          );
+          searchProducts.reset();
+          console.table(
+            await searchProducts.next({
+              keyword: "test",
+              category: "test"
+            })
+          );
+          searchProducts.reset();
+          console.table(
+            await searchProducts.next({
+              keyword: "test",
+              subject: "History"
+            })
+          );
+          searchProducts.reset();
+          console.table(
+            await searchProducts.next({
+              keyword: "test",
+              category: "test",
+              subject: "History"
+            })
+          );
+          searchProducts.reset();
+          console.table(
+            await searchProducts.next({
+              category: "test"
+            })
+          );
+          searchProducts.reset();
+          console.table(
+            await searchProducts.next({
+              subject: "History"
+            })
+          );
+          searchProducts.reset();
+          console.table(
+            await searchProducts.next({
+              category: "test",
+              subject: "History"
+            })
+          );
+        }}
       />
+      <div>{products.map(product => JSON.stringify(product))}</div>
     </div>
   );
 }
