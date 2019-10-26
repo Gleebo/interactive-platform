@@ -8,12 +8,14 @@ import {
   filter,
   tap
 } from "rxjs/operators";
+import { searchProducts } from "../firebase";
 
 const input$ = new Subject();
 
 export default function TestForm() {
   const [results, setResults] = useState([]);
   const [input, setInput] = useState("");
+  const [products, setProducts] = useState([]);
 
   let key = 0; //key for list of results
 
@@ -50,6 +52,13 @@ export default function TestForm() {
           <li key={key++}>{result}</li>
         ))}
       </ul>
+      <input
+        type="button"
+        value="button"
+        onClick={async () =>
+          setProducts(await searchProducts.next({ keyword: input }))
+        }
+      />
     </div>
   );
 }

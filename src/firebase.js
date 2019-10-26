@@ -227,7 +227,7 @@ const searchProducts = (function() {
     subject = "",
     limit = 10
   }) => {
-    let query = productsCollection.orderBy("name");
+    let query = productsCollection.orderBy("name", "asc");
     if (keyword !== "") {
       query = query.where("keywords", "array-contains", keyword.toLowerCase());
     }
