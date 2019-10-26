@@ -3,13 +3,17 @@ import { async } from "q";
 import {
   getCategoriesAndSubjects,
   setCategories,
-  setSubjects
+  setSubjects,
+  deleteAllProductsBySubject,
+  deleteAllProductsByCategory
 } from "../firebase";
 
 class CNs extends Component {
   state = {
     categories: [],
     subjects: [],
+    deleteCate: [],
+    deleteSub: [],
     newContent: {
       newCategory: "",
       newSubject: ""
@@ -25,22 +29,43 @@ class CNs extends Component {
   handleSubmitC = async e => {
     e.preventDefault();
 
-    const res = await setCategories(this.state.categories);
-    if (res instanceof Error) {
-      window.alert("error happens");
+    const makeSure = window.confirm(
+      "if your management including delete a category, all products related will all be removed "
+    );
+
+    if (makeSure) {
+      const res = await setCategories(this.state.categories);
+      if (res instanceof Error) {
+        window.alert("error happens");
+      } else {
+        this.state.deleteCate.map(
+          async cate => await deleteAllProductsByCategory(cate)
+        );
+        window.alert("Categories update successfully");
+        window.location.reload();
+      }
     } else {
-      window.alert("Categories update successfully");
       window.location.reload();
     }
   };
   handleSubmitS = async e => {
     e.preventDefault();
 
-    const res = await setSubjects(this.state.subjects);
-    if (res instanceof Error) {
-      window.alert("error happens");
+    const makeSure = window.confirm(
+      "if your management including delete a subject, all products related will all be removed "
+    );
+    if (makeSure) {
+      const res = await setSubjects(this.state.subjects);
+      if (res instanceof Error) {
+        window.alert("error happens");
+      } else {
+        this.state.deleteSub.map(
+          async sub => await deleteAllProductsBySubject(sub)
+        );
+        window.alert("Subjects update successfully");
+        window.location.reload();
+      }
     } else {
-      window.alert("Subjects update successfully");
       window.location.reload();
     }
   };
@@ -48,11 +73,17 @@ class CNs extends Component {
   handleDeteleC = category => {
     const categories = this.state.categories.filter(cate => cate !== category);
     this.setState({ categories });
+    let deleteCate = [...this.state.deleteCate];
+    deleteCate.push(category);
+    this.setState({ deleteCate });
   };
 
   handleDeteleS = subject => {
     const subjects = this.state.subjects.filter(sub => sub !== subject);
     this.setState({ subjects });
+    let deleteSub = [...this.state.deleteSub];
+    deleteSub.push(subject);
+    this.setState({ deleteSub });
   };
 
   handleAddC = () => {

@@ -31,17 +31,36 @@ class ResultPage extends Component {
     } else {
       this.setState({ resultProducts });
     }
+    sessionStorage.setItem("kind", "");
   }
 
   async componentDidMount() {
-    const keyword = this.props.location.state.keyword;
-
-    const { data: resultProducts } = await axios.get(
-      "https://us-central1-kids-islands.cloudfunctions.net/searchProducts?keyword=" +
-        keyword +
-        "&id=none&category=all"
-    );
-    this.setState({ resultProducts });
+    const kind = sessionStorage.getItem("kind");
+    if (kind === "cate") {
+      const category = sessionStorage.getItem("keyOfKind");
+      console.log(category);
+      const res = await searchProducts.next({
+        keyword: "",
+        category: category,
+        subject: "",
+        limit: 10
+      });
+      console.log(res);
+    } else if (kind === "sub") {
+      const subject = sessionStorage.getItem("keyOfKind");
+      console.log(subject);
+      const res = await searchProducts.next({ subject: subject });
+      console.log(res);
+    } else {
+      const keyword = this.props.location.state.keyword;
+      const { data: resultProducts } = await axios.get(
+        "https://us-central1-kids-islands.cloudfunctions.net/searchProducts?keyword=" +
+          keyword +
+          "&id=none&category=all"
+      );
+      this.setState({ resultProducts });
+    }
+    sessionStorage.setItem("kind", "");
   }
 
   handleCheckTrue = prodcut => {
@@ -125,7 +144,9 @@ class ResultPage extends Component {
             <span>
               This is the result based on keyword:{" "}
               <span className="badge badge-pill badge-info">
-                {this.props.location.state.keyword}{" "}
+                {sessionStorage.getItem("kind")
+                  ? "category or subject"
+                  : this.props.location.state.keyword}{" "}
               </span>
             </span>
           </div>

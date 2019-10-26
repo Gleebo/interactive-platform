@@ -35,6 +35,16 @@ class NavBar extends Component {
     }
   }
 
+  handleCateLinkGo = cate => {
+    sessionStorage.setItem("kind", "cate");
+    sessionStorage.setItem("keyOfKind", cate);
+  };
+
+  handleSubLinkGo = sub => {
+    sessionStorage.setItem("kind", "sub");
+    sessionStorage.setItem("keyOfKind", sub);
+  };
+
   render() {
     return (
       <div>
@@ -168,7 +178,12 @@ class NavBar extends Component {
                   <h5>Subjects</h5>
                   {this.state.subjects.map(sub => (
                     <div>
-                      <a href="#">{sub}</a>
+                      <a
+                        href="/resultPage"
+                        onClick={() => this.handleSubLinkGo(sub)}
+                      >
+                        {sub}
+                      </a>
                     </div>
                   ))}
                 </div>
@@ -182,7 +197,12 @@ class NavBar extends Component {
                   <h5>Categories</h5>
                   {this.state.categories.map(cate => (
                     <div>
-                      <a href="#">{cate}</a>
+                      <a
+                        href="/resultPage"
+                        onClick={() => this.handleCateLinkGo(cate)}
+                      >
+                        {cate}
+                      </a>
                     </div>
                   ))}
                 </div>
