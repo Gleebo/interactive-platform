@@ -14,51 +14,52 @@ class ResultPage extends Component {
     resultProducts: []
   };
 
-  async componentDidUpdate() {
-    const keyword = this.props.location.state.keyword
-      ? this.props.location.state.keyword
-      : "";
+  // async componentDidUpdate() {
+  //   const keyword = sessionStorage.getItem("wordToSearch");
 
-    const { data: resultProducts } = await axios.get(
-      "https://us-central1-kids-islands.cloudfunctions.net/searchProducts?keyword=" +
-        keyword +
-        "&id=none&category=all"
-    );
-    if (resultProducts.length >= 1) {
-      if (
-        this.state.resultProducts.length !== resultProducts.length ||
-        this.state.resultProducts[0].id !== resultProducts[0].id
-      )
-        this.setState({ resultProducts });
-    } else {
-      this.setState({ resultProducts });
-    }
-    // sessionStorage.setItem("kind", "");
-  }
+  //   const { data: resultProducts } = await axios.get(
+  //     "https://us-central1-kids-islands.cloudfunctions.net/searchProducts?keyword=" +
+  //       keyword +
+  //       "&id=none&category=all"
+  //   );
+  //   if (resultProducts.length >= 1) {
+  //     if (
+  //       this.state.resultProducts.length !== resultProducts.length ||
+  //       this.state.resultProducts[0].id !== resultProducts[0].id
+  //     )
+  //       this.setState({ resultProducts });
+  //     console.log("update in first");
+  //   } else {
+  //     console.log("update");
+  //     this.setState({ resultProducts });
+  //   }
+  // }
 
   async componentDidMount() {
     const kind = sessionStorage.getItem("kind");
-    if (kind === "cate") {
-      const category = sessionStorage.getItem("keyOfKind");
-      const res = await searchProducts.next({
-        category: category
-      });
-      this.setState({ resultProducts: res });
-    } else if (kind === "sub") {
-      const subject = sessionStorage.getItem("keyOfKind");
-      const res = await searchProducts.next({ subject: subject });
-      this.setState({ resultProducts: res });
-      console.log(res);
-    } else {
-      const keyword = this.props.location.state.keyword;
+    const theWord = sessionStorage.getItem("wordToSearch");
+    if (theWord) {
       const { data: resultProducts } = await axios.get(
         "https://us-central1-kids-islands.cloudfunctions.net/searchProducts?keyword=" +
-          keyword +
+          theWord +
           "&id=none&category=all"
       );
       this.setState({ resultProducts });
+    } else {
+      if (kind === "cate") {
+        const category = sessionStorage.getItem("keyOfKind");
+        const res = await searchProducts.next({
+          category: category
+        });
+        this.setState({ resultProducts: res });
+      } else if (kind === "sub") {
+        const subject = sessionStorage.getItem("keyOfKind");
+        const res = await searchProducts.next({ subject: subject });
+        this.setState({ resultProducts: res });
+      }
     }
-    //sessionStorage.setItem("kind", "");
+    sessionStorage.setItem("kind", "");
+    sessionStorage.setItem("wordToSearch", "");
   }
 
   handleCheckTrue = prodcut => {
@@ -95,9 +96,9 @@ class ResultPage extends Component {
               <span>
                 This is the result based on keyword:{" "}
                 <span className="badge badge-pill badge-info">
-                  {sessionStorage.getItem("kind")
-                    ? "category or subject"
-                    : this.props.location.state.keyword}{" "}
+                  {sessionStorage.getItem("wordToSearch")
+                    ? sessionStorage.getItem("wordToSearch")
+                    : sessionStorage.getItem("keyOfKind")}{" "}
                 </span>
               </span>
             </div>
@@ -144,9 +145,9 @@ class ResultPage extends Component {
             <span>
               This is the result based on keyword:{" "}
               <span className="badge badge-pill badge-info">
-                {sessionStorage.getItem("kind")
-                  ? "category or subject"
-                  : this.props.location.state.keyword}{" "}
+                {sessionStorage.getItem("wordToSearch")
+                  ? sessionStorage.getItem("wordToSearch")
+                  : sessionStorage.getItem("keyOfKind")}{" "}
               </span>
             </span>
           </div>
