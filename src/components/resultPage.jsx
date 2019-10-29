@@ -58,8 +58,6 @@ class ResultPage extends Component {
         this.setState({ resultProducts: res });
       }
     }
-    sessionStorage.setItem("kind", "");
-    sessionStorage.setItem("wordToSearch", "");
   }
 
   handleCheckTrue = prodcut => {

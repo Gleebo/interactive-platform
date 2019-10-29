@@ -36,11 +36,13 @@ class NavBar extends Component {
   }
 
   handleCateLinkGo = cate => {
+    sessionStorage.setItem("wordToSearch", "");
     sessionStorage.setItem("kind", "cate");
     sessionStorage.setItem("keyOfKind", cate);
   };
 
   handleSubLinkGo = sub => {
+    sessionStorage.setItem("wordToSearch", "");
     sessionStorage.setItem("kind", "sub");
     sessionStorage.setItem("keyOfKind", sub);
   };
