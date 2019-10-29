@@ -19,7 +19,6 @@ class Carousel extends Component {
     products.three = arr[2];
 
     this.setState({ products });
-    console.log(this.state.products.two);
   }
 
   render() {
