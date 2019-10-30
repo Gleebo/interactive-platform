@@ -18,6 +18,7 @@ class AllProducts extends Component {
     /*const { data: result } = await axios.get(
       "https://us-central1-kids-islands.cloudfunctions.net/getProducts?id=none" //use ? to query id in a link
     ); // use await in async function to convert Promise to real obejct(array here)  */
+    searchProducts.reset();
     const result = await searchProducts.next({});
     this.setState({ products: result });
   }
