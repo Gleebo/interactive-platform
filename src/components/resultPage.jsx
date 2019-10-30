@@ -48,10 +48,12 @@ class ResultPage extends Component {
     } else {
       if (kind === "cate") {
         const category = sessionStorage.getItem("keyOfKind");
+        searchProducts.reset();
         const res = await searchProducts.next({
           category: category
         });
         this.setState({ resultProducts: res });
+        console.log(category);
       } else if (kind === "sub") {
         const subject = sessionStorage.getItem("keyOfKind");
         const res = await searchProducts.next({ subject: subject });
