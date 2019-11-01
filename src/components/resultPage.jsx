@@ -11,7 +11,8 @@ import { searchProducts } from "../firebase";
 class ResultPage extends Component {
   state = {
     selectedProducts: [],
-    resultProducts: []
+    resultProducts: [],
+    state: 0
   };
 
   // async componentDidUpdate() {
@@ -61,6 +62,7 @@ class ResultPage extends Component {
         this.setState({ resultProducts: res });
       }
     }
+    this.setState({ state: 1 });
   }
 
   handleCheckTrue = prodcut => {
@@ -88,11 +90,73 @@ class ResultPage extends Component {
   };
 
   render() {
-    if (this.state.resultProducts.length >= 1) {
+    if (this.state.state === 0) {
       return (
-        <div>
-          <SearchBar />
-          <div className="row">
+        <div className="text-center">
+          <div
+            className="spinner-border"
+            style={{ marginTop: 15 + "%" }}
+            role="status"
+          >
+            <span className="sr-only">Loading...</span>
+          </div>
+        </div>
+      );
+    } else {
+      if (this.state.resultProducts.length >= 1) {
+        return (
+          <div>
+            <SearchBar />
+            <div className="row">
+              <div style={{ marginLeft: 40 }}>
+                <span>
+                  This is the result based on keyword:{" "}
+                  <span className="badge badge-pill badge-info">
+                    {sessionStorage.getItem("wordToSearch")
+                      ? sessionStorage.getItem("wordToSearch")
+                      : sessionStorage.getItem("keyOfKind")}{" "}
+                  </span>
+                </span>
+              </div>
+              <div
+                style={{
+                  marginLeft: 590
+                }}
+              >
+                <button
+                  type="button"
+                  className={
+                    sessionStorage.getItem("adminLogin")
+                      ? "btn btn-link"
+                      : "btn btn-link invisible"
+                  }
+                  style={{ color: "red" }}
+                  onClick={this.deleteClick}
+                >
+                  Delete selected
+                </button>
+              </div>
+            </div>
+
+            <div className="row justify-content-center">
+              {this.state.resultProducts.map(oneResultProduct =>
+                sessionStorage.getItem("adminLogin") ? (
+                  <OneProductForManagement
+                    onCheckTrue={this.handleCheckTrue}
+                    onCheckFalse={this.handleCheckFalse}
+                    product={oneResultProduct}
+                  />
+                ) : (
+                  OneProduct(oneResultProduct)
+                )
+              )}
+            </div>
+          </div>
+        );
+      } else {
+        return (
+          <div>
+            <SearchBar />
             <div style={{ marginLeft: 40 }}>
               <span>
                 This is the result based on keyword:{" "}
@@ -103,58 +167,10 @@ class ResultPage extends Component {
                 </span>
               </span>
             </div>
-            <div
-              style={{
-                marginLeft: 590
-              }}
-            >
-              <button
-                type="button"
-                className={
-                  sessionStorage.getItem("adminLogin")
-                    ? "btn btn-link"
-                    : "btn btn-link invisible"
-                }
-                style={{ color: "red" }}
-                onClick={this.deleteClick}
-              >
-                Delete selected
-              </button>
-            </div>
+            <NotFound />
           </div>
-
-          <div className="row justify-content-center">
-            {this.state.resultProducts.map(oneResultProduct =>
-              sessionStorage.getItem("adminLogin") ? (
-                <OneProductForManagement
-                  onCheckTrue={this.handleCheckTrue}
-                  onCheckFalse={this.handleCheckFalse}
-                  product={oneResultProduct}
-                />
-              ) : (
-                OneProduct(oneResultProduct)
-              )
-            )}
-          </div>
-        </div>
-      );
-    } else {
-      return (
-        <div>
-          <SearchBar />
-          <div style={{ marginLeft: 40 }}>
-            <span>
-              This is the result based on keyword:{" "}
-              <span className="badge badge-pill badge-info">
-                {sessionStorage.getItem("wordToSearch")
-                  ? sessionStorage.getItem("wordToSearch")
-                  : sessionStorage.getItem("keyOfKind")}{" "}
-              </span>
-            </span>
-          </div>
-          <NotFound />
-        </div>
-      );
+        );
+      }
     }
   }
 }
