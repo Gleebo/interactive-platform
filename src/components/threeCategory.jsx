@@ -16,7 +16,7 @@ const ThreeCategory = () => {
             <div className="card-img-overlay">
               <h5>Brands</h5>
               <p>Nike/Adidas/Li Ning/Anta...</p>
-              <Link to="/allProducts">
+              <Link to="/brandCateSub">
                 <button type="button" className="btn btn-outline-light">
                   Learn more
                 </button>
@@ -36,9 +36,11 @@ const ThreeCategory = () => {
             <div className="card-img-overlay">
               <h5>Properties</h5>
               <p>Books/Toys/Tools...</p>
-              <button type="button" className="btn btn-outline-light">
-                Learn more
-              </button>
+              <Link to="/brandCateSub">
+                <button type="button" className="btn btn-outline-light">
+                  Learn more
+                </button>
+              </Link>
             </div>
           </div>
         </div>
@@ -54,9 +56,11 @@ const ThreeCategory = () => {
             <div className="card-img-overlay">
               <h5>Subjects</h5>
               <p>Art/Math/History/Music...</p>
-              <button type="button" className="btn btn-outline-light">
-                Learn more
-              </button>
+              <Link to="/brandCateSub">
+                <button type="button" className="btn btn-outline-light">
+                  Learn more
+                </button>
+              </Link>
             </div>
           </div>
         </div>

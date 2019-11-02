@@ -23,6 +23,7 @@ import UserOrders from "./userOrders.jsx";
 import AskQuestion from "./askQuestion.jsx";
 import CheckQuestions from "./checkQuestions.jsx";
 import CNs from "./cNs.jsx";
+import BrandCateSub from "./brandCateSub.jsx";
 
 class MainInterface extends Component {
   render() {
@@ -70,6 +71,7 @@ class MainInterface extends Component {
           <Route path="/askQuestion" component={AskQuestion}></Route>
           <Route path="/checkQuestions" component={CheckQuestions}></Route>
           <Route path="/cNs" component={CNs}></Route>
+          <Route path="/brandCateSub" component={BrandCateSub}></Route>
         </div>
       </div>
     );
