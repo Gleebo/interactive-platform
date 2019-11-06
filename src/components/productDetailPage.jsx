@@ -54,8 +54,8 @@ class ProductDetailPage extends Component {
 
         newCartList.push({ id: id, quantity: amount });
         console.log(newCartList);
-        const s = await updateCart(newCartList);
-        console.log(s);
+        await updateCart(newCartList);
+
         this.setState({ products: newCartList });
         window.alert("add in the cart successfully. Find detail in my cart");
       }

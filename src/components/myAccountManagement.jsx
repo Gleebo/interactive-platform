@@ -120,6 +120,7 @@ class MyAccountManagement extends Component {
               </div>
               <div style={{ marginTop: 50 }}>
                 <button
+                  type="button"
                   style={{ width: "40%" }}
                   className="btn btn-secondary "
                   onClick={this.handleLogout}
