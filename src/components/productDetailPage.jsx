@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { getCart, updateCart } from "../firebase";
 import firebase from "firebase/app";
 import { Subject } from "rxjs";
+import { ToastContainer, toast } from "react-toastify";
 
 class ProductDetailPage extends Component {
   state = {
@@ -57,16 +58,17 @@ class ProductDetailPage extends Component {
         await updateCart(newCartList);
 
         this.setState({ products: newCartList });
-        window.alert("add in the cart successfully. Find detail in my cart");
+        toast.success("Add in the cart successfully. Find detail in my cart");
       }
     } else {
-      window.alert("Please login first");
+      toast.error("Please login first");
     }
   };
 
   render() {
     return (
       <div>
+        <ToastContainer />
         <div className="row" style={{ marginTop: 50, marginBottom: 100 }}>
           <div className="col-md-12 col-lg-6 text-center">
             <img

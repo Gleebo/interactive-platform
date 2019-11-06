@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { updateUserEmail, updateUserPassword } from "../firebase";
 import firebase from "firebase/app";
+import { ToastContainer, toast } from "react-toastify";
 
 class EmailPasswordUpdate extends Component {
   state = {
@@ -36,11 +37,12 @@ class EmailPasswordUpdate extends Component {
         await updateUserPassword(this.state.account.password);
         num++;
       } else {
-        window.alert("password should be longer than 6 ");
+        toast.error("password should be longer than 6 ");
+        num = 0;
       }
     }
     if (num !== 0) {
-      window.alert("update successfully");
+      toast.success("update successfully");
     }
   };
 
@@ -53,6 +55,7 @@ class EmailPasswordUpdate extends Component {
   render() {
     return (
       <div style={{ marginTop: 100 }} className="d-flex justify-content-center">
+        <ToastContainer />
         <div style={{ width: 30 + "%" }}>
           <span style={{ color: "red" }}>
             Notice: you are about to change some confidential information

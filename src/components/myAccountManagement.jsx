@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { signOut, updateUser, getUserInfo } from "../firebase";
 import firebase from "firebase/app";
+import { ToastContainer, toast } from "react-toastify";
 
 class MyAccountManagement extends Component {
   state = {
@@ -42,7 +43,7 @@ class MyAccountManagement extends Component {
     const infoFromBack = await signOut();
 
     if (infoFromBack instanceof Error) {
-      window.alert("Error happens, log out fail");
+      toast.error("Error happens, log out fail");
     } else {
       window.open("/", "_self");
     }
@@ -65,7 +66,8 @@ class MyAccountManagement extends Component {
 
   render() {
     return (
-      <div>
+      <div style={{ marginBottom: 40 }}>
+        <ToastContainer />
         <div className="d-flex justify-content-center">
           <div style={{ marginTop: 50, width: 400 }}>
             <div className="text-right">

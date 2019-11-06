@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { createNewUser } from "../firebase";
+import { ToastContainer, toast } from "react-toastify";
 
 class SignUp extends Component {
   state = {
@@ -18,20 +19,20 @@ class SignUp extends Component {
       this.state.account.password === "" ||
       this.state.account.confirmPassword === ""
     ) {
-      window.alert("sign up information is not complete");
+      toast.error("sign up information is not complete");
     } else if (
       this.state.account.password !== this.state.account.confirmPassword
     ) {
-      window.alert("password confirmation error");
+      toast.error("password confirmation error");
     } else if (this.state.account.password.length < 6) {
-      window.alert("the password should be longer than 6 ");
+      toast.error("the password should be longer than 6 ");
     } else {
       const infoFromBack = await createNewUser(
         this.state.account.username,
         this.state.account.password
       );
       if (infoFromBack instanceof Error) {
-        window.alert(infoFromBack.message);
+        toast.error(infoFromBack.message);
       } else {
         window.open("/", "_self");
       }
@@ -49,6 +50,7 @@ class SignUp extends Component {
 
     return (
       <div className="d-flex justify-content-center">
+        <ToastContainer />
         <div style={{ marginTop: 100, width: 400 }}>
           <div className="text-center" style={{ marginBottom: 14 }}>
             <span className="signInLogo">KidIslands</span>

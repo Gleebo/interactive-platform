@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { signIn } from "../firebase";
 import { async } from "q";
+import { ToastContainer, toast } from "react-toastify";
 
 class SignIn extends Component {
   state = {
@@ -17,14 +18,14 @@ class SignIn extends Component {
       this.state.account.username === "" ||
       this.state.account.password === ""
     ) {
-      window.alert("sign in information is not complete");
+      toast.error("sign in information is not complete");
     } else {
       const infoFromBack = await signIn(
         this.state.account.username,
         this.state.account.password
       );
       if (infoFromBack instanceof Error) {
-        window.alert(infoFromBack.message);
+        toast.error(infoFromBack.message);
       } else {
         window.open("/", "_self");
       }
@@ -42,6 +43,7 @@ class SignIn extends Component {
 
     return (
       <div className="d-flex justify-content-center">
+        <ToastContainer />
         <div style={{ marginTop: 100, width: 400 }}>
           <div className="text-center" style={{ marginBottom: 14 }}>
             <span className="signInLogo">KidIslands</span>

@@ -5,6 +5,7 @@ import MainInterface from "./components/mainInterface";
 import { BrowserRouter } from "react-router-dom";
 import "./components/myCss.css";
 import "bootstrap/dist/css/bootstrap.css";
+import "react-toastify/dist/ReactToastify.css";
 
 ReactDOM.render(
   <BrowserRouter>
