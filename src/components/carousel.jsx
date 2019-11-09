@@ -22,7 +22,7 @@ class Carousel extends Component {
   }
 
   render() {
-    const product = this.state.products.one;
+    //const product = this.state.products.one;
 
     return (
       <div
@@ -49,7 +49,7 @@ class Carousel extends Component {
               <Link
                 to={{
                   pathname: "/productDetailPage",
-                  state: { product } //how to attach data using Link to jump to new page
+                  state: { product: this.state.products.one } //how to attach data using Link to jump to new page
                 }}
               >
                 <button type="button" className="btn btn-outline-light btn-lg">
@@ -67,9 +67,16 @@ class Carousel extends Component {
             <div className="carousel-caption">
               <h1 className="display-2">{this.state.products.two.name}</h1>
               <h3>{this.state.products.two.description}</h3>
-              <button type="button" className="btn btn-outline-light btn-lg">
-                Learn More
-              </button>
+              <Link
+                to={{
+                  pathname: "/productDetailPage",
+                  state: { product: this.state.products.two } //how to attach data using Link to jump to new page
+                }}
+              >
+                <button type="button" className="btn btn-outline-light btn-lg">
+                  Learn More
+                </button>
+              </Link>
             </div>
           </div>
           <div className="carousel-item">
@@ -81,9 +88,16 @@ class Carousel extends Component {
             <div className="carousel-caption">
               <h1 className="display-2">{this.state.products.three.name}</h1>
               <h3>{this.state.products.three.description}</h3>
-              <button type="button" className="btn btn-outline-light btn-lg">
-                Learn More
-              </button>
+              <Link
+                to={{
+                  pathname: "/productDetailPage",
+                  state: { product: this.state.products.three } //how to attach data using Link to jump to new page
+                }}
+              >
+                <button type="button" className="btn btn-outline-light btn-lg">
+                  Learn More
+                </button>
+              </Link>
             </div>
           </div>
         </div>
