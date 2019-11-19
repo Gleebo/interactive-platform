@@ -16,9 +16,9 @@ class NavBar extends Component {
     const { data: brands } = await axios.get(
       "https://us-central1-kids-islands.cloudfunctions.net/getBrands"
     );
-
     this.setState({ brands });
     const cNs = await getCategoriesAndSubjects();
+    console.log(cNs);
     this.setState({ subjects: cNs.subjects });
     this.setState({ categories: cNs.categories });
   }
